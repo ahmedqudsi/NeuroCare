@@ -1,3 +1,4 @@
+
 import type { Quote, Exercise, Hospital, FASTStep } from '@/types';
 import { Smile, Users, MessageSquare, Clock } from 'lucide-react';
 
@@ -86,7 +87,7 @@ export const fastTestSteps: FASTStep[] = [
     description: 'Is one arm weak or numb?',
     checkItems: ['Ask the person to raise both arms.', 'Does one arm drift downward or is unable to rise?'],
     details: 'Sudden weakness or numbness in one arm is another key indicator. If one arm drifts down when both are raised, it could signal a stroke.',
-    icon: Users, // Placeholder for arm icon - Armchair is too specific. Using Users as generic body icon.
+    icon: Users, 
   },
   {
     id: 'S',
@@ -111,7 +112,7 @@ export const sampleHospitals: Hospital[] = [
   {
     id: '1',
     name: 'Olive Hospital',
-    address: '9-4-87/A/23 & 24, Salarjung Colony, Inner Ring Rd, Mehdipatnam, Hyderabad, Telangana 500028',
+    address: '9-4-87/A/23 & 24, Salarjung Colony, Inner Ring Rd, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2351 5000',
     services: ['Multi-Speciality Care', 'Emergency Services', 'Diagnostics & Imaging', 'Stroke Unit'],
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Apollo_hospital_hyderabad.jpg/640px-Apollo_hospital_hyderabad.jpg',
@@ -120,7 +121,7 @@ export const sampleHospitals: Hospital[] = [
   {
     id: '2',
     name: 'Premier Hospital',
-    address: '#12-2-823/A/25, St Ann\'s School Rd, Santosh Nagar, Mehdipatnam, Hyderabad, Telangana 500028',
+    address: '#12-2-823/A/25, St Ann\'s School Rd, Santosh Nagar, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2353 8686',
     services: ['General Medicine', 'Orthopedics', 'Neurology Consultations', '24/7 Pharmacy'],
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Fortis_Hospital_Mohali_India.jpg/640px-Fortis_Hospital_Mohali_India.jpg',
@@ -129,7 +130,7 @@ export const sampleHospitals: Hospital[] = [
   {
     id: '3',
     name: 'Sarojini Devi Eye Hospital',
-    address: 'Mehdipatnam Rd, Humayun Nagar, Hyderabad, Telangana 500028',
+    address: 'Mehdipatnam Rd, Humayun Nagar, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2334 0119',
     services: ['Specialized Eye Care', 'Emergency Eye Services', 'Outpatient Department'],
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Sarojini_Devi_Eye_Hospital_Block.JPG/640px-Sarojini_Devi_Eye_Hospital_Block.JPG',
@@ -138,7 +139,7 @@ export const sampleHospitals: Hospital[] = [
    {
     id: '4',
     name: 'Ayaan Hospital',
-    address: 'Pillar No 75, Ring Rd, near NMDC, Mehdipatnam, Hyderabad, Telangana 500028',
+    address: 'Pillar No 75, Ring Rd, near NMDC, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 72073 57861',
     services: ['Multi-Speciality Services', 'Intensive Care Unit', 'Surgical Facilities'],
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/KIMS_hospital_Secunderabad.jpg/640px-KIMS_hospital_Secunderabad.jpg',
