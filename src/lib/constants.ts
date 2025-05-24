@@ -114,8 +114,8 @@ export const sampleHospitals: Hospital[] = [
     address: '9-4-87/A/23 & 24, Salarjung Colony, Inner Ring Rd, Mehdipatnam, Hyderabad, Telangana 500028',
     phone: '+91 40 2351 5000',
     services: ['Multi-Speciality Care', 'Emergency Services', 'Diagnostics & Imaging', 'Stroke Unit'],
-    imageUrl: 'https://placehold.co/600x400.png',
-    imageHint: 'hospital building',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Apollo_hospital_hyderabad.jpg/640px-Apollo_hospital_hyderabad.jpg',
+    imageHint: 'modern hospital',
   },
   {
     id: '2',
@@ -123,26 +123,25 @@ export const sampleHospitals: Hospital[] = [
     address: '#12-2-823/A/25, St Ann\'s School Rd, Santosh Nagar, Mehdipatnam, Hyderabad, Telangana 500028',
     phone: '+91 40 2353 8686',
     services: ['General Medicine', 'Orthopedics', 'Neurology Consultations', '24/7 Pharmacy'],
-    imageUrl: 'https://placehold.co/600x400.png',
-    imageHint: 'medical center',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Fortis_Hospital_Mohali_India.jpg/640px-Fortis_Hospital_Mohali_India.jpg',
+    imageHint: 'hospital building',
   },
   {
     id: '3',
     name: 'Sarojini Devi Eye Hospital',
     address: 'Mehdipatnam Rd, Humayun Nagar, Hyderabad, Telangana 500028',
-    phone: '+91 40 2334 0119', // Example phone
-    services: ['Specialized Eye Care', 'Emergency Eye Services', 'Outpatient Department'], // General services, may not be stroke specific but is a major landmark.
-    imageUrl: 'https://placehold.co/600x400.png',
-    imageHint: 'hospital entrance',
+    phone: '+91 40 2334 0119',
+    services: ['Specialized Eye Care', 'Emergency Eye Services', 'Outpatient Department'],
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Sarojini_Devi_Eye_Hospital_Block.JPG/640px-Sarojini_Devi_Eye_Hospital_Block.JPG',
+    imageHint: 'eye hospital',
   },
    {
     id: '4',
     name: 'Ayaan Hospital',
     address: 'Pillar No 75, Ring Rd, near NMDC, Mehdipatnam, Hyderabad, Telangana 500028',
-    phone: '+91 72073 57861', // Example phone
+    phone: '+91 72073 57861',
     services: ['Multi-Speciality Services', 'Intensive Care Unit', 'Surgical Facilities'],
-    imageUrl: 'https://placehold.co/600x400.png',
-    imageHint: 'clinic building',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/KIMS_hospital_Secunderabad.jpg/640px-KIMS_hospital_Secunderabad.jpg',
+    imageHint: 'multi-speciality hospital',
   },
 ];
-
