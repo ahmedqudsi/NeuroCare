@@ -1,3 +1,4 @@
+
 import type { Exercise } from '@/types';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -9,6 +10,12 @@ interface ExerciseCardProps {
 }
 
 export function ExerciseCard({ exercise }: ExerciseCardProps) {
+  const handleWatchVideo = () => {
+    // Opens a YouTube search for "physical therapy exercise" as a placeholder
+    const youtubeSearchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(exercise.name + " physical therapy exercise")}`;
+    window.open(youtubeSearchUrl, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col">
       {exercise.imageUrl && (
@@ -40,9 +47,9 @@ export function ExerciseCard({ exercise }: ExerciseCardProps) {
         </div>
       </CardContent>
       <CardFooter>
-        <Button variant="outline" className="w-full" disabled>
+        <Button variant="outline" className="w-full" onClick={handleWatchVideo}>
           <PlayCircle className="mr-2 h-4 w-4" />
-          Watch Video (Coming Soon)
+          Watch Video
         </Button>
       </CardFooter>
     </Card>
