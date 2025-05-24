@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { siteConfig } from '@/config/site';
@@ -32,10 +33,10 @@ export function Header() {
               key={item.href}
               href={item.href}
               className={cn(
-                "text-sm font-medium transition-colors hover:text-primary",
+                "text-sm font-medium transition-colors",
                 (pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(item.href)))
-                  ? "text-primary" // Active link
-                  : "text-muted-foreground" // Inactive link
+                  ? "text-primary font-semibold" // Active link: more prominent
+                  : "text-muted-foreground hover:text-primary/90" // Inactive link: subtle hover
               )}
             >
               {item.label}
@@ -55,7 +56,7 @@ export function Header() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-full max-w-xs p-6">
-                 <div className="mb-6"> {/* Increased bottom margin */}
+                 <div className="mb-6">
                    <Link href="/dashboard" className="flex items-center space-x-2">
                      <Brain className="h-7 w-7 text-primary" />
                      <span className="text-lg font-semibold">
@@ -63,7 +64,7 @@ export function Header() {
                      </span>
                    </Link>
                  </div>
-                <nav className="flex flex-col space-y-3"> {/* Changed space-y */}
+                <nav className="flex flex-col space-y-3">
                   {siteConfig.sidebarNav.map((item) => (
                     <SheetClose asChild key={item.href}>
                       <Link
@@ -75,8 +76,8 @@ export function Header() {
                             : "text-muted-foreground"
                         )}
                       >
-                        <item.icon className="mr-3 h-5 w-5 flex-shrink-0" /> {/* Added flex-shrink-0 */}
-                        <span className="truncate">{item.label}</span> {/* Added truncate */}
+                        <item.icon className="mr-3 h-5 w-5 flex-shrink-0" />
+                        <span className="truncate">{item.label}</span>
                       </Link>
                     </SheetClose>
                   ))}
