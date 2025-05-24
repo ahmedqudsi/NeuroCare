@@ -110,29 +110,39 @@ export const fastTestSteps: FASTStep[] = [
 export const sampleHospitals: Hospital[] = [
   {
     id: '1',
-    name: 'City General Hospital',
-    address: '123 Main St, Anytown, USA',
-    phone: '(555) 123-4567',
-    services: ['Comprehensive Stroke Center', 'Emergency Care', 'Neurology Department'],
+    name: 'Olive Hospital',
+    address: '9-4-87/A/23 & 24, Salarjung Colony, Inner Ring Rd, Mehdipatnam, Hyderabad, Telangana 500028',
+    phone: '+91 40 2351 5000',
+    services: ['Multi-Speciality Care', 'Emergency Services', 'Diagnostics & Imaging', 'Stroke Unit'],
     imageUrl: 'https://placehold.co/600x400.png',
-    imageHint: 'hospital exterior',
+    imageHint: 'hospital building',
   },
   {
     id: '2',
-    name: 'Community Medical Center',
-    address: '456 Oak Ave, Anytown, USA',
-    phone: '(555) 987-6543',
-    services: ['Primary Stroke Center', '24/7 Emergency Room', 'Rehabilitation Services'],
+    name: 'Premier Hospital',
+    address: '#12-2-823/A/25, St Ann\'s School Rd, Santosh Nagar, Mehdipatnam, Hyderabad, Telangana 500028',
+    phone: '+91 40 2353 8686',
+    services: ['General Medicine', 'Orthopedics', 'Neurology Consultations', '24/7 Pharmacy'],
     imageUrl: 'https://placehold.co/600x400.png',
-    imageHint: 'medical building',
+    imageHint: 'medical center',
   },
   {
     id: '3',
-    name: 'St. Luke\'s Regional Hospital',
-    address: '789 Pine Rd, Anytown, USA',
-    phone: '(555) 234-5678',
-    services: ['Acute Stroke Ready Hospital', 'TeleStroke Services', 'Intensive Care Unit'],
+    name: 'Sarojini Devi Eye Hospital',
+    address: 'Mehdipatnam Rd, Humayun Nagar, Hyderabad, Telangana 500028',
+    phone: '+91 40 2334 0119', // Example phone
+    services: ['Specialized Eye Care', 'Emergency Eye Services', 'Outpatient Department'], // General services, may not be stroke specific but is a major landmark.
     imageUrl: 'https://placehold.co/600x400.png',
     imageHint: 'hospital entrance',
   },
+   {
+    id: '4',
+    name: 'Ayaan Hospital',
+    address: 'Pillar No 75, Ring Rd, near NMDC, Mehdipatnam, Hyderabad, Telangana 500028',
+    phone: '+91 72073 57861', // Example phone
+    services: ['Multi-Speciality Services', 'Intensive Care Unit', 'Surgical Facilities'],
+    imageUrl: 'https://placehold.co/600x400.png',
+    imageHint: 'clinic building',
+  },
 ];
+
