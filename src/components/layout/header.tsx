@@ -33,10 +33,10 @@ export function Header() {
               key={item.href}
               href={item.href}
               className={cn(
-                "text-sm font-medium transition-colors",
+                "text-sm font-medium transition-colors hover:text-foreground",
                 (pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(item.href)))
-                  ? "text-primary font-semibold" // Active link: more prominent
-                  : "text-muted-foreground hover:text-primary/90" // Inactive link: subtle hover
+                  ? "text-primary font-semibold" // Active link
+                  : "text-foreground/75" // Inactive link
               )}
             >
               {item.label}
@@ -70,10 +70,10 @@ export function Header() {
                       <Link
                         href={item.href}
                         className={cn(
-                          "flex items-center rounded-md p-2 text-base font-medium hover:bg-accent hover:text-accent-foreground",
+                          "flex items-center rounded-md p-2 text-base font-medium transition-colors",
                           (pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(item.href)))
-                            ? "bg-primary/10 text-primary"
-                            : "text-muted-foreground"
+                            ? "bg-accent text-accent-foreground" // Active mobile link
+                            : "text-muted-foreground hover:bg-accent hover:text-accent-foreground" // Inactive mobile link
                         )}
                       >
                         <item.icon className="mr-3 h-5 w-5 flex-shrink-0" />
