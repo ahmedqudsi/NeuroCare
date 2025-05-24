@@ -130,7 +130,7 @@ export const sampleHospitals: Hospital[] = [
   {
     id: '3',
     name: 'Sarojini Devi Eye Hospital',
-    address: 'Mehdipatnam Rd, Humayun Nagar, Hyderabad, Telangana 500028, India',
+    address: 'Mehdipatnam Main Rd, Humayun Nagar, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2334 0119',
     services: ['Specialized Eye Care', 'Emergency Eye Services', 'Outpatient Department'],
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Sarojini_Devi_Eye_Hospital_Block.JPG/640px-Sarojini_Devi_Eye_Hospital_Block.JPG',
@@ -139,10 +139,11 @@ export const sampleHospitals: Hospital[] = [
    {
     id: '4',
     name: 'Ayaan Hospital',
-    address: 'Pillar No 75, Ring Rd, near NMDC, Mehdipatnam, Hyderabad, Telangana 500028, India',
+    address: '12-2-417/A/2, Subhash Chandra Bose Rd, near NMDC, Gudimalkapur, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 72073 57861',
     services: ['Multi-Speciality Services', 'Intensive Care Unit', 'Surgical Facilities'],
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/KIMS_hospital_Secunderabad.jpg/640px-KIMS_hospital_Secunderabad.jpg',
     imageHint: 'multi-speciality hospital',
   },
 ];
+
