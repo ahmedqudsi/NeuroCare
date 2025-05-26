@@ -53,7 +53,7 @@ export function InteractiveFASTTestClient() {
         <Accordion 
           type="single" 
           collapsible 
-          className="w-full space-y-4" // Animation removed from parent Accordion to allow individual item animation
+          className="w-full space-y-4"
         >
           {fastTestSteps.map((step: FASTStep, index: number) => {
             const IconComponent = step.icon || (() => null);
@@ -62,9 +62,10 @@ export function InteractiveFASTTestClient() {
                 value={step.id}
                 key={step.id}
                 className={cn(
-                  "border bg-card rounded-lg shadow-sm transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-[1.02]",
-                  "animate-in fade-in-0 slide-in-from-bottom-4 duration-500", // Base animation for each item
-                  itemAnimationDelays[index % itemAnimationDelays.length] // Apply staggered delay based on index
+                  "relative border bg-card rounded-lg shadow-sm transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-[1.02]", // Added relative
+                  "animate-in fade-in-0 slide-in-from-bottom-4 duration-500", 
+                  itemAnimationDelays[index % itemAnimationDelays.length],
+                  "will-change-transform will-change-opacity" // Added will-change
                 )}
               >
                 <AccordionTrigger className="p-6 text-lg font-semibold hover:no-underline">
@@ -86,7 +87,7 @@ export function InteractiveFASTTestClient() {
             );
           })}
         </Accordion>
-        <div className="mt-8 text-center animate-in fade-in slide-in-from-bottom-8 delay-[900ms] duration-700"> {/* Adjusted delay for the button to appear last */}
+        <div className="mt-8 text-center animate-in fade-in slide-in-from-bottom-8 delay-[900ms] duration-700">
           <Button
             size="lg"
             variant="destructive"
