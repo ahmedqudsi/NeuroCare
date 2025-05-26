@@ -321,4 +321,59 @@ export const sampleNurses: Nurse[] = [
     imageHint: 'nurse with stethoscope',
     bio: 'Sunita has a strong background in cardiac care and diabetes education. She is passionate about empowering patients and their families with the knowledge to manage chronic conditions effectively at home.'
   },
+  {
+    id: 'nurse004',
+    name: 'Rajesh Kumar',
+    specializations: ['Emergency Care', 'ICU Experience', 'Ventilator Management'],
+    experienceYears: 10,
+    hourlyRate: 1400,
+    availability: 'Mon-Fri, 7am-7pm',
+    imageUrl: 'https://placehold.co/300x300.png',
+    imageHint: 'male nurse focused',
+    bio: 'Rajesh is an experienced critical care nurse, adept at handling emergency situations and managing patients requiring intensive care.'
+  },
+  {
+    id: 'nurse005',
+    name: 'Anjali Mehta',
+    specializations: ['Pediatric Care', 'Special Needs Support', 'Home Infusion Therapy'],
+    experienceYears: 7,
+    hourlyRate: 1300,
+    availability: 'Flexible, Weekends preferred',
+    imageUrl: 'https://placehold.co/300x300.png',
+    imageHint: 'female nurse gentle',
+    bio: 'Anjali specializes in pediatric home care and is skilled in supporting children with special needs. She is also experienced in home infusion therapies.'
+  },
+  {
+    id: 'nurse006',
+    name: 'Vikram Patel',
+    specializations: ['Orthopedic Care', 'Post-Surgery Rehabilitation', 'Pain Management'],
+    experienceYears: 9,
+    hourlyRate: 1350,
+    availability: 'Tue-Sat, 10am-6pm',
+    imageUrl: 'https://placehold.co/300x300.png',
+    imageHint: 'nurse assisting patient',
+    bio: 'Vikram has a strong background in orthopedic nursing, assisting patients with recovery after surgery and managing chronic pain conditions.'
+  },
+  {
+    id: 'nurse007',
+    name: 'Deepa Iyer',
+    specializations: ['Mental Health Support', 'Counseling', 'Dementia Care'],
+    experienceYears: 11,
+    hourlyRate: 1600,
+    availability: 'Mon, Wed, Fri, 9am-3pm',
+    imageUrl: 'https://placehold.co/300x300.png',
+    imageHint: 'female nurse empathetic',
+    bio: 'Deepa is a compassionate nurse focusing on mental health and dementia care, providing both medical support and counseling to patients and families.'
+  },
+  {
+    id: 'nurse008',
+    name: 'Mohan Das',
+    specializations: ['General Nursing', 'Elderly Companionship', 'Medication Reminders'],
+    experienceYears: 5,
+    hourlyRate: 1000,
+    availability: 'Daily, 4-hour shifts',
+    imageUrl: 'https://placehold.co/300x300.png',
+    imageHint: 'senior care nurse',
+    bio: 'Mohan provides general nursing care and companionship for the elderly, ensuring medication adherence and daily well-being checks.'
+  }
 ];
