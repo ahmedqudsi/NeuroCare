@@ -8,13 +8,11 @@ import type { Hospital } from '@/types';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Search } from 'lucide-react';
-// Removed getDictionary and related types/state
 
 export default function HospitalLocatorPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [displayedHospitals, setDisplayedHospitals] = useState<Hospital[]>(sampleHospitals);
   
-  // Static text, previously from dictionary
   const pageStaticText = {
     title: "Find Nearby Hospitals",
     description: "Locate medical facilities equipped for stroke care.",
@@ -36,8 +34,7 @@ export default function HospitalLocatorPage() {
     const lowercasedSearchTerm = searchTerm.toLowerCase();
     const filtered = sampleHospitals.filter(hospital => 
       hospital.name.toLowerCase().includes(lowercasedSearchTerm) ||
-      hospital.address.toLowerCase().includes(lowercasedSearchTerm) ||
-      hospital.address.toLowerCase().includes("india") // Ensure searching "India" works
+      hospital.address.toLowerCase().includes(lowercasedSearchTerm)
     );
     setDisplayedHospitals(filtered);
   };
@@ -73,7 +70,7 @@ export default function HospitalLocatorPage() {
         {displayedHospitals.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {displayedHospitals.map((hospital) => (
-              <HospitalCard key={hospital.id} hospital={hospital} /> // dictionary prop removed
+              <HospitalCard key={hospital.id} hospital={hospital} />
             ))}
           </div>
         ) : (
