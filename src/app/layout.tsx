@@ -29,19 +29,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en" suppressHydrationWarning>
+  return (<html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="light" // Reverted from system/dynamic
-          enableSystem={false} // Ensure system theme is not used
+          defaultTheme="light"
+          enableSystem={false}
           disableTransitionOnChange
         >
           {children}
           <Toaster />
         </ThemeProvider>
       </body>
-    </html>
-  );
+    </html>);
 }
