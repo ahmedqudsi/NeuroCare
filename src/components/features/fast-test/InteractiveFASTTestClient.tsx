@@ -17,8 +17,8 @@ export function InteractiveFASTTestClient() {
   const pageStaticText = {
     title: "F.A.S.T. Stroke Test",
     description: "Use the F.A.S.T. test to quickly check for common signs of a stroke. If you see any of these signs, call emergency services immediately.",
-    emergencyCallButton: "Call Emergency Services Now",
-    emergencyCallMessage: "Attempting to dial 112. If the call doesn't start, please dial your local emergency number manually.", // Updated message
+    emergencyCallButton: "Emergency Services", // <-- Updated text here
+    emergencyCallMessage: "Attempting to dial 112. If the call doesn't start, please dial your local emergency number manually.",
     emergencyCallToastTitle: "Emergency Action"
   };
 
@@ -89,3 +89,4 @@ export function InteractiveFASTTestClient() {
     </Card>
   );
 }
+
