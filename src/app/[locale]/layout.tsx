@@ -4,7 +4,7 @@
 import { Header } from '@/components/layout/header';
 import { getDictionary } from '@/lib/get-dictionary';
 import type { Locale, Dictionary } from '@/types';
-import { useEffect, useState }_from_react'; //_Corrected_import_
+import { useEffect, useState } from 'react'; // Corrected import
 import { siteConfig } from '@/config/site';
 
 export default function LocaleLayout({
