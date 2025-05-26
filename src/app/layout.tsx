@@ -18,14 +18,17 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
-export async function generateStaticParams() {
-  return siteConfig.i18n.locales.map((locale) => ({ locale }));
-}
+// generateStaticParams should not be here as this layout doesn't have dynamic segments
+// export async function generateStaticParams() {
+//   return siteConfig.i18n.locales.map((locale) => ({ locale }));
+// }
 
 export async function generateMetadata({ params }: { params: { locale?: Locale } }): Promise<Metadata> {
+  // For the root layout, locale might not be in params until middleware redirects.
+  // Use defaultLocale for initial metadata.
   const currentLocale = params?.locale || siteConfig.i18n.defaultLocale;
   const dictionary = await getDictionary(currentLocale);
-  const appName = dictionary.appName || "NeuroCare"; // Fallback if not in dictionary
+  const appName = dictionary.appName || "NeuroCare";
   const appDescription = dictionary.appDescription || siteConfig.description;
   return {
     title: {
@@ -38,19 +41,23 @@ export async function generateMetadata({ params }: { params: { locale?: Locale }
 
 export default function RootLayout({
   children,
-  params,
 }: Readonly<{
   children: React.ReactNode;
-  params: { locale?: Locale }; // locale can be undefined initially for root "/"
+  // params for RootLayout (app/layout.tsx) will be {} as it has no dynamic segments in its path.
+  // locale is determined by middleware and the [locale] segment for nested layouts/pages.
 }>) {
-  const currentLocale = params?.locale || siteConfig.i18n.defaultLocale;
+  // The lang attribute for the root HTML tag should reflect the actual locale being rendered.
+  // Middleware ensures a locale prefix. For initial "/", use default.
+  // However, specific [locale] layout will override this for its segment.
+  // For the very first render before redirection, using defaultLocale is safest.
+  const currentLocale = siteConfig.i18n.defaultLocale;
   return (
     <html lang={currentLocale} suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="light" // Changed from "system"
-          enableSystem={false} // Explicitly false as "System" option was removed
+          defaultTheme="light"
+          enableSystem={false}
           disableTransitionOnChange
         >
           {children}
