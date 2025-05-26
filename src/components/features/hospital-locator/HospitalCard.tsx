@@ -5,7 +5,7 @@ import type { Hospital as HospitalType } from '@/types';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { MapPin, Phone, Stethoscope, ExternalLink } from 'lucide-react';
+import { MapPin, Phone, Stethoscope, Map } from 'lucide-react'; // Changed ExternalLink to Map
 
 interface HospitalCardProps {
   hospital: HospitalType;
@@ -67,7 +67,7 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
           className="w-full transition-all duration-200 ease-in-out hover:bg-accent hover:text-accent-foreground hover:scale-[1.03] transform" 
           onClick={handleGetDirections}
         >
-          <ExternalLink className="mr-2 h-4 w-4" />
+          <Map className="mr-2 h-4 w-4" /> {/* Changed icon here */}
           {cardStaticText.getDirectionsButton}
         </Button>
       </CardFooter>
