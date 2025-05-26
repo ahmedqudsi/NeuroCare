@@ -4,12 +4,10 @@
 import type { Exercise } from '@/types';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import Image from 'next/image';
-import { ListChecks, PlayCircle } from 'lucide-react';
+import { ListChecks, PlayCircle, Play } from 'lucide-react'; // Added Play icon
 
 interface ExerciseCardProps {
   exercise: Exercise;
-  // dictionary prop removed
 }
 
 export function ExerciseCard({ exercise }: ExerciseCardProps) {
@@ -26,17 +24,15 @@ export function ExerciseCard({ exercise }: ExerciseCardProps) {
 
   return (
     <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col">
-      {exercise.imageUrl && (
-        <div className="relative w-full h-48 bg-secondary">
-            <Image
-              src={exercise.imageUrl}
-              alt={`Image for ${exercise.name}`}
-              fill
-              style={{ objectFit: 'cover' }}
-              data-ai-hint={exercise.imageHint || "physical therapy"}
-            />
-        </div>
-      )}
+      {/* Replace Image with Play icon area */}
+      <div 
+        className="relative w-full h-48 bg-muted flex items-center justify-center cursor-pointer hover:bg-accent/10 transition-colors group"
+        onClick={handleWatchVideo}
+        aria-label={`Watch video for ${exercise.name}`}
+      >
+        <Play className="h-20 w-20 text-primary group-hover:scale-110 transition-transform duration-200" fill="currentColor" />
+      </div>
+      
       <CardHeader>
         <CardTitle className="text-xl font-semibold">{exercise.name}</CardTitle>
         <CardDescription className="pt-1">{exercise.description}</CardDescription>
