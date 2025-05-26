@@ -39,12 +39,13 @@ export default async function DashboardPage() {
         {/* Left Side (Main Section) */}
         <div className="space-y-4 mt-4">
           <h1 className="text-6xl font-bold tracking-tight text-foreground">
-            <span>Your Digital Ally in</span>
-            <span className="block text-primary animate-pulse">Brain Stroke Recovery</span>
+            <span>Your Digital Ally in </span>
+            <span className="text-primary animate-pulse">Brain Stroke Recovery</span>
+             <Brain className="inline-block ml-2 h-10 w-10 text-primary animate-pulse" />
           </h1>
           <h2 className="text-lg text-muted-foreground">
             <div className="relative w-full overflow-hidden">
-              <p className="animate-marquee-to-right whitespace-nowrap">
+              <p className="animate-marquee-to-left whitespace-nowrap">
                 {appName}: Revolutionizing Stroke Recovery
               </p>
             </div>

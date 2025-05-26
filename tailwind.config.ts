@@ -83,15 +83,15 @@ export default {
   					height: '0'
   				}
   			},
-        'marquee-to-right': {
-          '0%': { transform: 'translateX(-100%)' },
-          '100%': { transform: 'translateX(100%)' },
+        'marquee-to-left': {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(-100%)' },
         },
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out',
-        'marquee-to-right': 'marquee-to-right 8s linear infinite',
+        'marquee-to-left': 'marquee-to-left 8s linear infinite',
   		}
   	}
   },
