@@ -1,6 +1,6 @@
 
-import type { Quote, Exercise, Hospital, FASTStep } from '@/types';
-import { Smile, Users, MessageSquare, Clock } from 'lucide-react';
+import type { Quote, Exercise, Hospital, FASTStep, HealthcareService, Nurse } from '@/types';
+import { Smile, Users, MessageSquare, Clock, UserRoundPlus, Home, Video, Truck, TestTube2 } from 'lucide-react';
 
 export const motivationalQuotes: Quote[] = [
   { id: '1', text: "The greatest glory in living lies not in never falling, but in rising every time we fall.", author: "Nelson Mandela" },
@@ -125,7 +125,7 @@ export const fastTestSteps: FASTStep[] = [
     id: 'T',
     title: 'Time to call Emergency Services',
     description: 'If you observe any of these signs, it’s time to call emergency services immediately.',
-    checkItems: ['Note the time when the first symptoms appeared.', 'Call emergency services (e.g., 911, 112) right away.'],
+    checkItems: ['Note the time when the first symptoms appeared.', 'Call emergency services (e.g., 112) right away.'],
     details: 'Time is critical in stroke treatment. The sooner a person receives medical attention, the better their chances of recovery. Do not delay in calling for help.',
     icon: Clock,
   },
@@ -241,4 +241,84 @@ export const sampleHospitals: Hospital[] = [
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Sir_Ganga_Ram_Hospital_Building.jpg/640px-Sir_Ganga_Ram_Hospital_Building.jpg',
     imageHint: 'ganga ram hospital delhi',
   }
+];
+
+// New constants for Healthcare Services
+export const healthcareServicesList: HealthcareService[] = [
+  {
+    id: 'home-nurse-booking',
+    title: 'Home Nurse Booking',
+    description: 'Book certified nurses for dedicated in-home medical care and support.',
+    icon: UserRoundPlus,
+    href: '/healthcare-services/home-nurse-booking',
+    cta: 'Book a Nurse',
+  },
+  {
+    id: 'doctor-visits-at-home',
+    title: 'Doctor Visits at Home',
+    description: 'Schedule convenient at-home consultations with qualified doctors.',
+    icon: Home,
+    href: '/healthcare-services/doctor-visits',
+    cta: 'Schedule Visit',
+  },
+  {
+    id: 'video-consultation',
+    title: 'Video Consultation',
+    description: 'Connect with doctors virtually for consultations from the comfort of your home.',
+    icon: Video,
+    href: '/healthcare-services/video-consultation',
+    cta: 'Consult Online',
+  },
+  {
+    id: 'pharma-medication-delivery',
+    title: 'Pharma & Medication Delivery',
+    description: 'Order prescribed medications and healthcare products delivered to your doorstep.',
+    icon: Truck,
+    href: '/healthcare-services/pharma-delivery',
+    cta: 'Order Medicines',
+  },
+  {
+    id: 'at-home-blood-tests',
+    title: 'At-Home Blood Tests',
+    description: 'Book lab technicians for sample collection at home and get digital reports.',
+    icon: TestTube2,
+    href: '/healthcare-services/lab-tests',
+    cta: 'Book a Test',
+  },
+];
+
+export const sampleNurses: Nurse[] = [
+  {
+    id: 'nurse001',
+    name: 'Priya Sharma',
+    specializations: ['Stroke Rehabilitation', 'Geriatric Care', 'Post-operative Care'],
+    experienceYears: 8,
+    hourlyRate: 1200, // INR
+    availability: 'Mon-Sat, 8am-6pm',
+    imageUrl: 'https://placehold.co/300x300.png',
+    imageHint: 'female nurse professional',
+    bio: 'Priya is a dedicated and compassionate nurse with extensive experience in helping stroke patients regain independence. She is skilled in mobility assistance, medication management, and providing emotional support.'
+  },
+  {
+    id: 'nurse002',
+    name: 'Amit Singh',
+    specializations: ['Neurological Care', 'Wound Management', 'Palliative Care'],
+    experienceYears: 12,
+    hourlyRate: 1500, // INR
+    availability: 'Flexible, including evenings',
+    imageUrl: 'https://placehold.co/300x300.png',
+    imageHint: 'male nurse smiling',
+    bio: 'Amit is a highly skilled nurse specializing in complex neurological conditions. He is proficient in advanced wound care techniques and offers compassionate palliative support.'
+  },
+  {
+    id: 'nurse003',
+    name: 'Sunita Reddy',
+    specializations: ['Cardiac Care', 'Diabetes Management', 'Elderly Support'],
+    experienceYears: 6,
+    hourlyRate: 1100, // INR
+    availability: 'Weekdays, 9am-5pm',
+    imageUrl: 'https://placehold.co/300x300.png',
+    imageHint: 'nurse with stethoscope',
+    bio: 'Sunita has a strong background in cardiac care and diabetes education. She is passionate about empowering patients and their families with the knowledge to manage chronic conditions effectively at home.'
+  },
 ];

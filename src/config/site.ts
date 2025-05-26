@@ -1,33 +1,36 @@
 
 import type { NavigationItem } from '@/types';
-import { LayoutDashboard, Activity, Hospital, Bike } from 'lucide-react'; // Removed Mic
+import { LayoutDashboard, Activity, Hospital, Bike, BriefcaseMedical } from 'lucide-react';
 
 export const siteConfig = {
-  appName: 'NeuroCare', // Direct string
+  appName: 'NeuroCare',
   description: 'A Comprehensive Stroke Awareness & Recovery Companion',
-  // i18n configuration removed
   sidebarNav: [
     {
       href: '/dashboard',
-      label: 'Dashboard', // Direct label
+      label: 'Dashboard',
       icon: LayoutDashboard,
     },
     {
       href: '/fast-test',
-      label: 'FAST Test', // Direct label
+      label: 'FAST Test',
       icon: Activity,
     },
     {
       href: '/hospital-locator',
-      label: 'Nearby Hospitals', // Direct label
+      label: 'Nearby Hospitals',
       icon: Hospital,
     },
     {
       href: '/rehabilitation',
-      label: 'Rehab Exercises', // Direct label
+      label: 'Rehab Exercises',
       icon: Bike,
     },
-    // Removed Speech Therapy AI entry
+    {
+      href: '/healthcare-services',
+      label: 'Healthcare Services', // New Navigation Item
+      icon: BriefcaseMedical,
+    },
   ] as NavigationItem[],
 };
 
