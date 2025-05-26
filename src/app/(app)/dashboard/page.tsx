@@ -59,10 +59,10 @@ export default async function DashboardPage() {
         </CardHeader>
         <CardContent>
           <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
-            <li>{commonTranslations.tipExploreFAST}</li>
-            <li>{commonTranslations.tipRehabExercises}</li>
-            <li>{commonTranslations.tipSpeechTherapy}</li>
-            <li>{commonTranslations.tipStayPositive}</li>
+            <li className="hover:scale-105 hover:text-foreground/90 transform transition-transform duration-200 ease-in-out origin-left">{commonTranslations.tipExploreFAST}</li>
+            <li className="hover:scale-105 hover:text-foreground/90 transform transition-transform duration-200 ease-in-out origin-left">{commonTranslations.tipRehabExercises}</li>
+            <li className="hover:scale-105 hover:text-foreground/90 transform transition-transform duration-200 ease-in-out origin-left">{commonTranslations.tipSpeechTherapy}</li>
+            <li className="hover:scale-105 hover:text-foreground/90 transform transition-transform duration-200 ease-in-out origin-left">{commonTranslations.tipStayPositive}</li>
           </ul>
         </CardContent>
       </Card>
