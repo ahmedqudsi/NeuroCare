@@ -1,15 +1,4 @@
-import { InteractiveFASTTestClient } from '@/components/features/fast-test/InteractiveFASTTestClient';
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'FAST Stroke Test',
-  description: 'Learn to recognize stroke symptoms using the FAST test.',
-};
-
+// This file is neutralized to prevent conflicts.
 export default function FASTTestPage() {
-  return (
-    <div className="container mx-auto py-8">
-      <InteractiveFASTTestClient />
-    </div>
-  );
+  return null;
 }
