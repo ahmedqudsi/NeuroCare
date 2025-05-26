@@ -29,7 +29,7 @@ export function ExerciseCard({ exercise }: ExerciseCardProps) {
   };
 
   return (
-    <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col">
+    <Card className="overflow-hidden shadow-lg hover:shadow-xl hover:scale-[1.02] transform transition-all duration-300 flex flex-col">
       <div 
         className="relative w-full h-48 bg-muted flex items-center justify-center cursor-pointer hover:bg-accent/10 transition-colors group"
         onClick={handleWatchVideo}
@@ -56,7 +56,11 @@ export function ExerciseCard({ exercise }: ExerciseCardProps) {
         </div>
       </CardContent>
       <CardFooter>
-        <Button variant="outline" className="w-full" onClick={handleWatchVideo}>
+        <Button 
+          variant="outline" 
+          className="w-full transition-all duration-200 ease-in-out hover:bg-primary hover:text-primary-foreground hover:scale-[1.03] transform" 
+          onClick={handleWatchVideo}
+        >
           <PlayCircle className="mr-2 h-4 w-4" />
           {cardStaticText.watchVideoButton}
         </Button>
