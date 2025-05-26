@@ -41,7 +41,7 @@ export default async function DashboardPage() {
           {/* Custom SVG for Brain in Stethoscope */}
           <svg
             viewBox="0 0 24 24"
-            className="inline-block h-8 w-8 ml-2 text-primary animate-pulse" // Adjusted margin
+            className="inline-block h-10 w-10 ml-2 text-primary animate-pulse" // Adjusted size and margin
             fill="currentColor"
             stroke="currentColor"
             strokeWidth="1.5"
