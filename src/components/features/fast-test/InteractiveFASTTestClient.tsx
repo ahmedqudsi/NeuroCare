@@ -1,78 +1,51 @@
 
 "use client";
 
-import { fastTestSteps as defaultFastTestSteps } from '@/lib/constants';
+import { fastTestSteps } from '@/lib/constants'; // Use default, non-translated
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { PhoneOutgoing, AlertTriangle, Smile, Users, MessageSquare, Clock } from 'lucide-react';
+import { PhoneOutgoing, AlertTriangle } from 'lucide-react'; // Removed unused icons
 import { useToast } from '@/hooks/use-toast';
 import type { FASTStep } from '@/types';
 
-// Helper to map icon strings to actual components if needed, or use directly if passed
-const iconMap = {
-  Smile,
-  Users,
-  MessageSquare,
-  Clock,
-};
 
-interface InteractiveFASTTestClientProps {
-  dictionary: { // Define expected dictionary structure for this component
-    title?: string;
-    description?: string;
-    emergencyCallButton?: string;
-    emergencyCallMessage?: string;
-    emergencyCallToastTitle?: string;
-    fastSteps?: { // Assuming translations for steps might come from dictionary
-      F?: { title?: string; description?: string; checkItems?: string[]; details?: string };
-      A?: { title?: string; description?: string; checkItems?: string[]; details?: string };
-      S?: { title?: string; description?: string; checkItems?: string[]; details?: string };
-      T?: { title?: string; description?: string; checkItems?: string[]; details?: string };
-    }
-  };
-}
-
-export function InteractiveFASTTestClient({ dictionary }: InteractiveFASTTestClientProps) {
+// Removed dictionary prop and related logic
+export function InteractiveFASTTestClient() {
   const { toast } = useToast();
+
+  // Static text, previously from dictionary
+  const pageStaticText = {
+    title: "F.A.S.T. Stroke Test",
+    description: "Use the F.A.S.T. test to quickly check for common signs of a stroke. If you see any of these signs, call emergency services immediately.",
+    emergencyCallButton: "Call Emergency Services Now",
+    emergencyCallMessage: "Calling emergency services immediately is crucial. For now, please dial your local emergency number.",
+    emergencyCallToastTitle: "Emergency Action"
+  };
 
   const handleEmergencyCall = () => {
     toast({
-      title: dictionary.emergencyCallToastTitle || "Emergency Action",
-      description: dictionary.emergencyCallMessage || "Calling emergency services immediately is crucial. For now, please dial your local emergency number.",
+      title: pageStaticText.emergencyCallToastTitle,
+      description: pageStaticText.emergencyCallMessage,
       variant: "destructive",
     });
   };
   
-  // Merge default steps with translations if available
-  const fastTestSteps: FASTStep[] = defaultFastTestSteps.map(step => {
-    const translatedStep = dictionary.fastSteps?.[step.id];
-    return {
-      ...step,
-      title: translatedStep?.title || step.title,
-      description: translatedStep?.description || step.description,
-      checkItems: translatedStep?.checkItems || step.checkItems,
-      details: translatedStep?.details || step.details,
-      // Icon remains from constants for now, can be made configurable
-    };
-  });
-
-
   return (
     <Card className="shadow-lg">
       <CardHeader>
         <CardTitle className="text-2xl font-bold flex items-center">
           <AlertTriangle className="mr-2 h-6 w-6 text-destructive" />
-          {dictionary.title || "F.A.S.T. Stroke Test"}
+          {pageStaticText.title}
         </CardTitle>
         <CardDescription>
-          {dictionary.description || "Use the F.A.S.T. test to quickly check for common signs of a stroke. If you see any of these signs, call emergency services immediately."}
+          {pageStaticText.description}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <Accordion type="single" collapsible className="w-full space-y-4">
-          {fastTestSteps.map((step) => {
-            const IconComponent = step.icon || (() => null); // Fallback for icon
+          {fastTestSteps.map((step: FASTStep) => { // Using imported non-translated steps
+            const IconComponent = step.icon || (() => null);
             return (
               <AccordionItem value={step.id} key={step.id} className="border bg-card rounded-lg shadow-sm">
                 <AccordionTrigger className="p-6 text-lg font-semibold hover:no-underline">
@@ -100,10 +73,10 @@ export function InteractiveFASTTestClient({ dictionary }: InteractiveFASTTestCli
             variant="destructive"
             className="w-full max-w-md shadow-md hover:shadow-lg transition-shadow"
             onClick={handleEmergencyCall}
-            aria-label={dictionary.emergencyCallButton || "Call emergency services"}
+            aria-label={pageStaticText.emergencyCallButton}
           >
             <PhoneOutgoing className="mr-2 h-5 w-5" />
-            {dictionary.emergencyCallButton || "Call Emergency Services Now"}
+            {pageStaticText.emergencyCallButton}
           </Button>
           <p className="mt-3 text-sm text-muted-foreground">
             If you suspect a stroke, every second counts. Do not delay.

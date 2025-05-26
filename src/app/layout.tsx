@@ -5,8 +5,6 @@ import './globals.css';
 import { ThemeProvider } from '@/providers/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
 import { siteConfig } from '@/config/site';
-import type { Locale } from '@/types';
-import { getDictionary } from '@/lib/get-dictionary';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -18,46 +16,26 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
-// generateStaticParams should not be here as this layout doesn't have dynamic segments
-// export async function generateStaticParams() {
-//   return siteConfig.i18n.locales.map((locale) => ({ locale }));
-// }
-
-export async function generateMetadata({ params }: { params: { locale?: Locale } }): Promise<Metadata> {
-  // For the root layout, locale might not be in params until middleware redirects.
-  // Use defaultLocale for initial metadata.
-  const currentLocale = params?.locale || siteConfig.i18n.defaultLocale;
-  const dictionary = await getDictionary(currentLocale);
-  const appName = dictionary.appName || "NeuroCare";
-  const appDescription = dictionary.appDescription || siteConfig.description;
-  return {
-    title: {
-      default: appName,
-      template: `%s | ${appName}`,
-    },
-    description: appDescription,
-  };
-}
+export const metadata: Metadata = {
+  title: {
+    default: siteConfig.appName,
+    template: `%s | ${siteConfig.appName}`,
+  },
+  description: siteConfig.description,
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-  // params for RootLayout (app/layout.tsx) will be {} as it has no dynamic segments in its path.
-  // locale is determined by middleware and the [locale] segment for nested layouts/pages.
 }>) {
-  // The lang attribute for the root HTML tag should reflect the actual locale being rendered.
-  // Middleware ensures a locale prefix. For initial "/", use default.
-  // However, specific [locale] layout will override this for its segment.
-  // For the very first render before redirection, using defaultLocale is safest.
-  const currentLocale = siteConfig.i18n.defaultLocale;
   return (
-    <html lang={currentLocale} suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning> {/* Default lang "en" */}
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
-          enableSystem={false}
+          defaultTheme="light" // Reverted from system/dynamic
+          enableSystem={false} // Ensure system theme is not used
           disableTransitionOnChange
         >
           {children}

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { siteConfig } from '@/config/site';
 import { ThemeToggleButton } from './theme-toggle-button';
-import { LanguageSwitcher } from './language-switcher';
+// LanguageSwitcher removed
 import { Brain, Menu } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -15,37 +15,27 @@ import {
   SheetTrigger,
   SheetClose,
 } from '@/components/ui/sheet';
-import type { Locale, Dictionary, NavigationItem } from '@/types';
+import type { NavigationItem } from '@/types';
 
-interface HeaderProps {
-  currentLocale: Locale;
-  dictionary: Dictionary;
-}
-
-export function Header({ currentLocale, dictionary }: HeaderProps) {
+export function Header() {
   const pathname = usePathname();
-  const appName = dictionary.appName || "NeuroCare";
-  const navTranslations = dictionary.nav || {};
-  const langSwitcherTranslations = dictionary.languageSwitcher || {};
-  const toggleMenuText = langSwitcherTranslations.toggleMenu || "Toggle menu";
-
-  // Filter out sidebarNav items that don't have a valid translation key
-  const validSidebarNav = siteConfig.sidebarNav.filter(item => navTranslations[item.labelKey] || item.labelKey === 'dashboard'); // Ensure dashboard always shows if key missing
+  const appName = siteConfig.appName;
+  const navItems = siteConfig.sidebarNav;
+  const toggleMenuText = "Toggle menu"; // Static text
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2 sm:gap-4">
-          <Link href={`/${currentLocale}/dashboard`} className="flex items-center space-x-2">
+          <Link href="/dashboard" className="flex items-center space-x-2">
             <Brain className="h-6 w-6 text-primary" />
             <span className="hidden sm:inline-block font-bold">{appName}</span>
           </Link>
         </div>
 
-        {/* Desktop Navigation */}
         <nav className="hidden md:flex flex-1 items-center justify-center space-x-4 lg:space-x-6">
-          {validSidebarNav.map((item: NavigationItem) => {
-            const itemPath = `/${currentLocale}${item.href}`;
+          {navItems.map((item: NavigationItem) => {
+            const itemPath = item.href;
             const isActive = pathname === itemPath || (item.href !== '/dashboard' && pathname.startsWith(itemPath + '/'));
             return (
               <Link
@@ -58,16 +48,15 @@ export function Header({ currentLocale, dictionary }: HeaderProps) {
                     : "text-foreground/75 hover:text-foreground"
                 )}
               >
-                {navTranslations[item.labelKey] || item.labelKey.charAt(0).toUpperCase() + item.labelKey.slice(1) /* Fallback label */}
+                {item.label}
               </Link>
             );
           })}
         </nav>
 
         <div className="flex items-center space-x-2">
-          <LanguageSwitcher currentLocale={currentLocale} translations={langSwitcherTranslations} />
+          {/* LanguageSwitcher removed */}
           <ThemeToggleButton />
-          {/* Mobile Menu Button */}
           <div className="md:hidden">
             <Sheet>
               <SheetTrigger asChild>
@@ -78,7 +67,7 @@ export function Header({ currentLocale, dictionary }: HeaderProps) {
               </SheetTrigger>
               <SheetContent side="left" className="w-full max-w-xs p-6">
                  <div className="mb-6">
-                   <Link href={`/${currentLocale}/dashboard`} className="flex items-center space-x-2">
+                   <Link href="/dashboard" className="flex items-center space-x-2">
                      <Brain className="h-7 w-7 text-primary" />
                      <span className="text-lg font-semibold">
                        {appName}
@@ -86,8 +75,8 @@ export function Header({ currentLocale, dictionary }: HeaderProps) {
                    </Link>
                  </div>
                 <nav className="flex flex-col space-y-3">
-                  {validSidebarNav.map((item: NavigationItem) => {
-                     const itemPath = `/${currentLocale}${item.href}`;
+                  {navItems.map((item: NavigationItem) => {
+                     const itemPath = item.href;
                      const isActive = pathname === itemPath || (item.href !== '/dashboard' && pathname.startsWith(itemPath + '/'));
                     return (
                       <SheetClose asChild key={item.href}>
@@ -101,7 +90,7 @@ export function Header({ currentLocale, dictionary }: HeaderProps) {
                           )}
                         >
                           <item.icon className="mr-3 h-5 w-5 flex-shrink-0" />
-                          <span className="truncate">{navTranslations[item.labelKey] || item.labelKey.charAt(0).toUpperCase() + item.labelKey.slice(1)}</span>
+                          <span className="truncate">{item.label}</span>
                         </Link>
                       </SheetClose>
                     );

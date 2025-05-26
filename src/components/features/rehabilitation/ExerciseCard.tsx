@@ -9,16 +9,19 @@ import { ListChecks, PlayCircle } from 'lucide-react';
 
 interface ExerciseCardProps {
   exercise: Exercise;
-  dictionary: { // For potential translations within the card
-    instructionsTitle?: string;
-    watchVideoButton?: string;
-  }
+  // dictionary prop removed
 }
 
-export function ExerciseCard({ exercise, dictionary }: ExerciseCardProps) {
+export function ExerciseCard({ exercise }: ExerciseCardProps) {
   const handleWatchVideo = () => {
     const youtubeSearchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(exercise.name + " physical therapy exercise")}`;
     window.open(youtubeSearchUrl, '_blank', 'noopener,noreferrer');
+  };
+
+  // Static text, previously from dictionary
+  const cardStaticText = {
+    instructionsTitle: "Instructions:",
+    watchVideoButton: "Watch Video"
   };
 
   return (
@@ -42,7 +45,7 @@ export function ExerciseCard({ exercise, dictionary }: ExerciseCardProps) {
         <div>
           <h4 className="text-sm font-medium flex items-center mb-1">
             <ListChecks className="mr-2 h-4 w-4 text-primary" />
-            {dictionary.instructionsTitle || "Instructions:"}
+            {cardStaticText.instructionsTitle}
             </h4>
           <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1 pl-2">
             {exercise.instructions.map((instruction, index) => (
@@ -54,7 +57,7 @@ export function ExerciseCard({ exercise, dictionary }: ExerciseCardProps) {
       <CardFooter>
         <Button variant="outline" className="w-full" onClick={handleWatchVideo}>
           <PlayCircle className="mr-2 h-4 w-4" />
-          {dictionary.watchVideoButton || "Watch Video"}
+          {cardStaticText.watchVideoButton}
         </Button>
       </CardFooter>
     </Card>

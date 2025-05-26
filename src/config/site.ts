@@ -1,37 +1,35 @@
-import type { NavigationItem, Locale } from '@/types'; // Ensure Locale is imported
+
+import type { NavigationItem } from '@/types';
 import { LayoutDashboard, Activity, Hospital, Bike, Mic } from 'lucide-react';
 
 export const siteConfig = {
-  appNameKey: 'appName', // Using a key for app name for i18n
+  appName: 'NeuroCare', // Direct string
   description: 'A Comprehensive Stroke Awareness & Recovery Companion',
-  i18n: {
-    locales: ['en', 'te', 'hi', 'ur', 'ar', 'zh'] as const,
-    defaultLocale: 'en' as const,
-  },
+  // i18n configuration removed
   sidebarNav: [
     {
       href: '/dashboard',
-      labelKey: 'dashboard', // Simplified key, assuming 'nav.dashboard' structure in JSON
+      label: 'Dashboard', // Direct label
       icon: LayoutDashboard,
     },
     {
       href: '/fast-test',
-      labelKey: 'fastTest',
+      label: 'FAST Test', // Direct label
       icon: Activity,
     },
     {
       href: '/hospital-locator',
-      labelKey: 'nearbyHospitals',
+      label: 'Nearby Hospitals', // Direct label
       icon: Hospital,
     },
     {
       href: '/rehabilitation',
-      labelKey: 'rehabExercises',
+      label: 'Rehab Exercises', // Direct label
       icon: Bike,
     },
     {
       href: '/speech-therapy',
-      labelKey: 'speechTherapyAI',
+      label: 'Speech Therapy AI', // Direct label
       icon: Mic,
     },
   ] as NavigationItem[],
