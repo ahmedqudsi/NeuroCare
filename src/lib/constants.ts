@@ -1,5 +1,5 @@
 
-import type { Quote, Exercise, Hospital, FASTStep, HealthcareService, Nurse } from '@/types';
+import type { Quote, Exercise, Hospital, FASTStep, HealthcareService, Nurse, Doctor } from '@/types';
 import { Smile, Users, MessageSquare, Clock, UserRoundPlus, Home, Video, Truck, TestTube2 } from 'lucide-react';
 
 export const motivationalQuotes: Quote[] = [
@@ -243,7 +243,6 @@ export const sampleHospitals: Hospital[] = [
   }
 ];
 
-// New constants for Healthcare Services
 export const healthcareServicesList: HealthcareService[] = [
   {
     id: 'home-nurse-booking',
@@ -375,5 +374,69 @@ export const sampleNurses: Nurse[] = [
     imageUrl: 'https://placehold.co/300x300.png',
     imageHint: 'senior care nurse',
     bio: 'Mohan provides general nursing care and companionship for the elderly, ensuring medication adherence and daily well-being checks.'
+  }
+];
+
+// Sample Doctors Data
+export const sampleDoctors: Doctor[] = [
+  {
+    id: 'doc001',
+    fullName: 'Dr. Anita Sharma',
+    specialty: 'General Physician',
+    yearsOfExperience: 15,
+    languagesSpoken: ['English', 'Hindi', 'Telugu'],
+    ratings: 4.7,
+    verifiedLicense: true,
+    profilePictureUrl: 'https://placehold.co/300x300.png',
+    imageHint: 'female doctor smiling',
+    locationDescription: 'Serves Mehdipatnam, Tolichowki, and Langar Houz.',
+    consultationFee: 800,
+    availability: 'Mon-Sat, 9am-1pm & 4pm-7pm',
+    bio: 'Dr. Sharma is a highly experienced GP focusing on family health and chronic disease management. Known for her compassionate approach.'
+  },
+  {
+    id: 'doc002',
+    fullName: 'Dr. Vikram Singh Rathore',
+    specialty: 'Neurologist',
+    yearsOfExperience: 12,
+    languagesSpoken: ['English', 'Hindi'],
+    ratings: 4.9,
+    verifiedLicense: true,
+    profilePictureUrl: 'https://placehold.co/300x300.png',
+    imageHint: 'male doctor professional',
+    locationDescription: 'Available for home visits across Hyderabad (central & west zones).',
+    consultationFee: 1500,
+    availability: 'Mon, Wed, Fri, 10am-4pm (by appointment)',
+    bio: 'Specializes in stroke recovery, epilepsy, and movement disorders. Committed to providing comprehensive neurological care at home.'
+  },
+  {
+    id: 'doc003',
+    fullName: 'Dr. Priya Reddy',
+    specialty: 'Geriatrician',
+    yearsOfExperience: 10,
+    languagesSpoken: ['English', 'Telugu'],
+    ratings: 4.6,
+    verifiedLicense: true,
+    profilePictureUrl: 'https://placehold.co/300x300.png',
+    imageHint: 'female doctor attentive',
+    locationDescription: 'Focuses on elderly care in Ameerpet, Banjara Hills, and Jubilee Hills.',
+    consultationFee: 1000,
+    availability: 'Tue, Thu, Sat, 11am-5pm',
+    bio: 'Dr. Reddy is passionate about elderly care, providing holistic assessments and management plans for age-related health issues.'
+  },
+  {
+    id: 'doc004',
+    fullName: 'Dr. Arjun Mehta',
+    specialty: 'Cardiologist',
+    yearsOfExperience: 18,
+    languagesSpoken: ['English', 'Hindi', 'Gujarati'],
+    ratings: 4.8,
+    verifiedLicense: false, // Example of an unverified doctor
+    profilePictureUrl: 'https://placehold.co/300x300.png',
+    imageHint: 'male doctor serious',
+    locationDescription: 'Pan-Hyderabad coverage for emergency cardiac consultations.',
+    consultationFee: 2000,
+    availability: 'Available on call for critical cases.',
+    bio: 'Experienced cardiologist providing expert consultations for heart-related conditions. (Note: License verification pending)'
   }
 ];

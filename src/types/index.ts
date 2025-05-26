@@ -43,7 +43,6 @@ export type FASTStep = {
   icon?: LucideIcon;
 };
 
-// New Types for Healthcare Services
 export interface HealthcareService {
   id: string;
   title: string;
@@ -72,4 +71,32 @@ export type NurseBookingFormData = {
   bookingTime: string; // e.g., "10:00 AM - 12:00 PM"
   address: string;
   notes?: string;
+};
+
+// Types for Doctor Visits
+export interface Doctor {
+  id: string;
+  fullName: string;
+  specialty: string;
+  yearsOfExperience: number;
+  languagesSpoken: string[];
+  ratings: number; // e.g., 4.5
+  verifiedLicense: boolean;
+  profilePictureUrl: string;
+  imageHint?: string;
+  locationDescription: string; // e.g., "Serves Mehdipatnam and surrounding areas within a 5km radius"
+  consultationFee: number; // in INR
+  availability: string; // General availability, e.g., "Mon-Fri, 10am-5pm"
+  bio?: string;
+}
+
+export type DoctorBookingFormData = {
+  patientName: string;
+  patientAge: number;
+  patientGender: 'male' | 'female' | 'other';
+  symptoms: string;
+  preferredDate: Date;
+  preferredTime: string; // e.g., "10:00 AM"
+  visitAddress: string;
+  // selectedDoctorId will be handled implicitly or explicitly later
 };
