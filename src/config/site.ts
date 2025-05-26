@@ -1,6 +1,6 @@
 
 import type { NavigationItem } from '@/types';
-import { LayoutDashboard, Activity, Hospital, Bike, Mic } from 'lucide-react';
+import { LayoutDashboard, Activity, Hospital, Bike } from 'lucide-react'; // Removed Mic
 
 export const siteConfig = {
   appName: 'NeuroCare', // Direct string
@@ -27,11 +27,7 @@ export const siteConfig = {
       label: 'Rehab Exercises', // Direct label
       icon: Bike,
     },
-    {
-      href: '/speech-therapy',
-      label: 'Speech Therapy AI', // Direct label
-      icon: Mic,
-    },
+    // Removed Speech Therapy AI entry
   ] as NavigationItem[],
 };
 
