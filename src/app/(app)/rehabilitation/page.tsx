@@ -18,7 +18,7 @@ export default async function RehabilitationPage() {
 
   return (
     <div className="space-y-8">
-      <div>
+      <div className="animate-in fade-in slide-in-from-top-8 duration-700">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">
           {pageStaticText.title}
         </h1>
@@ -27,17 +27,19 @@ export default async function RehabilitationPage() {
         </p>
       </div>
       
-      {rehabilitationExercises.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {rehabilitationExercises.map((exercise) => (
-            <ExerciseCard key={exercise.id} exercise={exercise} /> // dictionary prop removed
-          ))}
-        </div>
-      ) : (
-        <p className="text-center text-muted-foreground">
-          {pageStaticText.noExercises}
-        </p>
-      )}
+      <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300">
+        {rehabilitationExercises.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {rehabilitationExercises.map((exercise) => (
+              <ExerciseCard key={exercise.id} exercise={exercise} /> // dictionary prop removed
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-muted-foreground">
+            {pageStaticText.noExercises}
+          </p>
+        )}
+      </div>
     </div>
   );
 }
