@@ -52,7 +52,7 @@ export default async function DashboardPage() {
         <MotivationalQuoteCard quote={randomQuote} />
       </div>
 
-      <Card className="animate-in fade-in-0 slide-in-from-bottom-8 duration-700 delay-1000">
+      <Card className="animate-in fade-in-0 slide-in-from-bottom-8 duration-700 delay-600">
         <CardHeader>
           <CardTitle className="flex items-center">
              <Lightbulb className="mr-2 h-5 w-5 text-accent" />
