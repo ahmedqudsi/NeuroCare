@@ -10,14 +10,15 @@
   "languageSwitcher": {
     "changeLanguage": "Change language",
     "en": "English",
-    "te": "తెలుగు (Telugu)",
-    "hi": "हिन्दी (Hindi)",
-    "ur": "اردو (Urdu)",
-    "ar": "العربية (Arabic)",
-    "zh": "中文 (Chinese)"
+    "te": "Telugu",
+    "hi": "Hindi",
+    "ur": "Urdu",
+    "ar": "Arabic",
+    "zh": "Chinese",
+    "toggleMenu": "Toggle menu"
   },
   "dashboard": {
-    "welcome": "Welcome to {appName}",
+    "welcome": "Welcome to NeuroCare",
     "description": "Your companion for stroke awareness and recovery."
   }
 }

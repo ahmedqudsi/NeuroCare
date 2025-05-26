@@ -1,5 +1,5 @@
 // src/lib/get-dictionary.ts
-import 'server-only'; // Ensures this is only run on the server
+// import 'server-only'; // Removed to allow client-side usage for dynamic JSON imports
 import type { siteConfig } from '@/config/site';
 
 type Locale = typeof siteConfig.i18n.locales[number];
