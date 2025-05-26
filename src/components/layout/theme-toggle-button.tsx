@@ -20,15 +20,17 @@ export function ThemeToggleButton() {
 
   if (!mounted) {
     // Render a placeholder or null until the theme is determined client-side
+    // It's good practice to show an icon that matches the default theme or a neutral one.
+    // Assuming default is light, we can show Sun initially.
     return <Button variant="outline" size="icon" disabled><Sun className="h-[1.2rem] w-[1.2rem]" /></Button>;
   }
 
   return (
     <Button variant="outline" size="icon" onClick={toggleTheme} aria-label="Toggle theme">
       {theme === "dark" ? (
-        <Sun className="h-[1.2rem] w-[1.2rem] transition-all" />
+        <Moon className="h-[1.2rem] w-[1.2rem] transition-all" /> 
       ) : (
-        <Moon className="h-[1.2rem] w-[1.2rem] transition-all" />
+        <Sun className="h-[1.2rem] w-[1.2rem] transition-all" />
       )}
       <span className="sr-only">Toggle theme</span>
     </Button>
