@@ -8,5 +8,5 @@ import { redirect } from 'next/navigation';
 export default function HomePage() {
   // Redirect to the default locale's dashboard or root.
   // Middleware should handle this, but as a fallback:
-  redirect(`/${siteConfig.i18n.defaultLocale}`);
+  redirect(`/${siteConfig.i18n.defaultLocale}/dashboard`);
 }
