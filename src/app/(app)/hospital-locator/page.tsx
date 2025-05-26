@@ -17,7 +17,7 @@ export default function HospitalLocatorPage() {
   // Static text, previously from dictionary
   const pageStaticText = {
     title: "Find Nearby Hospitals",
-    description: "Locate medical facilities equipped for stroke care. (Sample data shown)",
+    description: "Locate medical facilities equipped for stroke care.",
     searchPlaceholder: "Enter hospital name or address...",
     searchButton: "Search",
     noResults: "No hospitals found matching your search criteria. Please try a different term or clear your search.",
