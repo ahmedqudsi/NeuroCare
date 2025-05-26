@@ -40,9 +40,12 @@ export default async function DashboardPage() {
           <span className="text-primary animate-pulse">{appName}</span>
           <Brain className="inline-block h-10 w-10 ml-2 text-primary animate-pulse" />
         </h1>
-        <p className="mt-2 text-lg text-muted-foreground animate-in fade-in-0 slide-in-from-top-10 duration-700 delay-200">
-          {pageTranslations.description}
-        </p>
+        {/* Marquee container */}
+        <div className="w-full overflow-hidden mt-2">
+          <p className="text-lg text-muted-foreground whitespace-nowrap animate-marquee-to-left">
+            {pageTranslations.description}
+          </p>
+        </div>
       </div>
       
       <div className="animate-in fade-in-0 slide-in-from-left-8 duration-700 delay-400">
