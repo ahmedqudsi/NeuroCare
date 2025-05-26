@@ -66,6 +66,34 @@ export const rehabilitationExercises: Exercise[] = [
     ],
     videoUrl: `https://www.youtube.com/results?search_query=${encodeURIComponent('Finger Taps stroke rehabilitation exercise guide')}`,
   },
+  {
+    id: '5',
+    name: 'Seated Trunk Twists',
+    description: 'Improves core strength and flexibility of the spine.',
+    instructions: [
+      'Sit tall in a chair with your feet flat on the floor and knees bent at 90 degrees.',
+      'Place your hands on your shoulders or across your chest.',
+      'Slowly twist your upper body to one side as far as comfortable, keeping your hips stable.',
+      'Hold for 2-3 seconds.',
+      'Return to the center and then twist to the other side.',
+      'Repeat 10-15 times to each side.'
+    ],
+    videoUrl: `https://www.youtube.com/results?search_query=${encodeURIComponent('Seated Trunk Twists stroke rehabilitation exercise guide')}`,
+  },
+  {
+    id: '6',
+    name: 'Ankle Pumps',
+    description: 'Helps improve circulation and range of motion in the ankles.',
+    instructions: [
+      'Sit or lie down with your legs extended.',
+      'Gently point your toes away from you (plantarflexion).',
+      'Hold for 2-3 seconds.',
+      'Then, pull your toes towards you, flexing your ankle (dorsiflexion).',
+      'Hold for 2-3 seconds.',
+      'Repeat 15-20 times for each ankle.'
+    ],
+    videoUrl: `https://www.youtube.com/results?search_query=${encodeURIComponent('Ankle Pumps stroke rehabilitation exercise guide')}`,
+  }
 ];
 
 export const fastTestSteps: FASTStep[] = [
@@ -214,4 +242,3 @@ export const sampleHospitals: Hospital[] = [
     imageHint: 'ganga ram hospital delhi',
   }
 ];
-
