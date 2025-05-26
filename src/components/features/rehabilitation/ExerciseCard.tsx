@@ -12,23 +12,24 @@ interface ExerciseCardProps {
 
 export function ExerciseCard({ exercise }: ExerciseCardProps) {
   const handleWatchVideo = () => {
-    const youtubeSearchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(exercise.name + " physical therapy exercise")}`;
+    // Refined search query for better specificity
+    const searchQuery = `${exercise.name} stroke rehabilitation exercise guide`;
+    const youtubeSearchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(searchQuery)}`;
     window.open(youtubeSearchUrl, '_blank', 'noopener,noreferrer');
   };
 
   // Static text, previously from dictionary
   const cardStaticText = {
     instructionsTitle: "Instructions:",
-    watchVideoButton: "Watch Video"
+    watchVideoButton: "Watch Video Guide" // Updated button text slightly
   };
 
   return (
     <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col">
-      {/* Replace Image with Play icon area */}
       <div 
         className="relative w-full h-48 bg-muted flex items-center justify-center cursor-pointer hover:bg-accent/10 transition-colors group"
         onClick={handleWatchVideo}
-        aria-label={`Watch video for ${exercise.name}`}
+        aria-label={`Watch video guide for ${exercise.name}`}
       >
         <Play className="h-20 w-20 text-primary group-hover:scale-110 transition-transform duration-200" fill="currentColor" />
       </div>
