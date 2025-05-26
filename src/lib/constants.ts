@@ -12,9 +12,6 @@ export const motivationalQuotes: Quote[] = [
   { id: '7', text: "Strength does not come from physical capacity. It comes from an indomitable will.", author: "Mahatma Gandhi" }
 ];
 
-// Placeholder video URL - replace with actual relevant videos
-const placeholderVideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"; // A generic, safe placeholder
-
 export const rehabilitationExercises: Exercise[] = [
   {
     id: '1',
@@ -29,7 +26,7 @@ export const rehabilitationExercises: Exercise[] = [
     ],
     imageUrl: 'https://placehold.co/600x400.png',
     imageHint: 'arm exercise',
-    videoUrl: placeholderVideoUrl,
+    videoUrl: `https://www.youtube.com/results?search_query=${encodeURIComponent('Arm Raises (Shoulder Flexion) stroke rehabilitation exercise guide')}`,
   },
   {
     id: '2',
@@ -45,7 +42,7 @@ export const rehabilitationExercises: Exercise[] = [
     ],
     imageUrl: 'https://placehold.co/600x400.png',
     imageHint: 'wrist exercise',
-    videoUrl: placeholderVideoUrl,
+    videoUrl: `https://www.youtube.com/results?search_query=${encodeURIComponent('Wrist Bends (Wrist Flexion/Extension) stroke rehabilitation exercise guide')}`,
   },
   {
     id: '3',
@@ -60,7 +57,7 @@ export const rehabilitationExercises: Exercise[] = [
     ],
     imageUrl: 'https://placehold.co/600x400.png',
     imageHint: 'leg exercise',
-    videoUrl: placeholderVideoUrl,
+    videoUrl: `https://www.youtube.com/results?search_query=${encodeURIComponent('Sit to Stand stroke rehabilitation exercise guide')}`,
   },
   {
     id: '4',
@@ -75,7 +72,7 @@ export const rehabilitationExercises: Exercise[] = [
     ],
     imageUrl: 'https://placehold.co/600x400.png',
     imageHint: 'finger exercise',
-    videoUrl: placeholderVideoUrl,
+    videoUrl: `https://www.youtube.com/results?search_query=${encodeURIComponent('Finger Taps stroke rehabilitation exercise guide')}`,
   },
 ];
 
@@ -137,7 +134,7 @@ export const sampleHospitals: Hospital[] = [
   {
     id: '3',
     name: 'Sarojini Devi Eye Hospital',
-    address: 'Mehdipatnam Main Rd, Humayun Nagar, Hyderabad, Telangana 500028, India',
+    address: '7VPC+J6P, Mehdipatnam Main Rd, Humayun Nagar, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2334 0119',
     services: ['Specialized Eye Care', 'Emergency Eye Services', 'Outpatient Department'],
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Sarojini_Devi_Eye_Hospital_Block.JPG/640px-Sarojini_Devi_Eye_Hospital_Block.JPG',
@@ -146,11 +143,10 @@ export const sampleHospitals: Hospital[] = [
    {
     id: '4',
     name: 'Ayaan Hospital',
-    address: 'Plot No. 12-2-417/A/2, Subhash Chandra Bose Rd, near NMDC, Gudimalkapur, Mehdipatnam, Hyderabad, Telangana 500028, India',
+    address: 'Plot No. 12-2-417/A/2, Main Road, beside Subhash Chandra Bose Statue, near NMDC, Gudimalkapur, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 72073 57861',
     services: ['Multi-Speciality Services', 'Intensive Care Unit', 'Surgical Facilities'],
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/KIMS_hospital_Secunderabad.jpg/640px-KIMS_hospital_Secunderabad.jpg',
     imageHint: 'multi-speciality hospital',
   },
 ];
-
