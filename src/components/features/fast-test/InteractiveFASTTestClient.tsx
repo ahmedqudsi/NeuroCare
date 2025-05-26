@@ -35,10 +35,10 @@ export function InteractiveFASTTestClient() {
   };
 
   return (
-    <Card className="shadow-lg">
+    <Card className="shadow-lg animate-in fade-in slide-in-from-top-8 duration-700">
       <CardHeader>
         <CardTitle className="text-2xl font-bold flex items-center">
-          <AlertTriangle className="mr-2 h-10 w-10 text-destructive animate-pulse" /> {/* Increased icon size */}
+          <AlertTriangle className="mr-2 h-10 w-10 text-destructive animate-pulse" />
           {pageStaticText.title}
         </CardTitle>
         <CardDescription>
@@ -46,14 +46,18 @@ export function InteractiveFASTTestClient() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Accordion type="single" collapsible className="w-full space-y-4">
+        <Accordion 
+          type="single" 
+          collapsible 
+          className="w-full space-y-4 animate-in fade-in delay-300 duration-700"
+        >
           {fastTestSteps.map((step: FASTStep) => {
             const IconComponent = step.icon || (() => null);
             return (
               <AccordionItem
                 value={step.id}
                 key={step.id}
-                className="border bg-card rounded-lg shadow-sm transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-[1.02]" /* Increased hover effect */
+                className="border bg-card rounded-lg shadow-sm transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-[1.02]"
               >
                 <AccordionTrigger className="p-6 text-lg font-semibold hover:no-underline">
                   <div className="flex items-center">
@@ -74,11 +78,11 @@ export function InteractiveFASTTestClient() {
             );
           })}
         </Accordion>
-        <div className="mt-8 text-center">
+        <div className="mt-8 text-center animate-in fade-in slide-in-from-bottom-8 delay-500 duration-700">
           <Button
             size="lg"
             variant="destructive"
-            className="w-full max-w-md shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 ease-in-out transform" /* Added hover effect */
+            className="w-full max-w-md shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 ease-in-out transform"
             onClick={handleEmergencyCall}
             aria-label={pageStaticText.emergencyCallButton}
           >
