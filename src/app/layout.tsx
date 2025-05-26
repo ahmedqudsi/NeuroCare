@@ -22,9 +22,10 @@ export async function generateStaticParams() {
   return siteConfig.i18n.locales.map((locale) => ({ locale }));
 }
 
-export async function generateMetadata({ params }: { params: { locale: Locale } }): Promise<Metadata> {
-  const dictionary = await getDictionary(params.locale);
-  const appName = dictionary.appName || "NeuroCare";
+export async function generateMetadata({ params }: { params: { locale?: Locale } }): Promise<Metadata> {
+  const currentLocale = params?.locale || siteConfig.i18n.defaultLocale;
+  const dictionary = await getDictionary(currentLocale);
+  const appName = dictionary.appName || "NeuroCare"; // Fallback if not in dictionary
   const appDescription = dictionary.appDescription || siteConfig.description;
   return {
     title: {
@@ -40,15 +41,16 @@ export default function RootLayout({
   params,
 }: Readonly<{
   children: React.ReactNode;
-  params: { locale: Locale };
+  params: { locale?: Locale }; // locale can be undefined initially for root "/"
 }>) {
+  const currentLocale = params?.locale || siteConfig.i18n.defaultLocale;
   return (
-    <html lang={params.locale} suppressHydrationWarning>
+    <html lang={currentLocale} suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
-          enableSystem={false}
+          defaultTheme="light" // Changed from "system"
+          enableSystem={false} // Explicitly false as "System" option was removed
           disableTransitionOnChange
         >
           {children}
