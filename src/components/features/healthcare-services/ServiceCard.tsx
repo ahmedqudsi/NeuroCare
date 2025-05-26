@@ -1,6 +1,4 @@
 
-"use client";
-
 import type { HealthcareService } from '@/types';
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
