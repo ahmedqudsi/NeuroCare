@@ -42,7 +42,7 @@ export default async function DashboardPage() {
         </h1>
         {/* Marquee container */}
         <div className="w-full overflow-hidden mt-2">
-          <p className="text-lg text-muted-foreground whitespace-nowrap animate-marquee-to-left">
+          <p className="text-lg text-muted-foreground whitespace-nowrap animate-marquee-to-right">
             {pageTranslations.description}
           </p>
         </div>
