@@ -20,9 +20,7 @@ export default function HospitalLocatorPage() {
     description: "Locate medical facilities equipped for stroke care.",
     searchPlaceholder: "Enter hospital name or address...",
     searchButton: "Search",
-    noResults: "No hospitals found matching your search criteria. Please try a different term or clear your search.",
-    noteTitle: "Note:",
-    noteContent: "This feature searches through sample hospital data. In an emergency, always call your local emergency number."
+    noResults: "No hospitals found matching your search criteria. Please try a different term or clear your search."
   };
 
 
@@ -79,9 +77,6 @@ export default function HospitalLocatorPage() {
         </p>
       )}
       
-      <p className="text-center text-sm text-muted-foreground mt-8">
-        <strong>{pageStaticText.noteTitle}</strong> {pageStaticText.noteContent}
-      </p>
     </div>
   );
 }
