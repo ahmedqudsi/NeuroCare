@@ -202,7 +202,7 @@ export function HomeNurseBookingForm({ nurses }: HomeNurseBookingFormProps) {
             control={form.control}
             name="bookingTime"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="flex flex-col"> {/* Added flex flex-col here */}
                 <FormLabel>Preferred Time Slot</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>

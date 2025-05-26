@@ -2,7 +2,8 @@
 import { MotivationalQuoteCard } from '@/components/features/common/MotivationalQuoteCard';
 import { motivationalQuotes } from '@/lib/constants';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Lightbulb, Brain } from 'lucide-react'; 
+import { Lightbulb, Brain, Users, ShieldCheck, Clock, Heart, Activity } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { siteConfig } from '@/config/site'; 
 import type { Metadata } from 'next';
 
@@ -34,22 +35,63 @@ export default async function DashboardPage() {
 
   return (
     <div className="space-y-8">
-      <div className="text-center md:text-left">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl animate-in fade-in slide-in-from-top-8 duration-700">
-          {pageTranslations.welcome}{' '}
-          <span className="text-primary animate-pulse">{appName}</span>
-          <Brain className="inline-block h-10 w-10 ml-2 text-primary animate-pulse" />
-        </h1>
-        {/* Marquee container */}
-        <div className="w-full overflow-hidden mt-2">
-          <p className="text-lg text-muted-foreground whitespace-nowrap animate-marquee-to-right">
-            {pageTranslations.description}
-          </p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 animate-in fade-in slide-in-from-top-8 duration-700">
+        {/* Left Side (Main Section) */}
+        <div className="space-y-4 mt-4">
+          <h1 className="text-6xl font-bold tracking-tight text-foreground">
+            <span>Your Digital Ally in</span>
+            <span className="block text-primary">Brain Stroke Recovery</span>
+          </h1>
+          <h2 className="text-lg text-muted-foreground">NeuroCare: Revolutionizing Stroke Recovery</h2>
+          <Button className="mt-8">Explore Now</Button>
+
+          {/* Additional Highlights */}
+          <div className="mt-4 flex justify-center gap-8 text-muted-foreground">
+            <div className="flex items-center space-x-2">
+              <Brain className="h-5 w-5 text-primary" />
+              <span>Cognitive Recovery Support</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Heart className="h-5 w-5 text-primary" />
+              <span>24/7 Virtual Assistance</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Activity className="h-5 w-5 text-primary" />
+              <span>Progress Tracking Tools</span>
+            </div>
+          </div>
         </div>
-      </div>
-      
-      <div className="animate-in fade-in-0 slide-in-from-left-8 duration-700 delay-400">
-        <MotivationalQuoteCard quote={randomQuote} />
+
+        {/* Right Side (Informational Section) */}
+        <div className="space-y-4">
+          <Card className="hover:scale-105 hover:bg-accent-foreground/10 transition-transform duration-200">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-amber-500">Global Impact</CardTitle>
+              <Users className="h-4 w-4 text-amber-500" />
+            </CardHeader>
+            <CardContent>
+              <p>15 million people suffer a stroke globally each year</p>
+            </CardContent>
+          </Card>
+          <Card className="hover:scale-105 hover:bg-accent-foreground/10 transition-transform duration-200">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-amber-500">Prevention is Possible</CardTitle>
+              <ShieldCheck className="h-4 w-4 text-amber-500" />
+            </CardHeader>
+            <CardContent>
+              <p>80% of strokes are preventable</p>
+            </CardContent>
+          </Card>
+          <Card className="hover:scale-105 hover:bg-accent-foreground/10 transition-transform duration-200">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-amber-500">The Golden Window</CardTitle>
+              <Clock className="h-4 w-4 text-amber-500" />
+            </CardHeader>
+            <CardContent>
+              <p>The first 3 months post-stroke are most critical for recovery</p>
+            </CardContent>
+          </Card>
+        </div>
       </div>
 
       <Card className="animate-in fade-in-0 slide-in-from-bottom-8 duration-700 delay-600">
