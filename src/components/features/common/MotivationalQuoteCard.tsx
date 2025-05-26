@@ -17,7 +17,7 @@ export function MotivationalQuoteCard({ quote }: MotivationalQuoteCardProps) {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <blockquote className="text-lg italic group-hover:scale-102 transform transition-transform duration-200 ease-in-out origin-center">
+        <blockquote className="text-lg italic group-hover:scale-[1.03] transform transition-transform duration-200 ease-in-out origin-center">
           "{quote.text}"
         </blockquote>
       </CardContent>
