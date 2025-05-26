@@ -40,7 +40,7 @@ export default async function DashboardPage() {
         <div className="space-y-4 mt-4">
           <h1 className="text-6xl font-bold tracking-tight text-foreground">
             <span>Your Digital Ally in </span>
-            <span className="text-primary animate-pulse whitespace-nowrap">Brain Stroke Recovery</span>
+            <span className="text-primary animate-pulse">Brain Stroke Recovery</span>
              <Brain className="inline-block ml-2 h-10 w-10 text-primary animate-pulse" />
           </h1>
           <h2 className="text-lg text-muted-foreground">
