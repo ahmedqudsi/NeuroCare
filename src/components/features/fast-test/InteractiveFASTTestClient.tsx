@@ -17,7 +17,7 @@ export function InteractiveFASTTestClient() {
   const pageStaticText = {
     title: "F.A.S.T. Stroke Test",
     description: "Use the F.A.S.T. test to quickly check for common signs of a stroke. If you see any of these signs, call emergency services immediately.",
-    emergencyCallButton: "Emergency Services", // <-- Updated text here
+    emergencyCallButton: "Emergency Services",
     emergencyCallMessage: "Attempting to dial 112. If the call doesn't start, please dial your local emergency number manually.",
     emergencyCallToastTitle: "Emergency Action"
   };
@@ -38,7 +38,7 @@ export function InteractiveFASTTestClient() {
     <Card className="shadow-lg">
       <CardHeader>
         <CardTitle className="text-2xl font-bold flex items-center">
-          <AlertTriangle className="mr-2 h-6 w-6 text-destructive" />
+          <AlertTriangle className="mr-2 h-6 w-6 text-destructive animate-pulse" />
           {pageStaticText.title}
         </CardTitle>
         <CardDescription>
@@ -50,7 +50,11 @@ export function InteractiveFASTTestClient() {
           {fastTestSteps.map((step: FASTStep) => { 
             const IconComponent = step.icon || (() => null);
             return (
-              <AccordionItem value={step.id} key={step.id} className="border bg-card rounded-lg shadow-sm">
+              <AccordionItem 
+                value={step.id} 
+                key={step.id} 
+                className="border bg-card rounded-lg shadow-sm transition-all duration-300 ease-in-out hover:shadow-md hover:scale-[1.01]"
+              >
                 <AccordionTrigger className="p-6 text-lg font-semibold hover:no-underline">
                   <div className="flex items-center">
                     <IconComponent className="mr-3 h-7 w-7 text-primary" />
