@@ -26,7 +26,7 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
   };
 
   return (
-    <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+    <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-full">
       {hospital.imageUrl && (
          <div className="relative w-full h-48 bg-secondary">
             <Image
@@ -44,7 +44,7 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
           <MapPin className="mr-2 h-4 w-4" /> {hospital.address}
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-3">
+      <CardContent className="space-y-3 flex-grow">
         <div className="flex items-center">
           <Phone className="mr-2 h-4 w-4 text-primary" />
           <span>{hospital.phone}</span>
@@ -62,7 +62,11 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
         </div>
       </CardContent>
       <CardFooter>
-        <Button variant="outline" className="w-full" onClick={handleGetDirections}>
+        <Button 
+          variant="outline" 
+          className="w-full transition-all duration-200 ease-in-out hover:bg-accent hover:text-accent-foreground hover:scale-[1.03] transform" 
+          onClick={handleGetDirections}
+        >
           <ExternalLink className="mr-2 h-4 w-4" />
           {cardStaticText.getDirectionsButton}
         </Button>
@@ -70,3 +74,4 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
     </Card>
   );
 }
+
