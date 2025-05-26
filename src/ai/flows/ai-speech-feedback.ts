@@ -34,6 +34,7 @@ export async function aiSpeechFeedback(input: AISpeechFeedbackInput): Promise<AI
 
 const prompt = ai.definePrompt({
   name: 'aiSpeechFeedbackPrompt',
+  model: 'googleai/gemini-1.5-flash-latest', // Added model specification here
   input: {schema: AISpeechFeedbackInputSchema},
   output: {schema: AISpeechFeedbackOutputSchema},
   prompt: `You are a speech therapist specializing in stroke rehabilitation.
