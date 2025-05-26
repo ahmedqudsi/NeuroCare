@@ -24,8 +24,6 @@ export const rehabilitationExercises: Exercise[] = [
       'Slowly lower your arm back down.',
       'Repeat 10-15 times.'
     ],
-    imageUrl: 'https://placehold.co/600x400.png',
-    imageHint: 'arm exercise',
     videoUrl: `https://www.youtube.com/results?search_query=${encodeURIComponent('Arm Raises (Shoulder Flexion) stroke rehabilitation exercise guide')}`,
   },
   {
@@ -40,8 +38,6 @@ export const rehabilitationExercises: Exercise[] = [
       'Turn your palm down and repeat, bending your wrist upwards.',
       'Repeat each direction 10-15 times.'
     ],
-    imageUrl: 'https://placehold.co/600x400.png',
-    imageHint: 'wrist exercise',
     videoUrl: `https://www.youtube.com/results?search_query=${encodeURIComponent('Wrist Bends (Wrist Flexion/Extension) stroke rehabilitation exercise guide')}`,
   },
   {
@@ -55,8 +51,6 @@ export const rehabilitationExercises: Exercise[] = [
       'Slowly lower yourself back to a seated position.',
       'Repeat 10-15 times.'
     ],
-    imageUrl: 'https://placehold.co/600x400.png',
-    imageHint: 'leg exercise',
     videoUrl: `https://www.youtube.com/results?search_query=${encodeURIComponent('Sit to Stand stroke rehabilitation exercise guide')}`,
   },
   {
@@ -70,8 +64,6 @@ export const rehabilitationExercises: Exercise[] = [
       'Alternatively, tap each finger on the table surface.',
       'Repeat 10-15 cycles.'
     ],
-    imageUrl: 'https://placehold.co/600x400.png',
-    imageHint: 'finger exercise',
     videoUrl: `https://www.youtube.com/results?search_query=${encodeURIComponent('Finger Taps stroke rehabilitation exercise guide')}`,
   },
 ];
@@ -91,7 +83,7 @@ export const fastTestSteps: FASTStep[] = [
     description: 'Is one arm weak or numb?',
     checkItems: ['Ask the person to raise both arms.', 'Does one arm drift downward or is unable to rise?'],
     details: 'Sudden weakness or numbness in one arm is another key indicator. If one arm drifts down when both are raised, it could signal a stroke.',
-    icon: Users, 
+    icon: Users,
   },
   {
     id: 'S',
@@ -115,38 +107,56 @@ export const fastTestSteps: FASTStep[] = [
 export const sampleHospitals: Hospital[] = [
   {
     id: '1',
-    name: 'Olive Hospital',
+    name: 'Olive Hospital - Hyderabad',
     address: '9-4-87/A/23 & 24, Salarjung Colony, Inner Ring Rd, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2351 5000',
     services: ['Multi-Speciality Care', 'Emergency Services', 'Diagnostics & Imaging', 'Stroke Unit'],
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Apollo_hospital_hyderabad.jpg/640px-Apollo_hospital_hyderabad.jpg',
-    imageHint: 'modern hospital',
+    imageHint: 'modern hospital hyderabad',
   },
   {
     id: '2',
-    name: 'Premier Hospital',
+    name: 'Premier Hospital - Hyderabad',
     address: '#12-2-823/A/25, St Ann\'s School Rd, Santosh Nagar, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2353 8686',
     services: ['General Medicine', 'Orthopedics', 'Neurology Consultations', '24/7 Pharmacy'],
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Fortis_Hospital_Mohali_India.jpg/640px-Fortis_Hospital_Mohali_India.jpg',
-    imageHint: 'hospital building',
+    imageHint: 'hospital building hyderabad',
   },
   {
     id: '3',
-    name: 'Sarojini Devi Eye Hospital',
-    address: '7VPC+J6P, Mehdipatnam Main Rd, Humayun Nagar, Hyderabad, Telangana 500028, India',
+    name: 'Sarojini Devi Eye Hospital - Hyderabad',
+    address: '7VPC+J6P, Humayun Nagar, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2334 0119',
     services: ['Specialized Eye Care', 'Emergency Eye Services', 'Outpatient Department'],
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Sarojini_Devi_Eye_Hospital_Block.JPG/640px-Sarojini_Devi_Eye_Hospital_Block.JPG',
-    imageHint: 'eye hospital',
+    imageHint: 'eye hospital hyderabad',
   },
    {
     id: '4',
-    name: 'Ayaan Hospital',
+    name: 'Ayaan Hospital - Hyderabad',
     address: 'Plot No. 12-2-417/A/2, Main Road, beside Subhash Chandra Bose Statue, near NMDC, Gudimalkapur, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 72073 57861',
     services: ['Multi-Speciality Services', 'Intensive Care Unit', 'Surgical Facilities'],
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/KIMS_hospital_Secunderabad.jpg/640px-KIMS_hospital_Secunderabad.jpg',
-    imageHint: 'multi-speciality hospital',
+    imageHint: 'multi-speciality hospital hyderabad',
   },
+  {
+    id: '5',
+    name: 'Bombay Hospital - Mumbai',
+    address: '12, Vitthaldas Thackersey Marg, New Marine Lines, Mumbai, Maharashtra 400020, India',
+    phone: '+91 22 2206 7676',
+    services: ['Emergency Care', 'Cardiology', 'Neurology', 'Advanced Stroke Care'],
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Bombay_Hospital_in_Mumbai.jpg/640px-Bombay_Hospital_in_Mumbai.jpg',
+    imageHint: 'city hospital building mumbai',
+  },
+  {
+    id: '6',
+    name: 'Max Healthcare - Delhi',
+    address: 'Press Enclave Road, Saket, New Delhi, Delhi 110017, India',
+    phone: '+91 11 2651 5050',
+    services: ['Comprehensive Stroke Center', 'Intensive Care', 'Neurosurgery', 'Rehabilitation Services'],
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Max_Hospital_Pitampura_new_delhi.jpg/640px-Max_Hospital_Pitampura_new_delhi.jpg',
+    imageHint: 'modern medical center delhi',
+  }
 ];
