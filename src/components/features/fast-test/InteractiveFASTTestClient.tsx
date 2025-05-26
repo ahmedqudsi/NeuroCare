@@ -5,7 +5,7 @@ import { fastTestSteps } from '@/lib/constants'; // Use default, non-translated
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { PhoneOutgoing, AlertTriangle } from 'lucide-react'; 
+import { PhoneOutgoing, AlertTriangle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import type { FASTStep } from '@/types';
 
@@ -33,12 +33,12 @@ export function InteractiveFASTTestClient() {
       duration: 7000, // Keep toast visible for 7 seconds
     });
   };
-  
+
   return (
     <Card className="shadow-lg">
       <CardHeader>
         <CardTitle className="text-2xl font-bold flex items-center">
-          <AlertTriangle className="mr-2 h-6 w-6 text-destructive animate-pulse" />
+          <AlertTriangle className="mr-2 h-7 w-7 text-destructive animate-pulse" /> {/* Increased icon size */}
           {pageStaticText.title}
         </CardTitle>
         <CardDescription>
@@ -47,13 +47,13 @@ export function InteractiveFASTTestClient() {
       </CardHeader>
       <CardContent>
         <Accordion type="single" collapsible className="w-full space-y-4">
-          {fastTestSteps.map((step: FASTStep) => { 
+          {fastTestSteps.map((step: FASTStep) => {
             const IconComponent = step.icon || (() => null);
             return (
-              <AccordionItem 
-                value={step.id} 
-                key={step.id} 
-                className="border bg-card rounded-lg shadow-sm transition-all duration-300 ease-in-out hover:shadow-md hover:scale-[1.01]"
+              <AccordionItem
+                value={step.id}
+                key={step.id}
+                className="border bg-card rounded-lg shadow-sm transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-[1.02]" /* Increased hover effect */
               >
                 <AccordionTrigger className="p-6 text-lg font-semibold hover:no-underline">
                   <div className="flex items-center">
@@ -78,7 +78,7 @@ export function InteractiveFASTTestClient() {
           <Button
             size="lg"
             variant="destructive"
-            className="w-full max-w-md shadow-md hover:shadow-lg transition-shadow"
+            className="w-full max-w-md shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 ease-in-out transform" /* Added hover effect */
             onClick={handleEmergencyCall}
             aria-label={pageStaticText.emergencyCallButton}
           >
@@ -93,4 +93,3 @@ export function InteractiveFASTTestClient() {
     </Card>
   );
 }
-
