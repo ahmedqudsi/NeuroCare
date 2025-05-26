@@ -1,7 +1,7 @@
 
 "use client";
 
-import { fastTestSteps } from '@/lib/constants'; // Use default, non-translated
+import { fastTestSteps } from '@/lib/constants';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -35,6 +35,7 @@ export function InteractiveFASTTestClient() {
     });
   };
 
+  // Defines specific delays for each accordion item to achieve a staggered animation
   const itemAnimationDelays = ['delay-300', 'delay-[450ms]', 'delay-600', 'delay-[750ms]'];
 
   return (
@@ -52,7 +53,7 @@ export function InteractiveFASTTestClient() {
         <Accordion 
           type="single" 
           collapsible 
-          className="w-full space-y-4" // Removed animation from parent Accordion
+          className="w-full space-y-4" // Animation removed from parent Accordion to allow individual item animation
         >
           {fastTestSteps.map((step: FASTStep, index: number) => {
             const IconComponent = step.icon || (() => null);
@@ -62,8 +63,8 @@ export function InteractiveFASTTestClient() {
                 key={step.id}
                 className={cn(
                   "border bg-card rounded-lg shadow-sm transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-[1.02]",
-                  "animate-in fade-in-0 slide-in-from-bottom-4 duration-500",
-                  itemAnimationDelays[index % itemAnimationDelays.length] // Apply staggered delay
+                  "animate-in fade-in-0 slide-in-from-bottom-4 duration-500", // Base animation for each item
+                  itemAnimationDelays[index % itemAnimationDelays.length] // Apply staggered delay based on index
                 )}
               >
                 <AccordionTrigger className="p-6 text-lg font-semibold hover:no-underline">
@@ -85,7 +86,7 @@ export function InteractiveFASTTestClient() {
             );
           })}
         </Accordion>
-        <div className="mt-8 text-center animate-in fade-in slide-in-from-bottom-8 delay-[900ms] duration-700"> {/* Adjusted delay */}
+        <div className="mt-8 text-center animate-in fade-in slide-in-from-bottom-8 delay-[900ms] duration-700"> {/* Adjusted delay for the button to appear last */}
           <Button
             size="lg"
             variant="destructive"
