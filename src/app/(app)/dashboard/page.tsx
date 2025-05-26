@@ -2,7 +2,7 @@
 import { MotivationalQuoteCard } from '@/components/features/common/MotivationalQuoteCard';
 import { motivationalQuotes } from '@/lib/constants';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Lightbulb, Brain } from 'lucide-react'; 
+import { Lightbulb, Brain, Stethoscope } from 'lucide-react'; 
 import { siteConfig } from '@/config/site'; 
 import type { Metadata } from 'next';
 
@@ -38,7 +38,8 @@ export default async function DashboardPage() {
         <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl animate-in fade-in slide-in-from-top-8 duration-700">
           {pageTranslations.welcome}{' '}
           <span className="text-primary animate-pulse">{appName}</span>
-          <Brain className="inline-block h-8 w-8 ml-2 text-primary animate-pulse" /> {/* Moved Brain icon here and added ml-2 for spacing */}
+          <Stethoscope className="inline-block h-8 w-8 mx-1 text-primary animate-pulse" />
+          <Brain className="inline-block h-8 w-8 text-primary animate-pulse" />
         </h1>
         <p className="mt-2 text-lg text-muted-foreground animate-in fade-in-0 slide-in-from-top-10 duration-700 delay-200">
           {pageTranslations.description}
