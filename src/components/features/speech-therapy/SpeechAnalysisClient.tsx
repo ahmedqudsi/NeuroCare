@@ -1,6 +1,7 @@
+
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -19,17 +20,50 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
-export function SpeechAnalysisClient() {
+interface SpeechAnalysisClientProps {
+ dictionary: {
+    title?: string;
+    description?: string;
+    labelText?: string;
+    placeholderText?: string;
+    buttonLoading?: string;
+    buttonDefault?: string;
+    errorTitle?: string;
+    feedbackTitle?: string;
+    overallAssessmentTitle?: string;
+    pronunciationTitle?: string;
+    fluencyTitle?: string;
+    clarityTitle?: string;
+    suggestionsTitle?: string;
+    validationMinChars?: string;
+    validationMaxChars?: string;
+ }
+}
+
+
+export function SpeechAnalysisClient({ dictionary }: SpeechAnalysisClientProps) {
   const [feedback, setFeedback] = useState<AISpeechFeedbackOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const currentFormSchema = z.object({
+    speechText: z.string()
+      .min(10, { message: dictionary.validationMinChars || 'Please enter at least 10 characters of speech.' })
+      .max(1000, { message: dictionary.validationMaxChars || 'Speech text cannot exceed 1000 characters.'}),
+  });
+  
   const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(currentFormSchema),
     defaultValues: {
       speechText: '',
     },
   });
+  
+  // Update resolver if dictionary changes (e.g., on locale change)
+  useEffect(() => {
+    form.reset(undefined, { keepValues: true }); // Re-validate with new messages potentially
+  }, [dictionary, form]);
+
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     setIsLoading(true);
@@ -53,10 +87,10 @@ export function SpeechAnalysisClient() {
       <CardHeader>
         <CardTitle className="text-2xl font-bold flex items-center">
           <Mic className="mr-2 h-6 w-6 text-primary" />
-          AI Speech Rehabilitation
+          {dictionary.title || "AI Speech Rehabilitation"}
         </CardTitle>
         <CardDescription>
-          Enter the text of your speech below. Our AI will analyze it and provide structured feedback on pronunciation, fluency, and clarity.
+          {dictionary.description || "Enter the text of your speech below. Our AI will analyze it and provide structured feedback on pronunciation, fluency, and clarity."}
         </CardDescription>
       </CardHeader>
       <Form {...form}>
@@ -67,11 +101,11 @@ export function SpeechAnalysisClient() {
               name="speechText"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="speechText" className="text-base">Your Speech Text</FormLabel>
+                  <FormLabel htmlFor="speechText" className="text-base">{dictionary.labelText || "Your Speech Text"}</FormLabel>
                   <FormControl>
                     <Textarea
                       id="speechText"
-                      placeholder="Type or paste your speech here..."
+                      placeholder={dictionary.placeholderText || "Type or paste your speech here..."}
                       rows={6}
                       className="resize-none"
                       {...field}
@@ -88,12 +122,12 @@ export function SpeechAnalysisClient() {
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Analyzing...
+                  {dictionary.buttonLoading || "Analyzing..."}
                 </>
               ) : (
                 <>
                   <Sparkles className="mr-2 h-4 w-4" />
-                  Get Feedback
+                  {dictionary.buttonDefault || "Get Feedback"}
                 </>
               )}
             </Button>
@@ -101,7 +135,7 @@ export function SpeechAnalysisClient() {
             {error && (
               <Alert variant="destructive">
                 <MessageSquareWarning className="h-4 w-4" />
-                <AlertTitle>Error</AlertTitle>
+                <AlertTitle>{dictionary.errorTitle || "Error"}</AlertTitle>
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}
@@ -111,30 +145,30 @@ export function SpeechAnalysisClient() {
                 <CardHeader>
                   <CardTitle className="text-lg flex items-center">
                     <Sparkles className="mr-2 h-5 w-5 text-accent" />
-                    AI Feedback
+                    {dictionary.feedbackTitle || "AI Feedback"}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4 text-sm">
                     <div>
-                      <h4 className="font-semibold text-base mb-1">Overall Assessment:</h4>
+                      <h4 className="font-semibold text-base mb-1">{dictionary.overallAssessmentTitle || "Overall Assessment:"}</h4>
                       <p className="whitespace-pre-wrap text-muted-foreground">{feedback.overallAssessment}</p>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-base mb-1">Pronunciation:</h4>
+                      <h4 className="font-semibold text-base mb-1">{dictionary.pronunciationTitle || "Pronunciation:"}</h4>
                       <p className="whitespace-pre-wrap text-muted-foreground">{feedback.pronunciationFeedback}</p>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-base mb-1">Fluency:</h4>
+                      <h4 className="font-semibold text-base mb-1">{dictionary.fluencyTitle || "Fluency:"}</h4>
                       <p className="whitespace-pre-wrap text-muted-foreground">{feedback.fluencyFeedback}</p>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-base mb-1">Clarity:</h4>
+                      <h4 className="font-semibold text-base mb-1">{dictionary.clarityTitle || "Clarity:"}</h4>
                       <p className="whitespace-pre-wrap text-muted-foreground">{feedback.clarityFeedback}</p>
                     </div>
                     {feedback.suggestions && feedback.suggestions.length > 0 && (
                       <div>
-                        <h4 className="font-semibold text-base mb-1">Suggestions for Improvement:</h4>
+                        <h4 className="font-semibold text-base mb-1">{dictionary.suggestionsTitle || "Suggestions for Improvement:"}</h4>
                         <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
                           {feedback.suggestions.map((suggestion, index) => (
                             <li key={index} className="whitespace-pre-wrap">{suggestion}</li>

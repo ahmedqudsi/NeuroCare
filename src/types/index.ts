@@ -1,14 +1,14 @@
+
 import type { LucideIcon } from 'lucide-react';
 import type { siteConfig } from '@/config/site';
 
 export type Locale = typeof siteConfig.i18n.locales[number];
 
-// A very generic type for the dictionary.
-// You should create a more specific type based on your common.json structure.
 export interface Dictionary {
   appName: string;
+  appDescription?: string; // For root layout metadata
   nav: {
-    [key: string]: string; // e.g., dashboard: "Dashboard"
+    [key: string]: string; 
   };
   languageSwitcher: {
     changeLanguage: string;
@@ -18,19 +18,29 @@ export interface Dictionary {
     ur: string;
     ar: string;
     zh: string;
+    toggleMenu?: string;
     [key: string]: string;
   };
-  dashboard?: { // Optional for now, as not all pages might have specific translations
+  dashboard?: {
     welcome?: string;
     description?: string;
   };
+  common?: { // For shared translations like quick tips
+    [key: string]: string;
+  };
+  // Page specific translation sections
+  fastTestPage?: any;
+  hospitalLocatorPage?: any;
+  rehabPage?: any;
+  exerciseCard?: any;
+  speechTherapyPage?: any;
   [key: string]: any; // Allow other keys
 }
 
 
 export type NavigationItem = {
   href: string;
-  labelKey: string; // Key for translation, e.g., "dashboard"
+  labelKey: string; 
   icon: LucideIcon;
   disabled?: boolean;
 };
@@ -41,7 +51,7 @@ export type Exercise = {
   description: string;
   instructions: string[];
   imageUrl?: string;
-  imageHint?: string; // for data-ai-hint
+  imageHint?: string;
 };
 
 export type Quote = {
@@ -57,7 +67,7 @@ export type Hospital = {
   phone: string;
   services: string[];
   imageUrl?: string;
-  imageHint?: string; // for data-ai-hint
+  imageHint?: string; 
 };
 
 export type FASTStep = {
@@ -66,5 +76,5 @@ export type FASTStep = {
   description: string;
   checkItems: string[];
   details: string;
-  icon?: LucideIcon;
+  icon?: LucideIcon; // Made icon optional as it's from constants
 };

@@ -1,10 +1,12 @@
+
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/providers/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
 import { siteConfig } from '@/config/site';
-import type { Locale } from '@/types'; // Assuming Locale is defined in types
+import type { Locale } from '@/types';
+import { getDictionary } from '@/lib/get-dictionary';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -16,17 +18,21 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
-// This metadata might need dynamic parts if the title/description change per locale
-export const metadata: Metadata = {
-  title: {
-    default: "NeuroCare", // Fallback, will be replaced by translated appName
-    template: `%s | NeuroCare`, // Fallback
-  },
-  description: siteConfig.description, // This might also need to be translated
-};
-
 export async function generateStaticParams() {
   return siteConfig.i18n.locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({ params }: { params: { locale: Locale } }): Promise<Metadata> {
+  const dictionary = await getDictionary(params.locale);
+  const appName = dictionary.appName || "NeuroCare";
+  const appDescription = dictionary.appDescription || siteConfig.description;
+  return {
+    title: {
+      default: appName,
+      template: `%s | ${appName}`,
+    },
+    description: appDescription,
+  };
 }
 
 export default function RootLayout({
@@ -41,8 +47,8 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="light" // Defaulting to light, system theme removed
-          enableSystem={false} // System theme removed
+          defaultTheme="light"
+          enableSystem={false}
           disableTransitionOnChange
         >
           {children}

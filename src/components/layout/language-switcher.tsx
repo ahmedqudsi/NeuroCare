@@ -1,3 +1,4 @@
+
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
@@ -10,10 +11,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Globe } from 'lucide-react';
+import type { Locale } from '@/types';
 
-type Locale = typeof siteConfig.i18n.locales[number];
-
-// This type should match the structure of your languageSwitcher section in common.json
 interface LanguageSwitcherTranslations {
   changeLanguage: string;
   en: string;
@@ -22,7 +21,7 @@ interface LanguageSwitcherTranslations {
   ur: string;
   ar: string;
   zh: string;
-  [key: string]: string; // Index signature for dynamic access
+  [key: string]: string;
 }
 
 interface LanguageSwitcherProps {
@@ -35,23 +34,12 @@ export function LanguageSwitcher({ currentLocale, translations }: LanguageSwitch
   const pathname = usePathname();
 
   const changeLocale = (newLocale: Locale) => {
-    if (!pathname) return;
-    // Pathname will be /<locale>/... or just / for default locale before middleware redirection
-    // For simplicity, we reconstruct the path ensuring the new locale is at the start
-    const newPath = `/${newLocale}${pathname.substring(pathname.startsWith(`/${currentLocale}`) ? `/${currentLocale}`.length : 0) || '/'}`;
-    
-    // If the current path is just `/` (e.g. for default locale before middleware adds prefix),
-    // and new locale is also default, ensure we go to /defaultLocale/
-    // Or more robustly, rely on Next.js to handle the path correctly when pushing `/${newLocale}/...`
-    
-    const segments = pathname.split('/');
-    if (segments[1] === currentLocale) {
-      segments[1] = newLocale;
-      router.push(segments.join('/'));
-    } else {
-      // If pathname doesn't start with currentLocale (e.g. default locale at root)
-      router.push(`/${newLocale}${pathname}`);
-    }
+    if (!pathname || newLocale === currentLocale) return;
+
+    // Pathname will be /<locale>/... or /<locale>
+    // Replace the current locale prefix with the new one
+    const newPath = pathname.replace(`/${currentLocale}`, `/${newLocale}`);
+    router.push(newPath);
   };
   
   const getLanguageName = (locale: Locale): string => {
@@ -61,7 +49,7 @@ export function LanguageSwitcher({ currentLocale, translations }: LanguageSwitch
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button variant="outline" size="icon" aria-label={translations.changeLanguage}>
           <Globe className="h-[1.2rem] w-[1.2rem]" />
           <span className="sr-only">{translations.changeLanguage}</span>
         </Button>

@@ -1,4 +1,6 @@
 
+"use client"; // Added "use client" as it has event handlers
+
 import type { Hospital as HospitalType } from '@/types';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -7,9 +9,13 @@ import { MapPin, Phone, Stethoscope, ExternalLink } from 'lucide-react';
 
 interface HospitalCardProps {
   hospital: HospitalType;
+  dictionary: { // For potential translations within the card
+    servicesTitle?: string;
+    getDirectionsButton?: string;
+  }
 }
 
-export function HospitalCard({ hospital }: HospitalCardProps) {
+export function HospitalCard({ hospital, dictionary }: HospitalCardProps) {
   const handleGetDirections = () => {
     const encodedAddress = encodeURIComponent(hospital.address);
     const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`;
@@ -23,8 +29,8 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
             <Image
               src={hospital.imageUrl}
               alt={`Image of ${hospital.name}`}
-              layout="fill"
-              objectFit="cover"
+              fill // Changed from layout="fill" objectFit="cover" for Next 13+
+              style={{ objectFit: 'cover' }} // Added style for objectFit
               data-ai-hint={hospital.imageHint || "hospital building"}
             />
          </div>
@@ -43,7 +49,7 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
         <div>
           <h4 className="text-sm font-medium flex items-center mb-1">
             <Stethoscope className="mr-2 h-4 w-4 text-primary" />
-            Services:
+            {dictionary.servicesTitle || "Services:"}
           </h4>
           <ul className="list-disc list-inside text-sm text-muted-foreground space-y-0.5 pl-2">
             {hospital.services.map((service, index) => (
@@ -55,7 +61,7 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
       <CardFooter>
         <Button variant="outline" className="w-full" onClick={handleGetDirections}>
           <ExternalLink className="mr-2 h-4 w-4" />
-          Get Directions
+          {dictionary.getDirectionsButton || "Get Directions"}
         </Button>
       </CardFooter>
     </Card>

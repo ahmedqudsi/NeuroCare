@@ -1,4 +1,4 @@
-// src/components/layout/header.tsx
+
 "use client";
 
 import Link from 'next/link';
@@ -24,12 +24,13 @@ interface HeaderProps {
 
 export function Header({ currentLocale, dictionary }: HeaderProps) {
   const pathname = usePathname();
-  const appName = dictionary.appName || "NeuroCare"; // Fallback app name
+  const appName = dictionary.appName || "NeuroCare";
   const navTranslations = dictionary.nav || {};
   const langSwitcherTranslations = dictionary.languageSwitcher || {};
+  const toggleMenuText = langSwitcherTranslations.toggleMenu || "Toggle menu";
 
   // Filter out sidebarNav items that don't have a valid translation key
-  const validSidebarNav = siteConfig.sidebarNav.filter(item => navTranslations[item.labelKey]);
+  const validSidebarNav = siteConfig.sidebarNav.filter(item => navTranslations[item.labelKey] || item.labelKey === 'dashboard'); // Ensure dashboard always shows if key missing
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -45,20 +46,19 @@ export function Header({ currentLocale, dictionary }: HeaderProps) {
         <nav className="hidden md:flex flex-1 items-center justify-center space-x-4 lg:space-x-6">
           {validSidebarNav.map((item: NavigationItem) => {
             const itemPath = `/${currentLocale}${item.href}`;
-            // More robust active check for nested routes
             const isActive = pathname === itemPath || (item.href !== '/dashboard' && pathname.startsWith(itemPath + '/'));
             return (
               <Link
                 key={item.href}
                 href={itemPath}
                 className={cn(
-                  "text-sm font-medium transition-colors hover:text-foreground",
+                  "text-sm font-medium transition-colors",
                   isActive
-                    ? "text-primary font-semibold" // Active link
-                    : "text-foreground/75" // Inactive link
+                    ? "text-primary font-semibold"
+                    : "text-foreground/75 hover:text-foreground"
                 )}
               >
-                {navTranslations[item.labelKey] || item.labelKey}
+                {navTranslations[item.labelKey] || item.labelKey.charAt(0).toUpperCase() + item.labelKey.slice(1) /* Fallback label */}
               </Link>
             );
           })}
@@ -73,7 +73,7 @@ export function Header({ currentLocale, dictionary }: HeaderProps) {
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
                   <Menu className="h-6 w-6" />
-                  <span className="sr-only">{langSwitcherTranslations.toggleMenu || "Toggle menu"}</span>
+                  <span className="sr-only">{toggleMenuText}</span>
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-full max-w-xs p-6">
@@ -96,12 +96,12 @@ export function Header({ currentLocale, dictionary }: HeaderProps) {
                           className={cn(
                             "flex items-center rounded-md p-2 text-base font-medium transition-colors",
                             isActive
-                              ? "bg-accent text-accent-foreground" // Active mobile link
-                              : "text-muted-foreground hover:bg-accent hover:text-accent-foreground" // Inactive mobile link
+                              ? "bg-accent text-accent-foreground"
+                              : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
                           )}
                         >
                           <item.icon className="mr-3 h-5 w-5 flex-shrink-0" />
-                          <span className="truncate">{navTranslations[item.labelKey] || item.labelKey}</span>
+                          <span className="truncate">{navTranslations[item.labelKey] || item.labelKey.charAt(0).toUpperCase() + item.labelKey.slice(1)}</span>
                         </Link>
                       </SheetClose>
                     );
