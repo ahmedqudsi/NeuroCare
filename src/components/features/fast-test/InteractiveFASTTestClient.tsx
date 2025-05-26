@@ -38,7 +38,7 @@ export function InteractiveFASTTestClient() {
     <Card className="shadow-lg">
       <CardHeader>
         <CardTitle className="text-2xl font-bold flex items-center">
-          <AlertTriangle className="mr-2 h-7 w-7 text-destructive animate-pulse" /> {/* Increased icon size */}
+          <AlertTriangle className="mr-2 h-8 w-8 text-destructive animate-pulse" /> {/* Increased icon size */}
           {pageStaticText.title}
         </CardTitle>
         <CardDescription>
