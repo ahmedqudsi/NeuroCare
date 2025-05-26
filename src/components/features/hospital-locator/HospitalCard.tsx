@@ -26,7 +26,7 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
   };
 
   return (
-    <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-full">
+    <Card className="overflow-hidden shadow-lg hover:shadow-xl hover:scale-[1.02] transform transition-all duration-300 flex flex-col h-full">
       {hospital.imageUrl && (
          <div className="relative w-full h-48 bg-secondary">
             <Image
@@ -74,4 +74,3 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
     </Card>
   );
 }
-
