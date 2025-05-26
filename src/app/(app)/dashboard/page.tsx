@@ -2,7 +2,7 @@
 import { MotivationalQuoteCard } from '@/components/features/common/MotivationalQuoteCard';
 import { motivationalQuotes } from '@/lib/constants';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Lightbulb, Brain, Users, ShieldCheck, Clock, Heart, Activity } from 'lucide-react';
+import { Lightbulb, Brain, Users, ShieldCheck, Clock, Heart, Activity, Stethoscope } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { siteConfig } from '@/config/site'; 
 import type { Metadata } from 'next';
@@ -29,7 +29,7 @@ export default async function DashboardPage() {
     quickTipsDescription: "Important reminders for your well-being.",
     tipExploreFAST: "Explore the FAST Test to learn about stroke symptoms.",
     tipRehabExercises: "Check out Rehabilitation Exercises to aid your recovery.",
-    tipSpeechTherapy: "Use the AI Speech Therapy tool to practice your speech.",
+    // tipSpeechTherapy: "Use the AI Speech Therapy tool to practice your speech.", // Removed as Speech Therapy AI is removed
     tipStayPositive: "Stay positive and consistent with your recovery plan."
   };
 
@@ -40,9 +40,15 @@ export default async function DashboardPage() {
         <div className="space-y-4 mt-4">
           <h1 className="text-6xl font-bold tracking-tight text-foreground">
             <span>Your Digital Ally in</span>
-            <span className="block text-primary">Brain Stroke Recovery</span>
+            <span className="block text-primary animate-pulse">Brain Stroke Recovery</span>
           </h1>
-          <h2 className="text-lg text-muted-foreground">NeuroCare: Revolutionizing Stroke Recovery</h2>
+          <h2 className="text-lg text-muted-foreground">
+            <div className="relative w-full overflow-hidden">
+              <p className="animate-marquee-to-right whitespace-nowrap">
+                {appName}: Revolutionizing Stroke Recovery
+              </p>
+            </div>
+          </h2>
           <Button className="mt-8">Explore Now</Button>
 
           {/* Additional Highlights */}
@@ -108,7 +114,7 @@ export default async function DashboardPage() {
           <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
             <li className="hover:scale-105 hover:text-foreground/90 transform transition-transform duration-200 ease-in-out origin-left">{commonTranslations.tipExploreFAST}</li>
             <li className="hover:scale-105 hover:text-foreground/90 transform transition-transform duration-200 ease-in-out origin-left">{commonTranslations.tipRehabExercises}</li>
-            <li className="hover:scale-105 hover:text-foreground/90 transform transition-transform duration-200 ease-in-out origin-left">{commonTranslations.tipSpeechTherapy}</li>
+            {/* <li className="hover:scale-105 hover:text-foreground/90 transform transition-transform duration-200 ease-in-out origin-left">{commonTranslations.tipSpeechTherapy}</li> */}
             <li className="hover:scale-105 hover:text-foreground/90 transform transition-transform duration-200 ease-in-out origin-left">{commonTranslations.tipStayPositive}</li>
           </ul>
         </CardContent>
