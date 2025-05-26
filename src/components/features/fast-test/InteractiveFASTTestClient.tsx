@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { PhoneOutgoing, AlertTriangle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import type { FASTStep } from '@/types';
+import { cn } from '@/lib/utils';
 
 
 export function InteractiveFASTTestClient() {
@@ -34,6 +35,8 @@ export function InteractiveFASTTestClient() {
     });
   };
 
+  const itemAnimationDelays = ['delay-300', 'delay-[450ms]', 'delay-600', 'delay-[750ms]'];
+
   return (
     <Card className="shadow-lg animate-in fade-in slide-in-from-top-8 duration-700">
       <CardHeader>
@@ -49,15 +52,19 @@ export function InteractiveFASTTestClient() {
         <Accordion 
           type="single" 
           collapsible 
-          className="w-full space-y-4 animate-in fade-in delay-300 duration-700"
+          className="w-full space-y-4" // Removed animation from parent Accordion
         >
-          {fastTestSteps.map((step: FASTStep) => {
+          {fastTestSteps.map((step: FASTStep, index: number) => {
             const IconComponent = step.icon || (() => null);
             return (
               <AccordionItem
                 value={step.id}
                 key={step.id}
-                className="border bg-card rounded-lg shadow-sm transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-[1.02]"
+                className={cn(
+                  "border bg-card rounded-lg shadow-sm transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-[1.02]",
+                  "animate-in fade-in-0 slide-in-from-bottom-4 duration-500",
+                  itemAnimationDelays[index % itemAnimationDelays.length] // Apply staggered delay
+                )}
               >
                 <AccordionTrigger className="p-6 text-lg font-semibold hover:no-underline">
                   <div className="flex items-center">
@@ -68,8 +75,8 @@ export function InteractiveFASTTestClient() {
                 <AccordionContent className="p-6 pt-0">
                   <p className="text-muted-foreground mb-3">{step.description}</p>
                   <ul className="list-disc space-y-1 pl-5 mb-3">
-                    {step.checkItems.map((item, index) => (
-                      <li key={index}>{item}</li>
+                    {step.checkItems.map((item, itemIndex) => (
+                      <li key={itemIndex}>{item}</li>
                     ))}
                   </ul>
                   <p className="text-sm bg-secondary p-3 rounded-md">{step.details}</p>
@@ -78,7 +85,7 @@ export function InteractiveFASTTestClient() {
             );
           })}
         </Accordion>
-        <div className="mt-8 text-center animate-in fade-in slide-in-from-bottom-8 delay-500 duration-700">
+        <div className="mt-8 text-center animate-in fade-in slide-in-from-bottom-8 delay-[900ms] duration-700"> {/* Adjusted delay */}
           <Button
             size="lg"
             variant="destructive"
