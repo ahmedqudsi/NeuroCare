@@ -138,7 +138,7 @@ export function HomeNurseBookingForm({ nurses }: HomeNurseBookingFormProps) {
               <FormLabel>Select Nurse</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger className={cn("hover:bg-accent hover:text-accent-foreground transition-colors")}>
                     <SelectValue placeholder="Choose a nurse from the list" />
                   </SelectTrigger>
                 </FormControl>
@@ -206,7 +206,7 @@ export function HomeNurseBookingForm({ nurses }: HomeNurseBookingFormProps) {
                 <FormLabel>Preferred Time Slot</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className={cn("hover:bg-accent hover:text-accent-foreground transition-colors")}>
                       <SelectValue placeholder="Select a time slot" />
                     </SelectTrigger>
                   </FormControl>
