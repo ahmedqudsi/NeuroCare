@@ -28,7 +28,7 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2 sm:gap-4">
           <Link href="/dashboard" className="flex items-center space-x-2">
-            <Brain className="h-6 w-6 text-primary animate-pulse" />
+            <Brain className="h-6 w-6 text-primary" /> {/* Animation removed here */}
             <span className="hidden sm:inline-block font-bold">{appName}</span>
           </Link>
         </div>
@@ -68,7 +68,7 @@ export function Header() {
               <SheetContent side="left" className="w-full max-w-xs p-6">
                  <div className="mb-6">
                    <Link href="/dashboard" className="flex items-center space-x-2">
-                     <Brain className="h-7 w-7 text-primary animate-pulse" />
+                     <Brain className="h-7 w-7 text-primary" /> {/* Animation removed here */}
                      <span className="text-lg font-semibold">
                        {appName}
                      </span>
