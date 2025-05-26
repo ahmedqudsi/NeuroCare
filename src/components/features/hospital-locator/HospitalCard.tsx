@@ -5,7 +5,7 @@ import type { Hospital as HospitalType } from '@/types';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { MapPin, Phone, Stethoscope, Map } from 'lucide-react'; // Changed ExternalLink to Map
+import { MapPin, Phone, Stethoscope } from 'lucide-react'; // Removed Map import
 
 interface HospitalCardProps {
   hospital: HospitalType;
@@ -67,7 +67,9 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
           className="w-full transition-all duration-200 ease-in-out hover:bg-accent hover:text-accent-foreground hover:scale-[1.03] transform" 
           onClick={handleGetDirections}
         >
-          <Map className="mr-2 h-4 w-4" /> {/* Changed icon here */}
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-geo-alt-fill mr-2 h-4 w-4" viewBox="0 0 16 16">
+            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
+          </svg>
           {cardStaticText.getDirectionsButton}
         </Button>
       </CardFooter>
