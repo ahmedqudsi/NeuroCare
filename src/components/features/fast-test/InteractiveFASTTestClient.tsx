@@ -5,12 +5,11 @@ import { fastTestSteps } from '@/lib/constants'; // Use default, non-translated
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { PhoneOutgoing, AlertTriangle } from 'lucide-react'; // Removed unused icons
+import { PhoneOutgoing, AlertTriangle } from 'lucide-react'; 
 import { useToast } from '@/hooks/use-toast';
 import type { FASTStep } from '@/types';
 
 
-// Removed dictionary prop and related logic
 export function InteractiveFASTTestClient() {
   const { toast } = useToast();
 
@@ -19,15 +18,19 @@ export function InteractiveFASTTestClient() {
     title: "F.A.S.T. Stroke Test",
     description: "Use the F.A.S.T. test to quickly check for common signs of a stroke. If you see any of these signs, call emergency services immediately.",
     emergencyCallButton: "Call Emergency Services Now",
-    emergencyCallMessage: "Calling emergency services immediately is crucial. For now, please dial your local emergency number.",
+    emergencyCallMessage: "Attempting to dial 112. If the call doesn't start, please dial your local emergency number manually.", // Updated message
     emergencyCallToastTitle: "Emergency Action"
   };
 
   const handleEmergencyCall = () => {
+    // Attempt to initiate a call to the emergency number for India
+    window.location.href = 'tel:112';
+
     toast({
       title: pageStaticText.emergencyCallToastTitle,
       description: pageStaticText.emergencyCallMessage,
       variant: "destructive",
+      duration: 7000, // Keep toast visible for 7 seconds
     });
   };
   
@@ -44,7 +47,7 @@ export function InteractiveFASTTestClient() {
       </CardHeader>
       <CardContent>
         <Accordion type="single" collapsible className="w-full space-y-4">
-          {fastTestSteps.map((step: FASTStep) => { // Using imported non-translated steps
+          {fastTestSteps.map((step: FASTStep) => { 
             const IconComponent = step.icon || (() => null);
             return (
               <AccordionItem value={step.id} key={step.id} className="border bg-card rounded-lg shadow-sm">
