@@ -38,27 +38,25 @@ export default async function DashboardPage() {
         <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl animate-in fade-in slide-in-from-top-8 duration-700">
           {pageTranslations.welcome}{' '}
           <span className="text-primary animate-pulse">{appName}</span>
-          {/* Custom SVG for Brain in Stethoscope */}
+          {/* Custom SVG for Brain in Stethoscope - Revised for better visibility */}
           <svg
             viewBox="0 0 24 24"
-            className="inline-block h-10 w-10 ml-2 text-primary animate-pulse" // Adjusted size and margin
+            className="inline-block h-10 w-10 ml-2 text-primary animate-pulse"
             fill="currentColor"
             stroke="currentColor"
-            strokeWidth="1.5"
+            strokeWidth="2" 
             strokeLinecap="round"
             strokeLinejoin="round"
             xmlns="http://www.w3.org/2000/svg"
           >
-            {/* Stethoscope Tube pointing left */}
-            <path d="M9 12 A4 4 0 0 0 2 10" fill="none"/>
+            {/* Stethoscope Tube pointing left, adjusted for thicker stroke */}
+            <path d="M8 12 A4 4 0 0 0 2 10" fill="none"/>
             {/* Stethoscope Bell (Circle) */}
-            <circle cx="16" cy="12" r="7" fill="none"/>
-            {/* Simplified Brain inside Bell (filled circles) */}
-            <circle cx="16" cy="10" r="2.2" stroke="none"/>
-            <circle cx="13.5" cy="13" r="2.2" stroke="none"/>
-            <circle cx="18.5" cy="13" r="2.2" stroke="none"/>
-            {/* Optional: thin lines connecting brain parts, for visual texture */}
-            <path d="M16 10 Q15 12 13.5 13 M16 10 Q17 12 18.5 13" fill="none" strokeWidth="0.75"/>
+            <circle cx="15.5" cy="12" r="6.5" fill="none"/> 
+            {/* Simplified Brain inside Bell - 3 larger circles */}
+            <circle cx="15.5" cy="10" r="2.5" stroke="none" /> {/* Central top */}
+            <circle cx="13" cy="13.5" r="2.5" stroke="none" /> {/* Bottom left */}
+            <circle cx="18" cy="13.5" r="2.5" stroke="none" /> {/* Bottom right */}
           </svg>
         </h1>
         <p className="mt-2 text-lg text-muted-foreground animate-in fade-in-0 slide-in-from-top-10 duration-700 delay-200">
