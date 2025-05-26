@@ -11,7 +11,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Loader2, Mic, Sparkles, MessageSquareWarning } from 'lucide-react';
-import { aiSpeechFeedback, type AISpeechFeedbackInput } from '@/ai/flows/ai-speech-feedback';
+import { aiSpeechFeedback, type AISpeechFeedbackInput, type AISpeechFeedbackOutput } from '@/ai/flows/ai-speech-feedback';
 
 const formSchema = z.object({
   speechText: z.string().min(10, { message: 'Please enter at least 10 characters of speech.' }).max(1000, {message: 'Speech text cannot exceed 1000 characters.'}),
@@ -20,7 +20,7 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 export function SpeechAnalysisClient() {
-  const [feedback, setFeedback] = useState<string | null>(null);
+  const [feedback, setFeedback] = useState<AISpeechFeedbackOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -39,7 +39,7 @@ export function SpeechAnalysisClient() {
     try {
       const inputData: AISpeechFeedbackInput = { speechText: data.speechText };
       const result = await aiSpeechFeedback(inputData);
-      setFeedback(result.feedback);
+      setFeedback(result);
     } catch (err) {
       console.error("Error getting speech feedback:", err);
       setError(err instanceof Error ? err.message : "An unexpected error occurred. Please try again.");
@@ -56,7 +56,7 @@ export function SpeechAnalysisClient() {
           AI Speech Rehabilitation
         </CardTitle>
         <CardDescription>
-          Enter the text of your speech below. Our AI will analyze it and provide feedback on pronunciation, fluency, and clarity.
+          Enter the text of your speech below. Our AI will analyze it and provide structured feedback on pronunciation, fluency, and clarity.
         </CardDescription>
       </CardHeader>
       <Form {...form}>
@@ -115,7 +115,34 @@ export function SpeechAnalysisClient() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="whitespace-pre-wrap text-sm">{feedback}</p>
+                  <div className="space-y-4 text-sm">
+                    <div>
+                      <h4 className="font-semibold text-base mb-1">Overall Assessment:</h4>
+                      <p className="whitespace-pre-wrap text-muted-foreground">{feedback.overallAssessment}</p>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-base mb-1">Pronunciation:</h4>
+                      <p className="whitespace-pre-wrap text-muted-foreground">{feedback.pronunciationFeedback}</p>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-base mb-1">Fluency:</h4>
+                      <p className="whitespace-pre-wrap text-muted-foreground">{feedback.fluencyFeedback}</p>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-base mb-1">Clarity:</h4>
+                      <p className="whitespace-pre-wrap text-muted-foreground">{feedback.clarityFeedback}</p>
+                    </div>
+                    {feedback.suggestions && feedback.suggestions.length > 0 && (
+                      <div>
+                        <h4 className="font-semibold text-base mb-1">Suggestions for Improvement:</h4>
+                        <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
+                          {feedback.suggestions.map((suggestion, index) => (
+                            <li key={index} className="whitespace-pre-wrap">{suggestion}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
                 </CardContent>
               </Card>
             )}

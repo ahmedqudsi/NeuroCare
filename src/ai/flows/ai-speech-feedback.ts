@@ -20,7 +20,11 @@ const AISpeechFeedbackInputSchema = z.object({
 export type AISpeechFeedbackInput = z.infer<typeof AISpeechFeedbackInputSchema>;
 
 const AISpeechFeedbackOutputSchema = z.object({
-  feedback: z.string().describe('The AI-generated feedback on the speech.'),
+  overallAssessment: z.string().describe('An overall assessment of the speech quality.'),
+  pronunciationFeedback: z.string().describe('Specific feedback on pronunciation, including any mispronounced words or sounds.'),
+  fluencyFeedback: z.string().describe('Specific feedback on fluency, noting the flow, rhythm, and any hesitations or choppiness.'),
+  clarityFeedback: z.string().describe('Specific feedback on clarity, evaluating how easy the speech is to understand.'),
+  suggestions: z.array(z.string()).describe('Actionable suggestions for improvement, typically 2-3 specific tips.'),
 });
 export type AISpeechFeedbackOutput = z.infer<typeof AISpeechFeedbackOutputSchema>;
 
@@ -33,11 +37,16 @@ const prompt = ai.definePrompt({
   input: {schema: AISpeechFeedbackInputSchema},
   output: {schema: AISpeechFeedbackOutputSchema},
   prompt: `You are a speech therapist specializing in stroke rehabilitation.
-
-You will analyze the following speech and provide feedback to the patient.
-Focus on pronunciation, fluency, and clarity.
+Analyze the following speech and provide detailed, structured feedback to the patient.
 
 Speech: {{{speechText}}}
+
+Please provide your output based on the following structure:
+1.  Overall Assessment: Give a brief summary of the speech quality.
+2.  Pronunciation Feedback: Comment on any mispronounced words or sounds. Be specific.
+3.  Fluency Feedback: Assess the flow and rhythm of the speech. Note any hesitations, repetitions, or choppiness.
+4.  Clarity Feedback: Evaluate how easy the speech is to understand. Mention any factors affecting clarity.
+5.  Suggestions: Provide 2-3 specific, actionable suggestions for improvement. List them as an array of strings.
 `,
 });
 
