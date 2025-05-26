@@ -2,7 +2,7 @@ import type { LucideIcon } from 'lucide-react';
 
 export type NavigationItem = {
   href: string;
-  label: string;
+  labelKey: string; // Changed from label to support i18n
   icon: LucideIcon;
   disabled?: boolean;
 };

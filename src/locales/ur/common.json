@@ -1,0 +1,23 @@
+{
+  "appName": "نیوروکیئر",
+  "nav": {
+    "dashboard": "ڈیش بورڈ",
+    "fastTest": "فاسٹ ٹیسٹ",
+    "nearbyHospitals": "قریبی ہسپتال",
+    "rehabExercises": "بحالی کی مشقیں",
+    "speechTherapyAI": "اسپیچ تھراپی AI"
+  },
+  "languageSwitcher": {
+    "changeLanguage": "زبان تبدیل کریں",
+    "en": "English (انگریزی)",
+    "te": "తెలుగు (تیلگو)",
+    "hi": "हिन्दी (ہندی)",
+    "ur": "اردو",
+    "ar": "العربية (عربی)",
+    "zh": "中文 (چینی)"
+  },
+  "dashboard": {
+    "welcome": "{appName} میں خوش آمدید",
+    "description": "فالج سے آگاہی اور بحالی کے لیے آپ کا ساتھی۔"
+  }
+}

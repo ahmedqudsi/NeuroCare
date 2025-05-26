@@ -1,33 +1,38 @@
 import type { NavigationItem } from '@/types';
-import { LayoutDashboard, Activity, Hospital, Bike, Mic, HelpCircle } from 'lucide-react';
+import { LayoutDashboard, Activity, Hospital, Bike, Mic } from 'lucide-react';
 
 export const siteConfig = {
-  name: 'NeuroCare',
+  // App name will be handled by translations, e.g., using a key like 'appName'
+  // name: 'NeuroCare', 
   description: 'A Comprehensive Stroke Awareness & Recovery Companion',
+  i18n: {
+    locales: ['en', 'te', 'hi', 'ur', 'ar', 'zh'] as const,
+    defaultLocale: 'en' as const,
+  },
   sidebarNav: [
     {
       href: '/dashboard',
-      label: 'Dashboard',
+      labelKey: 'nav.dashboard', // Key for translation
       icon: LayoutDashboard,
     },
     {
       href: '/fast-test',
-      label: 'FAST Test',
+      labelKey: 'nav.fastTest', // Key for translation
       icon: Activity,
     },
     {
       href: '/hospital-locator',
-      label: 'Nearby Hospitals',
+      labelKey: 'nav.nearbyHospitals', // Key for translation
       icon: Hospital,
     },
     {
       href: '/rehabilitation',
-      label: 'Rehab Exercises',
+      labelKey: 'nav.rehabExercises', // Key for translation
       icon: Bike,
     },
     {
       href: '/speech-therapy',
-      label: 'Speech Therapy AI',
+      labelKey: 'nav.speechTherapyAI', // Key for translation
       icon: Mic,
     },
   ] as NavigationItem[],

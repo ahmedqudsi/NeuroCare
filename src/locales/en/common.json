@@ -1,0 +1,23 @@
+{
+  "appName": "NeuroCare",
+  "nav": {
+    "dashboard": "Dashboard",
+    "fastTest": "FAST Test",
+    "nearbyHospitals": "Nearby Hospitals",
+    "rehabExercises": "Rehab Exercises",
+    "speechTherapyAI": "Speech Therapy AI"
+  },
+  "languageSwitcher": {
+    "changeLanguage": "Change language",
+    "en": "English",
+    "te": "తెలుగు (Telugu)",
+    "hi": "हिन्दी (Hindi)",
+    "ur": "اردو (Urdu)",
+    "ar": "العربية (Arabic)",
+    "zh": "中文 (Chinese)"
+  },
+  "dashboard": {
+    "welcome": "Welcome to {appName}",
+    "description": "Your companion for stroke awareness and recovery."
+  }
+}

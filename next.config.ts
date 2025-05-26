@@ -24,6 +24,11 @@ const nextConfig: NextConfig = {
       }
     ],
   },
+  i18n: {
+    locales: ['en', 'te', 'hi', 'ur', 'ar', 'zh'],
+    defaultLocale: 'en',
+    localeDetection: false, // Recommended to start with false for explicit path-based routing
+  },
 };
 
 export default nextConfig;

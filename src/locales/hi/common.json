@@ -1,0 +1,23 @@
+{
+  "appName": "न्यूरोकेयर",
+  "nav": {
+    "dashboard": "डैशबोर्ड",
+    "fastTest": "FAST टेस्ट",
+    "nearbyHospitals": "आस-पास के अस्पताल",
+    "rehabExercises": "पुनर्वास व्यायाम",
+    "speechTherapyAI": "स्पीच थेरेपी AI"
+  },
+  "languageSwitcher": {
+    "changeLanguage": "भाषा बदलें",
+    "en": "English (अंग्रेज़ी)",
+    "te": "తెలుగు (तेलुगु)",
+    "hi": "हिन्दी",
+    "ur": "اردو (उर्दू)",
+    "ar": "العربية (अरबी)",
+    "zh": "中文 (चीनी)"
+  },
+  "dashboard": {
+    "welcome": "{appName} में आपका स्वागत है",
+    "description": "स्ट्रोक जागरूकता और रिकवरी के लिए आपका साथी।"
+  }
+}

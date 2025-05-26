@@ -1,0 +1,23 @@
+{
+  "appName": "نيروكير",
+  "nav": {
+    "dashboard": "لوحة التحكم",
+    "fastTest": "اختبار FAST",
+    "nearbyHospitals": "المستشفيات القريبة",
+    "rehabExercises": "تمارين إعادة التأهيل",
+    "speechTherapyAI": "علاج النطق بالذكاء الاصطناعي"
+  },
+  "languageSwitcher": {
+    "changeLanguage": "تغيير اللغة",
+    "en": "English (الإنجليزية)",
+    "te": "తెలుగు (التيلجو)",
+    "hi": "हिन्दी (الهندية)",
+    "ur": "اردو (الأردية)",
+    "ar": "العربية",
+    "zh": "中文 (الصينية)"
+  },
+  "dashboard": {
+    "welcome": "مرحباً بك في {appName}",
+    "description": "رفيقك للتوعية بالسكتة الدماغية والتعافي منها."
+  }
+}
