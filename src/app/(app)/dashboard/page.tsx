@@ -2,7 +2,7 @@
 import { MotivationalQuoteCard } from '@/components/features/common/MotivationalQuoteCard';
 import { motivationalQuotes } from '@/lib/constants';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Lightbulb } from 'lucide-react';
+import { Lightbulb, Brain } from 'lucide-react'; // Added Brain icon
 import { siteConfig } from '@/config/site'; // For appName
 import type { Metadata } from 'next';
 
@@ -20,7 +20,7 @@ export default async function DashboardPage() {
 
   // Static text, previously from dictionary
   const pageTranslations = {
-    welcome: `Welcome to ${appName}`,
+    welcome: `Welcome to`, // Modified to separate appName
     description: "Your companion for stroke awareness and recovery."
   };
   const commonTranslations = {
@@ -36,7 +36,8 @@ export default async function DashboardPage() {
     <div className="space-y-8">
       <div className="text-center md:text-left">
         <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl animate-in fade-in slide-in-from-top-8 duration-700">
-          {pageTranslations.welcome.replace(appName, '')}
+          {pageTranslations.welcome}{' '}
+          <Brain className="inline-block h-8 w-8 mr-1 text-primary animate-pulse" /> {/* Added Brain icon here */}
           <span className="text-primary animate-pulse">{appName}</span>
         </h1>
         <p className="mt-2 text-lg text-muted-foreground animate-in fade-in-0 slide-in-from-top-10 duration-700 delay-200">
