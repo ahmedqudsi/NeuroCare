@@ -6,7 +6,9 @@ import type { Nurse } from '@/types';
 import { HomeNurseBookingForm } from '@/components/features/healthcare-services/HomeNurseBookingForm';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Star, DollarSign } from 'lucide-react'; // Using Star as a generic rating/experience icon
+import { Star, DollarSign, ArrowLeft } from 'lucide-react'; // Using Star as a generic rating/experience icon
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Book a Home Nurse',
@@ -19,6 +21,7 @@ export default function HomeNurseBookingPage() {
     description: "Find and schedule certified nurses for personalized in-home care. Review profiles and book a suitable nurse for your needs.",
     availableNursesTitle: "Available Nurses",
     bookingFormTitle: "Make a Booking Request",
+    backButtonText: "Back to Healthcare Services",
   };
 
   return (
@@ -30,6 +33,14 @@ export default function HomeNurseBookingPage() {
         <p className="mt-2 text-lg text-muted-foreground">
           {pageStaticText.description}
         </p>
+        <div className="mt-6">
+          <Button asChild variant="outline">
+            <Link href="/healthcare-services">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              {pageStaticText.backButtonText}
+            </Link>
+          </Button>
+        </div>
       </div>
 
       <section className="space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
