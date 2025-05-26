@@ -21,7 +21,7 @@ export function ExerciseCard({ exercise }: ExerciseCardProps) {
   // Static text, previously from dictionary
   const cardStaticText = {
     instructionsTitle: "Instructions:",
-    watchVideoButton: "Watch Video Guide" // Updated button text slightly
+    watchVideoButton: "Watch Video" // Changed from "Watch Video Guide"
   };
 
   return (
@@ -60,3 +60,4 @@ export function ExerciseCard({ exercise }: ExerciseCardProps) {
     </Card>
   );
 }
+
