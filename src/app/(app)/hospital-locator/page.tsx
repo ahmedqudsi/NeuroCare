@@ -36,14 +36,15 @@ export default function HospitalLocatorPage() {
     const lowercasedSearchTerm = searchTerm.toLowerCase();
     const filtered = sampleHospitals.filter(hospital => 
       hospital.name.toLowerCase().includes(lowercasedSearchTerm) ||
-      hospital.address.toLowerCase().includes(lowercasedSearchTerm)
+      hospital.address.toLowerCase().includes(lowercasedSearchTerm) ||
+      hospital.address.toLowerCase().includes("india") // Ensure searching "India" works
     );
     setDisplayedHospitals(filtered);
   };
 
   return (
     <div className="space-y-8">
-      <div>
+      <div className="animate-in fade-in slide-in-from-top-8 duration-700">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">
           {pageStaticText.title}
         </h1>
@@ -52,7 +53,10 @@ export default function HospitalLocatorPage() {
         </p>
       </div>
 
-      <form onSubmit={handleSearch} className="flex gap-2 items-center p-4 border rounded-lg bg-card shadow">
+      <form 
+        onSubmit={handleSearch} 
+        className="flex gap-2 items-center p-4 border rounded-lg bg-card shadow animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300"
+      >
         <Input 
           type="text" 
           placeholder={pageStaticText.searchPlaceholder}
@@ -65,17 +69,19 @@ export default function HospitalLocatorPage() {
         </Button>
       </form>
 
-      {displayedHospitals.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {displayedHospitals.map((hospital) => (
-            <HospitalCard key={hospital.id} hospital={hospital} /> // dictionary prop removed
-          ))}
-        </div>
-      ) : (
-        <p className="text-center text-muted-foreground py-8">
-          {pageStaticText.noResults}
-        </p>
-      )}
+      <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 delay-500">
+        {displayedHospitals.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {displayedHospitals.map((hospital) => (
+              <HospitalCard key={hospital.id} hospital={hospital} /> // dictionary prop removed
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-muted-foreground py-8">
+            {pageStaticText.noResults}
+          </p>
+        )}
+      </div>
       
     </div>
   );
