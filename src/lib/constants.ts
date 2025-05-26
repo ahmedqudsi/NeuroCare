@@ -12,6 +12,9 @@ export const motivationalQuotes: Quote[] = [
   { id: '7', text: "Strength does not come from physical capacity. It comes from an indomitable will.", author: "Mahatma Gandhi" }
 ];
 
+// Placeholder video URL - replace with actual relevant videos
+const placeholderVideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"; // A generic, safe placeholder
+
 export const rehabilitationExercises: Exercise[] = [
   {
     id: '1',
@@ -26,6 +29,7 @@ export const rehabilitationExercises: Exercise[] = [
     ],
     imageUrl: 'https://placehold.co/600x400.png',
     imageHint: 'arm exercise',
+    videoUrl: placeholderVideoUrl,
   },
   {
     id: '2',
@@ -41,6 +45,7 @@ export const rehabilitationExercises: Exercise[] = [
     ],
     imageUrl: 'https://placehold.co/600x400.png',
     imageHint: 'wrist exercise',
+    videoUrl: placeholderVideoUrl,
   },
   {
     id: '3',
@@ -55,6 +60,7 @@ export const rehabilitationExercises: Exercise[] = [
     ],
     imageUrl: 'https://placehold.co/600x400.png',
     imageHint: 'leg exercise',
+    videoUrl: placeholderVideoUrl,
   },
   {
     id: '4',
@@ -69,6 +75,7 @@ export const rehabilitationExercises: Exercise[] = [
     ],
     imageUrl: 'https://placehold.co/600x400.png',
     imageHint: 'finger exercise',
+    videoUrl: placeholderVideoUrl,
   },
 ];
 
@@ -139,7 +146,7 @@ export const sampleHospitals: Hospital[] = [
    {
     id: '4',
     name: 'Ayaan Hospital',
-    address: '12-2-417/A/2, Subhash Chandra Bose Rd, near NMDC, Gudimalkapur, Mehdipatnam, Hyderabad, Telangana 500028, India',
+    address: 'Plot No. 12-2-417/A/2, Subhash Chandra Bose Rd, near NMDC, Gudimalkapur, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 72073 57861',
     services: ['Multi-Speciality Services', 'Intensive Care Unit', 'Surgical Facilities'],
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/KIMS_hospital_Secunderabad.jpg/640px-KIMS_hospital_Secunderabad.jpg',

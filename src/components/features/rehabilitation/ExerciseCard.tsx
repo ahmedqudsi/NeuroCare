@@ -4,7 +4,7 @@
 import type { Exercise } from '@/types';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ListChecks, PlayCircle, Play } from 'lucide-react'; // Added Play icon
+import { ListChecks, PlayCircle, Play } from 'lucide-react'; 
 
 interface ExerciseCardProps {
   exercise: Exercise;
@@ -12,16 +12,20 @@ interface ExerciseCardProps {
 
 export function ExerciseCard({ exercise }: ExerciseCardProps) {
   const handleWatchVideo = () => {
-    // Refined search query for better specificity
-    const searchQuery = `${exercise.name} stroke rehabilitation exercise guide`;
-    const youtubeSearchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(searchQuery)}`;
-    window.open(youtubeSearchUrl, '_blank', 'noopener,noreferrer');
+    if (exercise.videoUrl) {
+      window.open(exercise.videoUrl, '_blank', 'noopener,noreferrer');
+    } else {
+      // Fallback if no specific video URL is provided (though ideally it should be)
+      const searchQuery = `${exercise.name} stroke rehabilitation exercise guide`;
+      const youtubeSearchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(searchQuery)}`;
+      window.open(youtubeSearchUrl, '_blank', 'noopener,noreferrer');
+    }
   };
 
   // Static text, previously from dictionary
   const cardStaticText = {
     instructionsTitle: "Instructions:",
-    watchVideoButton: "Watch Video" // Changed from "Watch Video Guide"
+    watchVideoButton: "Watch Video"
   };
 
   return (
@@ -60,4 +64,3 @@ export function ExerciseCard({ exercise }: ExerciseCardProps) {
     </Card>
   );
 }
-

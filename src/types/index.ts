@@ -16,6 +16,7 @@ export type Exercise = {
   instructions: string[];
   imageUrl?: string;
   imageHint?: string;
+  videoUrl?: string; // Added videoUrl field
 };
 
 export type Quote = {
@@ -42,3 +43,4 @@ export type FASTStep = {
   details: string;
   icon?: LucideIcon; // Icon was already optional
 };
+
