@@ -126,7 +126,7 @@ export const sampleHospitals: Hospital[] = [
   {
     id: '3',
     name: 'Sarojini Devi Eye Hospital - Hyderabad',
-    address: '7VPC+J6P, Humayun Nagar, Mehdipatnam, Hyderabad, Telangana 500028, India',
+    address: '7VPC+J6P, Humayun Nagar Rd, Humayun Nagar, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2334 0119',
     services: ['Specialized Eye Care', 'Emergency Eye Services', 'Outpatient Department'],
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Sarojini_Devi_Eye_Hospital_Block.JPG/640px-Sarojini_Devi_Eye_Hospital_Block.JPG',
@@ -135,7 +135,7 @@ export const sampleHospitals: Hospital[] = [
    {
     id: '4',
     name: 'Ayaan Hospital - Hyderabad',
-    address: 'Plot No. 12-2-417/A/2, Main Road, beside Subhash Chandra Bose Statue, near NMDC, Gudimalkapur, Mehdipatnam, Hyderabad, Telangana 500028, India',
+    address: '12-2-417/A/2, Main Road, beside Subhash Chandra Bose Statue, near NMDC, Gudimalkapur, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 72073 57861',
     services: ['Multi-Speciality Services', 'Intensive Care Unit', 'Surgical Facilities'],
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/KIMS_hospital_Secunderabad.jpg/640px-KIMS_hospital_Secunderabad.jpg',
@@ -165,7 +165,7 @@ export const sampleHospitals: Hospital[] = [
     address: 'Rao Saheb Achutrao Patwardhan Marg, Four Bungalows, Andheri West, Mumbai, Maharashtra 400053, India',
     phone: '+91 22 3066 6666',
     services: ['Multi-Speciality', 'Robotic Surgery', 'Cancer Care', 'Stroke Program'],
-    imageUrl: 'https://placehold.co/600x400.png',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Kokilaben_Dhirubhai_Ambani_Hospital_building.jpg/640px-Kokilaben_Dhirubhai_Ambani_Hospital_building.jpg',
     imageHint: 'large hospital mumbai',
   },
   {
@@ -174,7 +174,7 @@ export const sampleHospitals: Hospital[] = [
     address: 'A-791, Bandra Reclamation, Bandra West, Mumbai, Maharashtra 400050, India',
     phone: '+91 22 2675 1000',
     services: ['Neurology', 'Cardiology', 'Oncology', 'Emergency Room'],
-    imageUrl: 'https://placehold.co/600x400.png',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Lilavati_Hospital_and_Research_Centre%2C_Bandra%2C_Mumbai.jpg/640px-Lilavati_Hospital_and_Research_Centre%2C_Bandra%2C_Mumbai.jpg',
     imageHint: 'research hospital mumbai',
   },
   {
@@ -183,7 +183,7 @@ export const sampleHospitals: Hospital[] = [
     address: '60 A, Bhulabhai Desai Road, Breach Candy, Mumbai, Maharashtra 400026, India',
     phone: '+91 22 2367 1888',
     services: ['Critical Care', 'Diagnostic Services', 'Surgical Specialties', 'Neurology'],
-    imageUrl: 'https://placehold.co/600x400.png',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Breach_Candy_Hospital.jpg/640px-Breach_Candy_Hospital.jpg',
     imageHint: 'classic hospital mumbai',
   },
   {
@@ -201,7 +201,7 @@ export const sampleHospitals: Hospital[] = [
     address: 'Okhla Road, New Friends Colony, New Delhi, Delhi 110025, India',
     phone: '+91 11 4713 5000',
     services: ['Cardiac Care', 'Emergency Services', 'Neurology', 'Vascular Surgery'],
-    imageUrl: 'https://placehold.co/600x400.png',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Fortis_Escorts_Heart_Institute_Okhla_Delhi.jpg/640px-Fortis_Escorts_Heart_Institute_Okhla_Delhi.jpg',
     imageHint: 'heart institute delhi',
   },
   {
@@ -214,3 +214,4 @@ export const sampleHospitals: Hospital[] = [
     imageHint: 'ganga ram hospital delhi',
   }
 ];
+
