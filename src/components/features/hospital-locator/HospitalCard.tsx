@@ -24,43 +24,42 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
   };
 
   const getImagePath = () => {
-    // Specific cases already handled or defined by user
+    // Specific cases for images in the public folder
     if (hospital.name === 'Olive Hospital - Hyderabad') {
       return '/olive.webp';
     }
     if (hospital.name === 'Premier Hospital - Hyderabad') {
       return '/premier.jpeg';
     }
-    // New cases based on first name
     if (hospital.name === 'Sarojini Devi Eye Hospital - Hyderabad') {
-      return '/Sarojini.jpg';
+      return '/Sarojini.jpg'; // Assuming this was previously set or intended
     }
     if (hospital.name === 'Ayaan Hospital - Hyderabad') {
-      return '/Ayaan.jpg';
+      return '/Ayaan.jpg'; // Assuming this was previously set or intended
     }
     if (hospital.name === 'Bombay Hospital & Medical Research Centre - Mumbai') {
-      return '/Bombay.jpg';
+      return '/bombay.jpg';
     }
     if (hospital.name === 'Max Healthcare Saket - Delhi') {
-      return '/Max.jpg';
+      return '/max hospital.jpg';
     }
     if (hospital.name === 'Kokilaben Dhirubhai Ambani Hospital - Mumbai') {
-      return '/Kokilaben.jpg';
+      return '/kokila.avif';
     }
     if (hospital.name === 'Lilavati Hospital and Research Centre - Mumbai') {
-      return '/Lilavati.jpg';
+      return '/lilavita.jpg';
     }
     if (hospital.name === 'Breach Candy Hospital Trust - Mumbai') {
-      return '/Breach.jpg';
+      return '/Breach.jpg'; // Assuming this was previously set or intended
     }
     if (hospital.name === 'Indraprastha Apollo Hospitals - Delhi') {
-      return '/Indraprastha.jpg';
+      return '/Indraprastha.jpg'; // Assuming this was previously set or intended
     }
     if (hospital.name === 'Fortis Escorts Heart Institute - Delhi') {
-      return '/Fortis.jpg';
+      return '/fortis.jpg';
     }
     if (hospital.name === 'Sir Ganga Ram Hospital - Delhi') {
-      return '/Sir.jpg';
+      return '/sir ganga.jpeg';
     }
 
     // Fallback to the imageUrl from constants if no specific local path is matched
