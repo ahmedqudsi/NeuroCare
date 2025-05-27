@@ -15,6 +15,7 @@ import { Form } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { ShippingAddressForm } from '@/components/features/checkout/ShippingAddressForm';
 import { PaymentDetailsForm } from '@/components/features/checkout/PaymentDetailsForm';
+import confetti from 'canvas-confetti';
 
 const checkoutFormSchema = z.object({
   // Shipping Details
@@ -69,6 +70,34 @@ export default function CheckoutPage() {
       router.push('/healthcare-services/pharma-delivery');
     }
   }, [cartItems, router, isSubmitting, paymentComplete]);
+
+  useEffect(() => {
+    if (paymentComplete && !paymentProcessing) {
+      const duration = 2 * 1000; // Confetti for 2 seconds
+      const animationEnd = Date.now() + duration;
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 2000 }; // zIndex higher than modal
+
+      function randomInRange(min: number, max: number) {
+        return Math.random() * (max - min) + min;
+      }
+
+      const interval = setInterval(function() {
+        const timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+          return clearInterval(interval);
+        }
+
+        const particleCount = 50 * (timeLeft / duration);
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+      }, 250);
+      
+      // Cleanup interval on component unmount or if dependencies change
+      return () => clearInterval(interval);
+    }
+  }, [paymentComplete, paymentProcessing]);
+
 
   const calculateTotal = () => {
     return cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0).toFixed(2);
