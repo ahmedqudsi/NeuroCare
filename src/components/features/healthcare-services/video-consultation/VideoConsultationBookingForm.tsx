@@ -26,13 +26,13 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
-import { CalendarIcon, AlertTriangle, CheckCircle2 } from 'lucide-react'; // Added CheckCircle2
+import { CalendarIcon, AlertTriangle, CheckCircle2, Loader2 } from 'lucide-react'; // Added CheckCircle2 and Loader2
 import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { db } from '@/lib/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp, Timestamp } from 'firebase/firestore'; // Added Timestamp
 import { sendBookingConfirmation } from '@/lib/notifications';
 
 const videoBookingFormSchema = z.object({
@@ -78,8 +78,7 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
 
   async function onSubmit(values: z.infer<typeof videoBookingFormSchema>) {
     setIsSubmitting(true);
-    setSubmissionStatus(null);
-    // console.log("Video Consultation Request Submitted:", values); // For debugging
+    setSubmissionStatus(null); // Clear previous status immediately
 
     const patientId = "mock-patient-123"; // Placeholder for actual patient ID
 
@@ -100,7 +99,7 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
         patientName: values.patientName,
         doctorName: selectedDoctor.fullName,
         consultationType: values.consultationType,
-        scheduledDate: values.preferredDate, 
+        scheduledDate: Timestamp.fromDate(values.preferredDate), // Store as Firestore Timestamp
         timeSlot: values.preferredTimeSlot,
         symptoms: values.symptoms,
         status: "pending",
@@ -108,7 +107,6 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
         createdAt: serverTimestamp(),
       });
 
-      // console.log("Video consultation booking stored with ID: ", docRef.id); // For debugging
 
       const consultationDateTime = `${format(values.preferredDate, "PPP")} at ${values.preferredTimeSlot}`;
       sendBookingConfirmation(values.patientName, selectedDoctor.fullName, consultationDateTime);
@@ -305,7 +303,7 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
 
         {submissionStatus === 'success' && (
           <Alert variant="default" className="bg-green-50 border-green-300 text-green-700 dark:bg-green-900/30 dark:border-green-700 dark:text-green-300">
-            <CheckCircle2 className="h-4 w-4 !text-green-600 dark:!text-green-400" /> {/* Using CheckCircle2 */}
+            <CheckCircle2 className="h-4 w-4 !text-green-600 dark:!text-green-400" />
             <AlertTitle>Request Submitted & Awaiting Confirmation!</AlertTitle>
             <AlertDescription>
               Your video consultation request has been sent. We'll notify you upon confirmation.
@@ -324,7 +322,14 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
         )}
 
         <Button type="submit" className="w-full sm:w-auto" disabled={isSubmitting}>
-          {isSubmitting ? "Submitting Request..." : "Book Video Consultation"}
+          {isSubmitting ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Processing...
+            </>
+          ) : (
+            "Book Video Consultation"
+          )}
         </Button>
       </form>
     </Form>
