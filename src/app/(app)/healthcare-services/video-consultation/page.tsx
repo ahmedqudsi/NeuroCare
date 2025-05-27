@@ -8,7 +8,7 @@ import type { Doctor, ConsultationType } from '@/types';
 import { VideoDoctorProfileCard } from '@/components/features/healthcare-services/video-consultation/VideoDoctorProfileCard';
 import { VideoConsultationBookingForm } from '@/components/features/healthcare-services/video-consultation/VideoConsultationBookingForm';
 import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, UploadCloud } from 'lucide-react';
+import { ArrowLeft, UploadCloud, Video as VideoIcon } from 'lucide-react'; // Added VideoIcon
 import { useEffect, useState, type ChangeEvent } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, getDocs } from 'firebase/firestore';
@@ -31,7 +31,7 @@ export default function VideoConsultationPage() {
     backButtonText: "Back to Healthcare Services",
     joinCallTitle: "Join Video Call",
     joinCallDescription: "Click the button below to join the video consultation. Ensure you have a stable internet connection.",
-    joinCallButton: "Join Meeting Now",
+    joinCallButton: "Video Call", // Changed text here
     prescriptionTitle: "Prescription and Follow-up Notes",
     prescriptionDescriptionPatient: "Upload prescription and notes for the patient here (PDF/JPG accepted). The actual file upload to cloud storage will be implemented in a future update.",
     prescriptionDescriptionDoctor: "Upload prescription and notes for the patient here.",
@@ -109,7 +109,7 @@ export default function VideoConsultationPage() {
         description: `File: ${selectedFile.name} (${(selectedFile.size / 1024).toFixed(2)} KB)`,
       });
       // Reset file input after selection (optional)
-      // setSelectedFile(null); 
+      // setSelectedFile(null);
       // const fileInput = document.getElementById('prescriptionUpload') as HTMLInputElement;
       // if (fileInput) fileInput.value = '';
     } else {
@@ -171,6 +171,7 @@ export default function VideoConsultationPage() {
         <p className="text-muted-foreground">{pageStaticText.joinCallDescription}</p>
         <Button asChild>
             <a href="https://meet.jit.si/NeuroCareTestRoom" target="_blank" rel="noopener noreferrer">
+                <VideoIcon className="mr-2 h-4 w-4" /> {/* Using VideoIcon */}
                 {pageStaticText.joinCallButton}
             </a>
         </Button>

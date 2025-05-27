@@ -3,8 +3,8 @@ import type { Doctor } from '@/types';
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Video, MessageSquareText, CheckCircle2, CalendarClock } from 'lucide-react'; // Removed Download icon
-import { FeedbackForm } from './FeedbackForm';
+import { Video, MessageSquareText, CheckCircle2, CalendarClock } from 'lucide-react';
+// FeedbackForm removed
 import { Button } from '@/components/ui/button';
 
 interface VideoDoctorProfileCardProps {
@@ -41,7 +41,7 @@ export function VideoDoctorProfileCard({ doctor }: VideoDoctorProfileCardProps) 
         <p className="flex items-center"><MessageSquareText className="mr-2 h-4 w-4 text-primary" /> Speaks: {doctor.languagesSpoken.join(', ')}</p>
         {doctor.videoAvailabilitySlots && doctor.videoAvailabilitySlots.length > 0 && (
           <div className="flex items-start">
-            <CalendarClock className="mr-2 h-4 w-4 text-primary mt-0.5 flex-shrink-0" /> 
+            <CalendarClock className="mr-2 h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
             <div>
               <strong>Sample Slots:</strong>
               <ul className="list-disc list-inside pl-1 text-xs">
@@ -54,13 +54,8 @@ export function VideoDoctorProfileCard({ doctor }: VideoDoctorProfileCardProps) 
         {doctor.bio && <p className="mt-2 text-xs italic line-clamp-2">{doctor.bio}</p>}
       </CardContent>
        <CardFooter className="pt-2 flex flex-wrap gap-2 justify-between items-center">
-         <Button size="sm" asChild>
-            <a href="https://meet.jit.si/NeuroCareTestRoom" target="_blank" rel="noopener noreferrer">
-                <Video className="mr-2 h-4 w-4" /> Join Call
-            </a>
-         </Button>
-          {/* Removed Download Prescription button from here */}
-          <FeedbackForm />
+         {/* Removed Join Call button */}
+         {/* Removed FeedbackForm component */}
        </CardFooter>
     </Card>
   );

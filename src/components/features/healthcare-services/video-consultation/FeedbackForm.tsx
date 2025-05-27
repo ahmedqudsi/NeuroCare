@@ -42,10 +42,20 @@ export function FeedbackForm() {
     }
     // In a real app, you would send this feedback to your backend (e.g., Firestore)
     console.log("Feedback submitted:", selectedFeedback);
-    toast({
-      title: "Feedback Submitted",
-      description: "Thank you for your response!",
-    });
+
+    if (selectedFeedback <= 2) { // For "Poor" or "Very Poor"
+      toast({
+        title: "We Appreciate Your Honesty",
+        description: "We're sorry to hear about your experience. Your feedback is valuable, and we'll strive to make necessary improvements. Thank you.",
+        variant: "default",
+        duration: 7000,
+      });
+    } else {
+      toast({
+        title: "Feedback Submitted",
+        description: "Thank you for your response! We're glad to hear from you.",
+      });
+    }
     setSelectedFeedback(null); // Reset selection
     setOpen(false);
   };
