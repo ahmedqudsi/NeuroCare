@@ -12,15 +12,11 @@ import { ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, getDocs } from 'firebase/firestore';
-import { FeedbackForm } from '@/components/features/healthcare-services/video-consultation/FeedbackForm'; // Import FeedbackForm
-
-// If you need dynamic metadata with client components, you'd typically handle it differently,
-// e.g. by setting document.title in useEffect or using a Head component from next/head if not in App Router.
-// For App Router, metadata is usually in server components.
+import { FeedbackForm } from '@/components/features/healthcare-services/video-consultation/FeedbackForm';
 
 export default function VideoConsultationPage() {
-  const [doctors, setDoctors] = useState<Doctor[]>(staticSampleDoctors); // Initialize with static data
-  const [isLoading, setIsLoading] = useState(true); // Still used to manage fetching logic
+  const [doctors, setDoctors] = useState<Doctor[]>(staticSampleDoctors);
+  const [isLoading, setIsLoading] = useState(true);
 
   const pageStaticText = {
     mainTitle: 'Video Consultation with Doctors',
@@ -28,12 +24,11 @@ export default function VideoConsultationPage() {
     availableDoctorsTitle: 'Doctors Available for Video Consultation',
     bookingFormTitle: 'Book Your Video Consultation',
     backButtonText: "Back to Healthcare Services",
-    // loadingDoctors: "Loading doctors...", // Removed this
     joinCallTitle: "Join Video Call",
     joinCallDescription: "Click the button below to join the video consultation. Ensure you have a stable internet connection.",
     joinCallButton: "Join Meeting Now",
     prescriptionTitle: "Prescription and Follow-up Notes",
-    prescriptionDescriptionPatient: "Download your prescription and follow-up notes here after your consultation.",
+    prescriptionDescriptionPatient: "Download your prescription and follow-up notes here after your consultation. (Note: Uploading new prescriptions, which will support PDF/JPG formats, will be available in a future update.)",
     prescriptionDescriptionDoctor: "Upload prescription and notes for the patient here.",
     downloadPrescriptionButton: "Download Prescription",
     feedbackTitle: "Feedback and Ratings",
@@ -68,14 +63,14 @@ export default function VideoConsultationPage() {
               videoAvailabilitySlots: data.videoAvailabilitySlots || [],
             } as Doctor);
           });
-          setDoctors(doctorsData.length > 0 ? doctorsData : staticSampleDoctors); // Use fetched data or fallback
+          setDoctors(doctorsData.length > 0 ? doctorsData : staticSampleDoctors);
         } catch (error) {
           console.error("Error fetching doctors from Firestore:", error);
-          setDoctors(staticSampleDoctors); // Fallback to static data on error
+          setDoctors(staticSampleDoctors);
         }
       } else {
         console.warn("Firebase not initialized, using static doctor data.");
-        setDoctors(staticSampleDoctors); // Fallback if Firebase isn't ready
+        setDoctors(staticSampleDoctors);
       }
       setIsLoading(false);
     };
@@ -111,7 +106,6 @@ export default function VideoConsultationPage() {
 
       <section className="space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
         <h2 className="text-2xl font-semibold text-foreground">{pageStaticText.availableDoctorsTitle}</h2>
-        {/* Removed explicit loading text. The list will be empty or show "No doctors..." if data isn't ready/available */}
         {videoDoctors.length > 0 ? (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {videoDoctors.map((doctor: Doctor) => (
@@ -142,31 +136,20 @@ export default function VideoConsultationPage() {
                 {pageStaticText.joinCallButton}
             </a>
         </Button>
-        {/* Placeholder for embedded video call integration. You would uncomment and configure this.
-        <div className="mt-4 aspect-video w-full max-w-3xl rounded-lg border bg-muted overflow-hidden">
-           <iframe
-            src="https://meet.jit.si/NeuroCareTestRoom" // Replace with dynamic room URL
-            allow="camera; microphone; fullscreen; display-capture"
-            className="w-full h-full border-0"
-            title="Video Consultation"
-          ></iframe>
-        </div>
-        */}
       </section>
 
       <section className="space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-800">
         <h2 className="text-2xl font-semibold text-foreground">{pageStaticText.prescriptionTitle}</h2>
         <p className="text-muted-foreground">
           {pageStaticText.prescriptionDescriptionPatient}
-          {/* For doctor's view, you might show: {pageStaticText.prescriptionDescriptionDoctor} */}
         </p>
         <Button asChild variant="outline">
-          <a href="/prescription.pdf" download="prescription.pdf">
+          <a href="/prescription.pdf" download="prescription.pdf" target="_blank" rel="noopener noreferrer">
             {pageStaticText.downloadPrescriptionButton}
           </a>
         </Button>
         <p className="text-xs text-muted-foreground mt-1">
-          Note: To test download, create a dummy `prescription.pdf` file in your `public` folder.
+          Important: To test download, create a dummy file named `prescription.pdf` in your `public` folder.
         </p>
       </section>
 

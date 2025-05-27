@@ -60,7 +60,7 @@ export function VideoDoctorProfileCard({ doctor }: VideoDoctorProfileCardProps) 
             </a>
          </Button>
           <Button size="sm" variant="outline" asChild>
-            <a href="/prescription.pdf" download="prescription.pdf">
+            <a href="/prescription.pdf" download="prescription.pdf" target="_blank" rel="noopener noreferrer">
                 <Download className="mr-2 h-4 w-4" /> Prescription
             </a>
           </Button>
