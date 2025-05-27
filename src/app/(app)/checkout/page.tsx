@@ -30,9 +30,9 @@ const checkoutFormSchema = z.object({
   // Payment Details
   cardholderName: z.string().min(3, { message: "Cardholder name must be at least 3 characters." }),
   cardNumber: z.string()
-    .min(15, { message: "Card number must be between 15 and 19 digits."})
-    .max(19, { message: "Card number must be between 15 and 19 digits."})
-    .regex(/^(\d{4} ?){3,4}\d{3,4}$/, { message: "Enter a valid card number (e.g., XXXX XXXX XXXX XXXX)." }),
+    .min(15, { message: "Card number must be 15 or 16 digits."})
+    .max(16, { message: "Card number must be 15 or 16 digits."})
+    .regex(/^\d+$/, { message: "Card number must contain only digits." }), // Validates raw digits
   expiryDate: z.string().regex(/^(0[1-9]|1[0-2])\/\d{2}$/, { message: "Enter expiry date in MM/YY format (e.g., 08/25)." }),
   cvv: z.string().regex(/^\d{3,4}$/, { message: "CVV must be 3 or 4 digits." }),
 });
@@ -123,7 +123,7 @@ export default function CheckoutPage() {
     setPaymentComplete(false);
     setShowPaymentModal(true);
 
-    console.log("Checkout Data:", data);
+    console.log("Checkout Data (raw card number stored):", data);
     console.log("Cart Items for Order:", cartItems);
 
     await new Promise(resolve => setTimeout(resolve, 3000));
@@ -160,13 +160,10 @@ export default function CheckoutPage() {
         }
       }
 
-      // Mark the previous most recent order as "Delivered"
       if (existingOrders.length > 0 && existingOrders[0].status === "Processing") {
         existingOrders[0].status = "Delivered";
-        // Optionally update its timestamp to reflect delivery time, for now just keeping original
       }
 
-      // Add the new order to the beginning of the list
       const updatedOrders = [newOrderData, ...existingOrders];
       localStorage.setItem('neuroCareOrders', JSON.stringify(updatedOrders));
     }
@@ -192,7 +189,7 @@ export default function CheckoutPage() {
     clearCart();
     form.reset();
     setIsSubmitting(false);
-    router.push('/order-status'); // Navigate to order status page
+    router.push('/order-status'); 
   }
 
   if (cartItems.length === 0 && !isSubmitting && !paymentComplete) {
@@ -298,4 +295,3 @@ export default function CheckoutPage() {
     </div>
   );
 }
-    
