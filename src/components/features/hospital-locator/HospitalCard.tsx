@@ -28,7 +28,7 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
       {hospital.imageUrl && (
          <div className="relative w-full h-48 bg-secondary">
             <Image
-              src={hospital.imageUrl}
+              src={hospital.name === 'Olive Hospital' ? '/olive.webp' : hospital.imageUrl}
               alt={`Image of ${hospital.name}`}
               fill
               style={{ objectFit: 'cover' }}

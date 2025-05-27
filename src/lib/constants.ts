@@ -148,8 +148,8 @@ export const sampleHospitals: Hospital[] = [
     address: '#12-2-823/A/25, St Ann\'s School Rd, Santosh Nagar, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2353 8686',
     services: ['General Medicine', 'Orthopedics', 'Neurology Consultations', '24/7 Pharmacy'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Fortis_Hospital_Mohali_India.jpg/640px-Fortis_Hospital_Mohali_India.jpg',
-    imageHint: 'hospital building hyderabad',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Apollo_hospital_hyderabad.jpg/640px-Apollo_hospital_hyderabad.jpg',
+    imageHint: 'apollo hospital hyderabad',
   },
   {
     id: '3',
@@ -490,3 +490,5 @@ export const sampleConsultationTypes: ConsultationType[] = [
   { id: 'mental_wellness', name: 'Mental Wellness Check-in', description: 'Consultation for emotional support and mental well-being.' },
   { id: 'cardiology', name: 'Cardiology Consultation', description: 'For heart-related concerns and post-stroke cardiac care.' },
 ];
+
+    
