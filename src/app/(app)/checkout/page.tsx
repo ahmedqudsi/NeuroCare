@@ -39,6 +39,21 @@ const checkoutFormSchema = z.object({
 
 type CheckoutFormValues = z.infer<typeof checkoutFormSchema>;
 
+interface StoredOrder {
+  orderId: string;
+  items: { name: string; quantity: number; }[];
+  total: string;
+  shippingAddress: {
+    fullName: string;
+    streetAddress: string;
+    city: string;
+    state: string;
+    pincode: string;
+  };
+  status: "Processing" | "Out for Delivery" | "Delivered" | "Cancelled";
+  timestamp: string;
+}
+
 export default function CheckoutPage() {
   const { cartItems, clearCart } = useCart();
   const router = useRouter();
@@ -66,14 +81,14 @@ export default function CheckoutPage() {
   });
 
   useEffect(() => {
-    if (cartItems.length === 0 && !isSubmitting && !paymentComplete) { 
+    if (cartItems.length === 0 && !isSubmitting && !paymentComplete) {
       router.push('/healthcare-services/pharma-delivery');
     }
   }, [cartItems, router, isSubmitting, paymentComplete]);
 
   useEffect(() => {
     if (paymentComplete && !paymentProcessing) {
-      const duration = 2 * 1000; 
+      const duration = 2 * 1000;
       const animationEnd = Date.now() + duration;
       const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 2000 };
 
@@ -92,7 +107,7 @@ export default function CheckoutPage() {
         confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
         confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
       }, 250);
-      
+
       return () => clearInterval(interval);
     }
   }, [paymentComplete, paymentProcessing]);
@@ -111,13 +126,13 @@ export default function CheckoutPage() {
     console.log("Checkout Data:", data);
     console.log("Cart Items for Order:", cartItems);
 
-    await new Promise(resolve => setTimeout(resolve, 3000)); 
+    await new Promise(resolve => setTimeout(resolve, 3000));
 
     setPaymentProcessing(false);
     setPaymentComplete(true);
 
     const mockOrderId = `NC-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
-    const orderData = {
+    const newOrderData: StoredOrder = {
       orderId: mockOrderId,
       items: cartItems.map(item => ({ name: item.product.productName, quantity: item.quantity })),
       total: calculateTotal(),
@@ -133,9 +148,29 @@ export default function CheckoutPage() {
     };
 
     if (typeof window !== "undefined") {
-      localStorage.setItem('neuroCareLastOrder', JSON.stringify(orderData));
+      let existingOrders: StoredOrder[] = [];
+      const storedOrdersData = localStorage.getItem('neuroCareOrders');
+      if (storedOrdersData) {
+        try {
+          existingOrders = JSON.parse(storedOrdersData);
+          if (!Array.isArray(existingOrders)) existingOrders = [];
+        } catch (e) {
+          console.error("Error parsing existing orders from localStorage", e);
+          existingOrders = [];
+        }
+      }
+
+      // Mark the previous most recent order as "Delivered"
+      if (existingOrders.length > 0 && existingOrders[0].status === "Processing") {
+        existingOrders[0].status = "Delivered";
+        // Optionally update its timestamp to reflect delivery time, for now just keeping original
+      }
+
+      // Add the new order to the beginning of the list
+      const updatedOrders = [newOrderData, ...existingOrders];
+      localStorage.setItem('neuroCareOrders', JSON.stringify(updatedOrders));
     }
-    
+
 
     toast({
       title: "Order Placed Successfully!",
@@ -148,16 +183,16 @@ export default function CheckoutPage() {
       duration: 7000,
     });
 
-    await new Promise(resolve => setTimeout(resolve, 2000)); 
+    await new Promise(resolve => setTimeout(resolve, 2000));
 
     setShowPaymentModal(false);
-    setPaymentProcessing(false); 
+    setPaymentProcessing(false);
     setPaymentComplete(false);
-    
-    clearCart(); 
+
+    clearCart();
     form.reset();
     setIsSubmitting(false);
-    router.push('/dashboard'); 
+    router.push('/order-status'); // Navigate to order status page
   }
 
   if (cartItems.length === 0 && !isSubmitting && !paymentComplete) {
@@ -185,7 +220,6 @@ export default function CheckoutPage() {
               <Card className="shadow-lg">
                 <CardHeader>
                   <CardTitle>Shipping Information</CardTitle>
-                  <CardDescription>Please provide your shipping details.</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ShippingAddressForm />
@@ -230,7 +264,7 @@ export default function CheckoutPage() {
               </Card>
             </div>
           </div>
-          
+
           <div className="mt-8 flex justify-center">
             <Button type="submit" size="lg" className="w-full max-w-md" disabled={isSubmitting || showPaymentModal}>
               <CreditCard className="mr-2 h-4 w-4" />
@@ -264,5 +298,4 @@ export default function CheckoutPage() {
     </div>
   );
 }
-
     
