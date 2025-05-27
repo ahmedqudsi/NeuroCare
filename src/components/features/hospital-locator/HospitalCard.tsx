@@ -32,10 +32,10 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
       return '/premier.jpeg';
     }
     if (hospital.name === 'Sarojini Devi Eye Hospital - Hyderabad') {
-      return '/Sarojini.jpg'; // Assuming this was previously set or intended
+      return '/sarojini.avif'; // Updated
     }
     if (hospital.name === 'Ayaan Hospital - Hyderabad') {
-      return '/Ayaan.jpg'; // Assuming this was previously set or intended
+      return '/ayaan.png'; // Updated
     }
     if (hospital.name === 'Bombay Hospital & Medical Research Centre - Mumbai') {
       return '/bombay.jpg';
@@ -50,10 +50,10 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
       return '/lilavita.jpg';
     }
     if (hospital.name === 'Breach Candy Hospital Trust - Mumbai') {
-      return '/Breach.jpg'; // Assuming this was previously set or intended
+      return '/Breach.jpg'; 
     }
     if (hospital.name === 'Indraprastha Apollo Hospitals - Delhi') {
-      return '/Indraprastha.jpg'; // Assuming this was previously set or intended
+      return '/Indraprastha.jpg'; 
     }
     if (hospital.name === 'Fortis Escorts Heart Institute - Delhi') {
       return '/fortis.jpg';
