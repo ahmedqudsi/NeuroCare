@@ -4,9 +4,11 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { PackageSearch, ArrowLeft, Timer, ShoppingBag } from 'lucide-react';
+import { PackageSearch, ArrowLeft, Timer, ShoppingBag, AlertTriangle, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { formatDistanceToNow } from 'date-fns';
+import { Alert, AlertDescription, AlertTitle as AlertTitleUi } from "@/components/ui/alert";
+
 
 interface OrderItem {
   name: string;
@@ -30,18 +32,42 @@ interface StoredOrder {
 export default function OrderStatusPage() {
   const [order, setOrder] = useState<StoredOrder | null>(null);
   const [loading, setLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
+    setLoading(true);
+    setErrorMessage(null);
+
     if (typeof window !== "undefined") {
       const storedOrderData = localStorage.getItem('neuroCareLastOrder');
+      console.log("OrderStatusPage: Raw data from localStorage for 'neuroCareLastOrder':", storedOrderData);
+
       if (storedOrderData) {
         try {
-          setOrder(JSON.parse(storedOrderData));
-        } catch (error) {
-          console.error("Error parsing order data from localStorage:", error);
+          const parsedOrder: StoredOrder = JSON.parse(storedOrderData);
+          
+          // Basic validation of the parsed object
+          if (parsedOrder && typeof parsedOrder.orderId === 'string' && Array.isArray(parsedOrder.items) && typeof parsedOrder.shippingAddress === 'object') {
+            setOrder(parsedOrder);
+          } else {
+            console.error("OrderStatusPage: Parsed order data is missing essential fields or has incorrect types.", parsedOrder);
+            setErrorMessage("The stored order data is incomplete or malformed. Please try placing a new order.");
+            localStorage.removeItem('neuroCareLastOrder'); // Clean up malformed data
+            setOrder(null);
+          }
+        } catch (e: any) {
+          console.error("OrderStatusPage: Error parsing order data from localStorage.", e);
+          setErrorMessage(`Failed to load your order details: ${e.message}. The stored data might be corrupted and has been cleared. Please try placing a new order.`);
+          localStorage.removeItem('neuroCareLastOrder'); // Clean up corrupted data
           setOrder(null);
         }
+      } else {
+        // No order data found, which is normal if no order has been placed.
+        console.log("OrderStatusPage: No order data found in localStorage for 'neuroCareLastOrder'.");
+        setOrder(null);
       }
+    } else {
+      setErrorMessage("Unable to access order storage. This feature requires a browser environment.");
     }
     setLoading(false);
   }, []);
@@ -60,6 +86,7 @@ export default function OrderStatusPage() {
     outForDeliveryMessage: "Your order is out for delivery!",
     deliveredMessage: "Your order has been delivered.",
     estimatedDelivery: "Estimated delivery in 10-15 minutes (Demo).",
+    errorLoadingOrder: "Error Loading Order",
   };
 
   if (loading) {
@@ -86,7 +113,17 @@ export default function OrderStatusPage() {
         </Button>
       </div>
 
-      {order ? (
+      {errorMessage && (
+        <Alert variant="destructive" className="animate-in fade-in duration-500">
+          <AlertTriangle className="h-5 w-5" />
+          <AlertTitleUi>{pageStaticText.errorLoadingOrder}</AlertTitleUi>
+          <AlertDescription>
+            {errorMessage}
+          </AlertDescription>
+        </Alert>
+      )}
+
+      {!errorMessage && order && (
         <Card className="shadow-lg animate-in fade-in slide-in-from-bottom-8 duration-700">
           <CardHeader>
             <CardTitle className="text-2xl">
@@ -134,7 +171,9 @@ export default function OrderStatusPage() {
             </div>
           </CardContent>
         </Card>
-      ) : (
+      )}
+
+      {!errorMessage && !order && !loading && (
         <div className="text-center py-12 animate-in fade-in duration-700">
           <ShoppingBag className="mx-auto h-16 w-16 text-muted-foreground opacity-50" />
           <p className="mt-4 text-xl text-muted-foreground">
@@ -145,5 +184,3 @@ export default function OrderStatusPage() {
     </div>
   );
 }
-
-    
