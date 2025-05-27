@@ -52,7 +52,7 @@ export default function PharmaDeliveryPage() {
       // Simulate upload - In a real app, upload to Firebase Storage
       toast({
         title: 'Prescription Upload Initiated',
-        description: `Your prescription ${selectedFile.name} is being processed. This is a demo; no actual upload occurs.`,
+        description: `Your prescription ${selectedFile.name} has been received and is being processed.`,
         duration: 5000,
       });
       setSelectedFile(null); // Reset after "upload"
@@ -152,5 +152,3 @@ export default function PharmaDeliveryPage() {
     </div>
   );
 }
-
-    

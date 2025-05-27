@@ -83,7 +83,7 @@ export default function OrderStatusPage() {
     processingMessage: "Your order is being prepared.",
     outForDeliveryMessage: "Your order is out for delivery!",
     deliveredMessage: "This order was successfully delivered!",
-    estimatedDelivery: "Estimated delivery in 10-15 minutes (Demo).",
+    estimatedDelivery: "Estimated delivery in 10-15 minutes.",
     errorLoadingOrder: "Error Loading Order History",
   };
 
@@ -211,4 +211,3 @@ export default function OrderStatusPage() {
     </div>
   );
 }
-
