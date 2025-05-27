@@ -31,6 +31,9 @@ import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { db } from '@/lib/firebase';
+import { collection, addDoc } from 'firebase/firestore';
+import { sendBookingConfirmation } from '@/lib/notifications';
 
 const videoBookingFormSchema = z.object({
   patientName: z.string().min(2, {
@@ -79,19 +82,56 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
     setSubmissionStatus(null);
     console.log("Video Consultation Request Submitted:", values);
 
-    // Simulate API call (e.g., to Firebase Firestore)
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      // Hardcoded patient ID for now (replace with actual user authentication)
+      const patientId = "test-patient-id";
+
+      if (db) {
+        const docRef = await addDoc(collection(db, "video_consultations"), {
+          doctor_id: values.selectedDoctorId,
+          patient_id: patientId,
+          scheduled_time: values.preferredDate,
+          time_slot: values.preferredTimeSlot,
+          consultation_type: values.consultationType,
+          symptoms: values.symptoms,
+          status: "pending",
+          uploaded_reports: [], // Implement file upload later
+        });
+
+        console.log("Document written with ID: ", docRef.id);
+
+        const selectedDoctor = doctors.find(d => d.id === values.selectedDoctorId)?.fullName || 'the selected doctor';
+        const consultationDateTime = format(values.preferredDate, "PPP") + " at " + values.preferredTimeSlot;
+
+        sendBookingConfirmation(values.patientName, selectedDoctor, consultationDateTime);
     
-    const selectedDoctor = doctors.find(d => d.id === values.selectedDoctorId)?.fullName || 'the selected doctor';
-    
-    toast({
-      title: "Video Consultation Request Submitted!",
-      description: `Thank you, ${values.patientName}. Your request for a video consultation with ${selectedDoctor} on ${format(values.preferredDate, "PPP")} at ${values.preferredTimeSlot} has been received. We will contact you shortly to confirm.`,
-      duration: 7000,
-    });
-    setSubmissionStatus('success');
-    form.reset();
-    setIsSubmitting(false);
+        toast({
+          title: "Video Consultation Request Submitted!",
+          description: `Thank you, ${values.patientName}. Your request for a video consultation with ${selectedDoctor} on ${format(values.preferredDate, "PPP")} at ${values.preferredTimeSlot} has been received. We will contact you shortly to confirm.`,
+          duration: 7000,
+        });
+        setSubmissionStatus('success');
+        form.reset();
+      } else {
+        console.error("Firebase not initialized");
+        toast({
+          title: "Error Submitting Request",
+          description: "Firebase not initialized. Please try again.",
+          variant: "destructive",
+        });
+        setSubmissionStatus('error');
+      }
+    } catch (error: any) {
+      console.error("Error adding document: ", error);
+      toast({
+        title: "Error Submitting Request",
+        description: error.message || "There was an error submitting your request. Please try again.",
+        variant: "destructive",
+      });
+      setSubmissionStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
