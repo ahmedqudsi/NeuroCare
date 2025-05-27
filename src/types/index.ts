@@ -62,7 +62,7 @@ export interface Nurse {
   imageUrl?: string;
   imageHint?: string;
   bio?: string;
-  verifiedLicense?: boolean; // Added verifiedLicense
+  verifiedLicense?: boolean;
 }
 
 export type NurseBookingFormData = {
@@ -121,3 +121,48 @@ export type ConsultationType = {
   description?: string;
 };
 
+// Types for Pharma Delivery
+export interface PharmacyProduct {
+  id: string;
+  productName: string;
+  category: string; // e.g., Blood Thinners, Supplements, Pain Relief
+  imageUrl: string;
+  imageHint?: string;
+  price: number; // in INR
+  inStock: boolean;
+  description: string;
+  tags?: string[]; // e.g., stroke recovery, neuro meds
+  prescriptionRequired?: boolean;
+}
+
+// // Future types for cart & order (can be expanded later)
+// export interface CartItem {
+//   productId: string;
+//   quantity: number;
+// }
+
+// export interface Cart {
+//   userId: string;
+//   items: CartItem[];
+//   totalPrice: number;
+//   updatedAt: Date;
+// }
+
+// export interface OrderItem {
+//   productId: string;
+//   quantity: number;
+//   unitPrice: number;
+// }
+
+// export interface Order {
+//   orderId: string;
+//   userId: string;
+//   orderItems: OrderItem[];
+//   totalAmount: number;
+//   shippingAddress: string;
+//   orderStatus: 'pending' | 'processing' | 'out_for_delivery' | 'delivered' | 'cancelled';
+//   placedAt: Date;
+//   estimatedDeliveryDate?: Date;
+//   paymentStatus: 'paid' | 'unpaid' | 'cod';
+//   prescriptionUrl?: string;
+// }

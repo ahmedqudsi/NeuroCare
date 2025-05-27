@@ -1,6 +1,6 @@
 
-import type { Quote, Exercise, Hospital, FASTStep, HealthcareService, Nurse, Doctor, ConsultationType } from '@/types';
-import { Smile, Users, MessageSquare, Clock, UserRoundPlus, Home, Video, Truck, TestTube2 } from 'lucide-react';
+import type { Quote, Exercise, Hospital, FASTStep, HealthcareService, Nurse, Doctor, ConsultationType, PharmacyProduct } from '@/types';
+import { Smile, Users, MessageSquare, Clock, UserRoundPlus, Home, Video, Truck, TestTube2, Pill } from 'lucide-react';
 
 export const motivationalQuotes: Quote[] = [
   { id: '1', text: "The greatest glory in living lies not in never falling, but in rising every time we fall.", author: "Nelson Mandela" },
@@ -139,7 +139,7 @@ export const sampleHospitals: Hospital[] = [
     address: 'Masab Tank, Main Road, Chintal Basti, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2351 5000',
     services: ['Multi-Speciality Care', 'Emergency Services', 'Diagnostics & Imaging', 'Stroke Unit'],
-    imageUrl: '/olive.webp', 
+    imageUrl: '/olive.webp',
     imageHint: 'modern hospital hyderabad',
   },
   {
@@ -149,7 +149,7 @@ export const sampleHospitals: Hospital[] = [
     phone: '+91 40 2353 8686',
     services: ['General Medicine', 'Orthopedics', 'Neurology Consultations', '24/7 Pharmacy'],
     imageUrl: '/premier.jpeg',
-    imageHint: 'apollo hospital hyderabad',
+    imageHint: 'hospital hyderabad',
   },
   {
     id: '3',
@@ -157,7 +157,7 @@ export const sampleHospitals: Hospital[] = [
     address: 'Santhosh Nagar, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2334 0119',
     services: ['Specialized Eye Care', 'Emergency Eye Services', 'Outpatient Department'],
-    imageUrl: '/sarojini.avif', 
+    imageUrl: '/sarojini.avif',
     imageHint: 'eye hospital hyderabad',
   },
    {
@@ -166,7 +166,7 @@ export const sampleHospitals: Hospital[] = [
     address: '12-2-417/A/2, Main Road, beside Subhash Chandra Bose Statue, near NMDC, Gudimalkapur, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 72073 57861',
     services: ['Multi-Speciality Services', 'Intensive Care Unit', 'Surgical Facilities'],
-    imageUrl: '/ayaan.png', 
+    imageUrl: '/ayaan.png',
     imageHint: 'multi-speciality hospital hyderabad',
   },
   {
@@ -445,7 +445,7 @@ export const sampleDoctors: Doctor[] = [
     yearsOfExperience: 18,
     languagesSpoken: ['English', 'Hindi', 'Gujarati'],
     ratings: 4.8,
-    verifiedLicense: true, 
+    verifiedLicense: true,
     profilePictureUrl: 'https://placehold.co/300x300.png',
     imageHint: 'male doctor serious',
     locationDescription: 'Pan-Hyderabad coverage for emergency cardiac consultations.',
@@ -466,7 +466,7 @@ export const sampleDoctors: Doctor[] = [
     profilePictureUrl: 'https://placehold.co/300x300.png',
     imageHint: 'female doctor friendly',
     locationDescription: 'Specializes in post-stroke speech rehabilitation.',
-    consultationFee: 900, 
+    consultationFee: 900,
     availability: 'By appointment',
     bio: 'Dr. Gupta helps patients recover speech and swallowing abilities post-stroke, using evidence-based therapies.',
     videoConsultationFee: 700,
@@ -500,6 +500,65 @@ export const sampleConsultationTypes: ConsultationType[] = [
   { id: 'cardiology', name: 'Cardiology Consultation', description: 'For heart-related concerns and post-stroke cardiac care.' },
 ];
 
-    
-
-    
+export const samplePharmacyProducts: PharmacyProduct[] = [
+  {
+    id: 'med001',
+    productName: 'Aspirin 75mg Tablets (Strip of 10)',
+    category: 'Blood Thinners',
+    imageUrl: 'https://placehold.co/300x200.png',
+    imageHint: 'aspirin tablets',
+    price: 25, // INR
+    inStock: true,
+    description: 'Low-dose aspirin helps prevent blood clots. Commonly prescribed after a stroke.',
+    tags: ['stroke recovery', 'heart health', 'blood thinner'],
+    prescriptionRequired: true,
+  },
+  {
+    id: 'med002',
+    productName: 'Omega-3 Fish Oil Capsules (60 Capsules)',
+    category: 'Supplements',
+    imageUrl: 'https://placehold.co/300x200.png',
+    imageHint: 'fish oil capsules',
+    price: 450,
+    inStock: true,
+    description: 'Supports brain health and cardiovascular function. May aid in stroke recovery.',
+    tags: ['brain health', 'supplement', 'omega 3'],
+    prescriptionRequired: false,
+  },
+  {
+    id: 'med003',
+    productName: 'Paracetamol 500mg Tablets (Strip of 15)',
+    category: 'Pain Relief',
+    imageUrl: 'https://placehold.co/300x200.png',
+    imageHint: 'paracetamol tablets',
+    price: 30,
+    inStock: true,
+    description: 'Provides relief from mild to moderate pain and fever.',
+    tags: ['pain relief', 'fever'],
+    prescriptionRequired: false,
+  },
+  {
+    id: 'med004',
+    productName: 'Vitamin D3 Capsules (Weekly Dose - 4 Capsules)',
+    category: 'Supplements',
+    imageUrl: 'https://placehold.co/300x200.png',
+    imageHint: 'vitamin D3 capsules',
+    price: 120,
+    inStock: true,
+    description: 'Supports bone health and immune function. Important for overall well-being.',
+    tags: ['vitamin D', 'bone health', 'supplement'],
+    prescriptionRequired: false,
+  },
+  {
+    id: 'med005',
+    productName: 'Atorvastatin 10mg Tablets (Strip of 10)',
+    category: 'Cholesterol Control',
+    imageUrl: 'https://placehold.co/300x200.png',
+    imageHint: 'cholesterol tablets',
+    price: 80,
+    inStock: true,
+    description: 'Used to lower cholesterol and reduce the risk of heart disease and stroke.',
+    tags: ['cholesterol', 'heart health', 'stroke prevention'],
+    prescriptionRequired: true,
+  },
+];
