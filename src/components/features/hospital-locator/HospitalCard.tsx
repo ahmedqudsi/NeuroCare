@@ -25,10 +25,10 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
 
   return (
     <Card className="overflow-hidden shadow-lg hover:shadow-xl hover:scale-[1.02] transform transition-all duration-300 flex flex-col h-full">
-      {hospital.imageUrl && (
+      {hospital.imageUrl && ( // This condition might need adjustment if olive.webp is primary and imageUrl is just a fallback
          <div className="relative w-full h-48 bg-secondary">
             <Image
-              src={hospital.name === 'Olive Hospital' ? '/olive.webp' : hospital.imageUrl}
+              src={hospital.name === 'Olive Hospital - Hyderabad' ? '/olive.webp' : hospital.imageUrl}
               alt={`Image of ${hospital.name}`}
               fill
               style={{ objectFit: 'cover' }}
