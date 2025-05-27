@@ -8,31 +8,22 @@ import { Input } from '@/components/ui/input';
 import type { PharmacyProduct } from '@/types';
 import { ProductCard } from '@/components/features/healthcare-services/pharma-delivery/ProductCard';
 import { ArrowLeft, UploadCloud, ShoppingCart, PackageSearch } from 'lucide-react';
-import { useState, type ChangeEvent, useEffect } from 'react';
+import { useState, type ChangeEvent } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { db } from '@/lib/firebase';
-import { collection, getDocs } from 'firebase/firestore';
-import { samplePharmacyProducts } from '@/lib/constants'; // Import sample data as fallback
-
-// Metadata should be handled at a higher level for client components or dynamically
-// export const metadata: Metadata = {
-//   title: 'Pharmaceutical & Medication Delivery',
-//   description: 'Order medicines and healthcare products online.',
-// };
+import { samplePharmacyProducts } from '@/lib/constants'; // Import sample data
 
 export default function PharmaDeliveryPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const { toast } = useToast();
-  const [products, setProducts] = useState<PharmacyProduct[]>([]);
-  const [loading, setLoading] = useState(true);
+  // Directly use sample products
+  const products: PharmacyProduct[] = samplePharmacyProducts;
 
   const pageStaticText = {
     mainTitle: 'Pharmaceutical & Medication Delivery',
     mainDescription: 'Order your medicines and healthcare products conveniently from home. Browse our catalog or upload your prescription.',
     backButtonText: "Back to Healthcare Services",
     catalogTitle: "Medicine Catalog",
-    loadingProducts: "Loading products...",
     noProducts: "No products available at the moment. Please check back later.",
     viewCartButton: "View Cart",
     trackOrderButton: "Track My Order",
@@ -42,48 +33,6 @@ export default function PharmaDeliveryPage() {
     fileSelectedSuccess: "File selected for prescription upload.",
     noFileSelectedError: "Please select a file to upload.",
   };
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      setLoading(true);
-      if (db) {
-        try {
-          const querySnapshot = await getDocs(collection(db, 'pharmacy_products'));
-          const productList: PharmacyProduct[] = querySnapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          })) as PharmacyProduct[];
-          
-          if (productList.length > 0) {
-            setProducts(productList);
-          } else {
-            // If Firestore is empty, use sample products as a fallback for demonstration
-            console.warn("No products found in Firestore, using sample data.");
-            setProducts(samplePharmacyProducts);
-          }
-        } catch (error) {
-          console.error('Error fetching products from Firestore:', error);
-          toast({
-            title: 'Error Fetching Products',
-            description: 'Failed to load products from the database. Displaying sample data.',
-            variant: 'destructive',
-          });
-          setProducts(samplePharmacyProducts); // Fallback to sample data on error
-        }
-      } else {
-        console.error('Firebase not initialized, using sample data.');
-        toast({
-          title: 'Offline Mode',
-          description: 'Cannot connect to the database. Displaying sample products.',
-          variant: 'default',
-        });
-        setProducts(samplePharmacyProducts); // Fallback to sample data if db is null
-      }
-      setLoading(false);
-    };
-
-    fetchProducts();
-  }, [toast]);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -188,9 +137,7 @@ export default function PharmaDeliveryPage() {
       {/* Medicine Catalog Section */}
       <section className="space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-400">
         <h2 className="text-2xl font-semibold text-foreground">{pageStaticText.catalogTitle}</h2>
-        {loading ? (
-          <p className="text-muted-foreground">{pageStaticText.loadingProducts}</p>
-        ) : products.length > 0 ? (
+        {products.length > 0 ? (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {products.map((product: PharmacyProduct) => (
               <ProductCard key={product.id} product={product} />
