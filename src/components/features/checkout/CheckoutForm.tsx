@@ -56,9 +56,15 @@ export function CheckoutForm() {
     console.log("Checkout Data:", data);
     console.log("Cart Items for Order:", cartItems);
 
-    // Simulate payment gateway interaction
-    await new Promise(resolve => setTimeout(resolve, 1500)); 
+    toast({
+      title: "Processing Order...",
+      description: "Redirecting to secure payment gateway. Please wait.",
+    });
 
+    // Simulate payment gateway interaction and delay
+    await new Promise(resolve => setTimeout(resolve, 2500));
+
+    // Simulate successful payment for now
     toast({
       title: "Order Placed Successfully!",
       description: (
