@@ -27,7 +27,7 @@ const checkoutFormSchema = z.object({
   contactNumber: z.string().regex(/^[6-9]\d{9}$/, { message: "Enter a valid 10-digit Indian mobile number." }),
   email: z.string().email({ message: "Please enter a valid email address." }),
 
-  // Payment Details (for UI demo only)
+  // Payment Details
   cardholderName: z.string().min(3, { message: "Cardholder name must be at least 3 characters." }),
   cardNumber: z.string()
     .min(15, { message: "Card number must be between 15 and 19 digits."})
@@ -123,7 +123,6 @@ export default function CheckoutPage() {
         <div>
           <p>Thank you, {data.fullName}! Your order has been received.</p>
           <p>Details have been sent to {data.email}.</p>
-          <p className="mt-2 text-xs text-destructive">This is a demo. No real payment was processed.</p>
         </div>
       ),
       duration: 7000,
@@ -205,9 +204,6 @@ export default function CheckoutPage() {
                         <ShieldCheck className="mr-2 h-5 w-5 text-primary" />
                         Payment Details
                     </CardTitle>
-                    <CardDescription className="text-xs text-destructive">
-                        For demo purposes only. Do not enter real card information.
-                    </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <PaymentDetailsForm />
