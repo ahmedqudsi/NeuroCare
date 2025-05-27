@@ -1,5 +1,5 @@
 
-import type { Quote, Exercise, Hospital, FASTStep, HealthcareService, Nurse, Doctor } from '@/types';
+import type { Quote, Exercise, Hospital, FASTStep, HealthcareService, Nurse, Doctor, ConsultationType } from '@/types';
 import { Smile, Users, MessageSquare, Clock, UserRoundPlus, Home, Video, Truck, TestTube2 } from 'lucide-react';
 
 export const motivationalQuotes: Quote[] = [
@@ -24,7 +24,7 @@ export const rehabilitationExercises: Exercise[] = [
       'Slowly lower your arm back down.',
       'Repeat 10-15 times.'
     ],
-    videoUrl: `https://www.youtube.com/results?search_query=${encodeURIComponent('Arm Raises (Shoulder Flexion) stroke rehabilitation exercise guide')}`,
+    videoUrl: 'https://www.youtube.com/results?search_query=Arm+Raises+%28Shoulder+Flexion%29+stroke+rehabilitation+exercise+guide',
   },
   {
     id: '2',
@@ -38,7 +38,7 @@ export const rehabilitationExercises: Exercise[] = [
       'Turn your palm down and repeat, bending your wrist upwards.',
       'Repeat each direction 10-15 times.'
     ],
-    videoUrl: `https://www.youtube.com/results?search_query=${encodeURIComponent('Wrist Bends (Wrist Flexion/Extension) stroke rehabilitation exercise guide')}`,
+    videoUrl: 'https://www.youtube.com/results?search_query=Wrist+Bends+%28Wrist+Flexion%2FExtension%29+stroke+rehabilitation+exercise+guide',
   },
   {
     id: '3',
@@ -51,7 +51,7 @@ export const rehabilitationExercises: Exercise[] = [
       'Slowly lower yourself back to a seated position.',
       'Repeat 10-15 times.'
     ],
-    videoUrl: `https://www.youtube.com/results?search_query=${encodeURIComponent('Sit to Stand stroke rehabilitation exercise guide')}`,
+    videoUrl: 'https://www.youtube.com/results?search_query=Sit+to+Stand+stroke+rehabilitation+exercise+guide',
   },
   {
     id: '4',
@@ -64,7 +64,7 @@ export const rehabilitationExercises: Exercise[] = [
       'Alternatively, tap each finger on the table surface.',
       'Repeat 10-15 cycles.'
     ],
-    videoUrl: `https://www.youtube.com/results?search_query=${encodeURIComponent('Finger Taps stroke rehabilitation exercise guide')}`,
+    videoUrl: 'https://www.youtube.com/results?search_query=Finger+Taps+stroke+rehabilitation+exercise+guide',
   },
   {
     id: '5',
@@ -78,7 +78,7 @@ export const rehabilitationExercises: Exercise[] = [
       'Return to the center and then twist to the other side.',
       'Repeat 10-15 times to each side.'
     ],
-    videoUrl: `https://www.youtube.com/results?search_query=${encodeURIComponent('Seated Trunk Twists stroke rehabilitation exercise guide')}`,
+    videoUrl: 'https://www.youtube.com/results?search_query=Seated+Trunk+Twists+stroke+rehabilitation+exercise+guide',
   },
   {
     id: '6',
@@ -92,7 +92,7 @@ export const rehabilitationExercises: Exercise[] = [
       'Hold for 2-3 seconds.',
       'Repeat 15-20 times for each ankle.'
     ],
-    videoUrl: `https://www.youtube.com/results?search_query=${encodeURIComponent('Ankle Pumps stroke rehabilitation exercise guide')}`,
+    videoUrl: 'https://www.youtube.com/results?search_query=Ankle+Pumps+stroke+rehabilitation+exercise+guide',
   }
 ];
 
@@ -392,7 +392,9 @@ export const sampleDoctors: Doctor[] = [
     locationDescription: 'Serves Mehdipatnam, Tolichowki, and Langar Houz.',
     consultationFee: 800,
     availability: 'Mon-Sat, 9am-1pm & 4pm-7pm',
-    bio: 'Dr. Sharma is a highly experienced GP focusing on family health and chronic disease management. Known for her compassionate approach.'
+    bio: 'Dr. Sharma is a highly experienced GP focusing on family health and chronic disease management. Known for her compassionate approach.',
+    videoConsultationFee: 600,
+    videoAvailabilitySlots: ['Mon 10am-11am', 'Wed 3pm-4pm', 'Fri 11am-12pm']
   },
   {
     id: 'doc002',
@@ -407,7 +409,9 @@ export const sampleDoctors: Doctor[] = [
     locationDescription: 'Available for home visits across Hyderabad (central & west zones).',
     consultationFee: 1500,
     availability: 'Mon, Wed, Fri, 10am-4pm (by appointment)',
-    bio: 'Specializes in stroke recovery, epilepsy, and movement disorders. Committed to providing comprehensive neurological care at home.'
+    bio: 'Specializes in stroke recovery, epilepsy, and movement disorders. Committed to providing comprehensive neurological care at home.',
+    videoConsultationFee: 1200,
+    videoAvailabilitySlots: ['Tue 2pm-3pm', 'Thu 4pm-5pm (Next Week)']
   },
   {
     id: 'doc003',
@@ -422,7 +426,9 @@ export const sampleDoctors: Doctor[] = [
     locationDescription: 'Focuses on elderly care in Ameerpet, Banjara Hills, and Jubilee Hills.',
     consultationFee: 1000,
     availability: 'Tue, Thu, Sat, 11am-5pm',
-    bio: 'Dr. Reddy is passionate about elderly care, providing holistic assessments and management plans for age-related health issues.'
+    bio: 'Dr. Reddy is passionate about elderly care, providing holistic assessments and management plans for age-related health issues.',
+    videoConsultationFee: 750,
+    videoAvailabilitySlots: ['Mon 9am-10am', 'Sat 10am-11am']
   },
   {
     id: 'doc004',
@@ -437,6 +443,50 @@ export const sampleDoctors: Doctor[] = [
     locationDescription: 'Pan-Hyderabad coverage for emergency cardiac consultations.',
     consultationFee: 2000,
     availability: 'Available on call for critical cases.',
-    bio: 'Experienced cardiologist providing expert consultations for heart-related conditions. (Note: License verification pending)'
+    bio: 'Experienced cardiologist providing expert consultations for heart-related conditions. (Note: License verification pending)',
+    // No video consultation for this doctor example
+  },
+  {
+    id: 'doc005',
+    fullName: 'Dr. Sunaina Gupta',
+    specialty: 'Speech Therapist',
+    yearsOfExperience: 7,
+    languagesSpoken: ['English', 'Hindi'],
+    ratings: 4.5,
+    verifiedLicense: true,
+    profilePictureUrl: 'https://placehold.co/300x300.png',
+    imageHint: 'female doctor friendly',
+    locationDescription: 'Specializes in post-stroke speech rehabilitation.',
+    consultationFee: 900, // Assuming this is for in-person if offered
+    availability: 'By appointment',
+    bio: 'Dr. Gupta helps patients recover speech and swallowing abilities post-stroke, using evidence-based therapies.',
+    videoConsultationFee: 700,
+    videoAvailabilitySlots: ['Mon 2pm-3pm', 'Wed 10am-11am', 'Fri 2pm-3pm']
+  },
+  {
+    id: 'doc006',
+    fullName: 'Dr. Ramesh Iyer',
+    specialty: 'Psychiatrist',
+    yearsOfExperience: 20,
+    languagesSpoken: ['English', 'Tamil', 'Hindi'],
+    ratings: 4.9,
+    verifiedLicense: true,
+    profilePictureUrl: 'https://placehold.co/300x300.png',
+    imageHint: 'male doctor listening',
+    locationDescription: 'Mental health support for patients and caregivers.',
+    consultationFee: 1800,
+    availability: 'Tue & Thu, 5pm-8pm',
+    bio: 'Dr. Iyer provides counseling and psychiatric support for individuals coping with the emotional and mental impact of stroke.',
+    videoConsultationFee: 1500,
+    videoAvailabilitySlots: ['Tue 6pm-7pm', 'Thu 7pm-8pm']
   }
+];
+
+
+export const sampleConsultationTypes: ConsultationType[] = [
+  { id: 'general', name: 'General Consultation', description: 'For general health check-ups or non-specific symptoms.' },
+  { id: 'neurology', name: 'Neurology Follow-up', description: 'Follow-up for existing neurological conditions or stroke recovery.' },
+  { id: 'speech_therapy', name: 'Speech Therapy Assessment', description: 'Initial assessment for speech-related issues post-stroke.' },
+  { id: 'mental_wellness', name: 'Mental Wellness Check-in', description: 'Consultation for emotional support and mental well-being.' },
+  { id: 'cardiology', name: 'Cardiology Consultation', description: 'For heart-related concerns and post-stroke cardiac care.' },
 ];

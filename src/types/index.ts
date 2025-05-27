@@ -88,6 +88,10 @@ export interface Doctor {
   consultationFee: number; // in INR
   availability: string; // General availability, e.g., "Mon-Fri, 10am-5pm"
   bio?: string;
+
+  // New fields for video consultation
+  videoConsultationFee?: number;
+  videoAvailabilitySlots?: string[]; // e.g., ["Mon 9am-10am", "Tue 2pm-3pm (Next Week)"]
 }
 
 export type DoctorBookingFormData = {
@@ -98,5 +102,20 @@ export type DoctorBookingFormData = {
   preferredDate: Date;
   preferredTime: string; // e.g., "10:00 AM"
   visitAddress: string;
-  // selectedDoctorId will be handled implicitly or explicitly later
+};
+
+// Types for Video Consultation
+export type VideoConsultationBookingFormData = {
+  patientName: string;
+  selectedDoctorId: string;
+  consultationType: string;
+  preferredDate: Date;
+  preferredTimeSlot: string;
+  symptoms: string;
+};
+
+export type ConsultationType = {
+  id: string;
+  name: string;
+  description?: string;
 };
