@@ -23,13 +23,58 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
     getDirectionsButton: "Get Directions"
   };
 
+  // Helper function to slugify names for image paths
+  const slugify = (name: string) => {
+    return name.toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '');
+  };
+
   const getImagePath = () => {
+    // Specific cases already handled
     if (hospital.name === 'Olive Hospital - Hyderabad') {
       return '/olive.webp';
     }
     if (hospital.name === 'Premier Hospital - Hyderabad') {
       return '/premier.jpeg';
     }
+
+    // Dynamically generate paths for other hospitals assuming a .jpg extension
+    // and that the user has placed these files in the /public folder
+    // with names derived from the hospital name.
+    const hospitalNameSlug = slugify(hospital.name);
+
+    // Add conditions for other hospitals based on their exact names from constants.ts
+    if (hospital.name === 'Sarojini Devi Eye Hospital - Hyderabad') {
+      return `/${hospitalNameSlug}.jpg`; // Expected: /public/sarojini_devi_eye_hospital_hyderabad.jpg
+    }
+    if (hospital.name === 'Ayaan Hospital - Hyderabad') {
+      return `/${hospitalNameSlug}.jpg`; // Expected: /public/ayaan_hospital_hyderabad.jpg
+    }
+    if (hospital.name === 'Bombay Hospital & Medical Research Centre - Mumbai') {
+      return `/${hospitalNameSlug}.jpg`; // Expected: /public/bombay_hospital_medical_research_centre_mumbai.jpg
+    }
+    if (hospital.name === 'Max Healthcare Saket - Delhi') {
+      return `/${hospitalNameSlug}.jpg`; // Expected: /public/max_healthcare_saket_delhi.jpg
+    }
+    if (hospital.name === 'Kokilaben Dhirubhai Ambani Hospital - Mumbai') {
+      return `/${hospitalNameSlug}.jpg`; // Expected: /public/kokilaben_dhirubhai_ambani_hospital_mumbai.jpg
+    }
+    if (hospital.name === 'Lilavati Hospital and Research Centre - Mumbai') {
+      return `/${hospitalNameSlug}.jpg`; // Expected: /public/lilavati_hospital_and_research_centre_mumbai.jpg
+    }
+    if (hospital.name === 'Breach Candy Hospital Trust - Mumbai') {
+      return `/${hospitalNameSlug}.jpg`; // Expected: /public/breach_candy_hospital_trust_mumbai.jpg
+    }
+    if (hospital.name === 'Indraprastha Apollo Hospitals - Delhi') {
+      return `/${hospitalNameSlug}.jpg`; // Expected: /public/indraprastha_apollo_hospitals_delhi.jpg
+    }
+    if (hospital.name === 'Fortis Escorts Heart Institute - Delhi') {
+      return `/${hospitalNameSlug}.jpg`; // Expected: /public/fortis_escorts_heart_institute_delhi.jpg
+    }
+    if (hospital.name === 'Sir Ganga Ram Hospital - Delhi') {
+      return `/${hospitalNameSlug}.jpg`; // Expected: /public/sir_ganga_ram_hospital_delhi.jpg
+    }
+
+    // Fallback to the imageUrl from constants if no specific local path is matched
     return hospital.imageUrl;
   };
 
@@ -45,9 +90,9 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
               data-ai-hint={hospital.imageHint || "hospital building"}
               onError={(e) => {
                 // Fallback for local images if they are not found or error out
-                if (hospital.name === 'Olive Hospital - Hyderabad' || hospital.name === 'Premier Hospital - Hyderabad') {
-                  (e.target as HTMLImageElement).src = 'https://placehold.co/600x400.png?text=Image+Not+Found';
-                }
+                // This can also catch if a slugified name doesn't match a file
+                (e.target as HTMLImageElement).src = `https://placehold.co/600x400.png?text=${encodeURIComponent(hospital.name.split(' ')[0])}+Not+Found`;
+                (e.target as HTMLImageElement).alt = `Image for ${hospital.name} not found`;
               }}
             />
          </div>
