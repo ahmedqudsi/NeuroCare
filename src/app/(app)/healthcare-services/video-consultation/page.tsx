@@ -12,6 +12,7 @@ import { ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, getDocs } from 'firebase/firestore';
+import { FeedbackForm } from '@/components/features/healthcare-services/video-consultation/FeedbackForm'; // Import FeedbackForm
 
 // If you need dynamic metadata with client components, you'd typically handle it differently,
 // e.g. by setting document.title in useEffect or using a Head component from next/head if not in App Router.
@@ -28,6 +29,16 @@ export default function VideoConsultationPage() {
     bookingFormTitle: 'Book Your Video Consultation',
     backButtonText: "Back to Healthcare Services",
     loadingDoctors: "Loading doctors...",
+    joinCallTitle: "Join Video Call",
+    joinCallDescription: "Click the button below to join the video consultation. Ensure you have a stable internet connection.",
+    joinCallButton: "Join Meeting Now",
+    prescriptionTitle: "Prescription and Follow-up Notes",
+    prescriptionDescriptionPatient: "Download your prescription and follow-up notes here after your consultation.",
+    prescriptionDescriptionDoctor: "Upload prescription and notes for the patient here.",
+    downloadPrescriptionButton: "Download Prescription",
+    feedbackTitle: "Feedback and Ratings",
+    feedbackDescription: "Share your experience and help us improve our services.",
+    submitFeedbackButton: "Submit Feedback",
   };
 
   useEffect(() => {
@@ -38,7 +49,6 @@ export default function VideoConsultationPage() {
           const querySnapshot = await getDocs(collection(db, "doctors"));
           const doctorsData: Doctor[] = [];
           querySnapshot.forEach((doc) => {
-            // Ensure all required fields from Doctor type are present or have defaults
             const data = doc.data();
             doctorsData.push({
               id: doc.id,
@@ -61,12 +71,10 @@ export default function VideoConsultationPage() {
           setDoctors(doctorsData);
         } catch (error) {
           console.error("Error fetching doctors from Firestore:", error);
-          // Fallback to static data if Firestore fetch fails
           setDoctors(staticSampleDoctors);
         }
       } else {
         console.warn("Firebase not initialized, using static doctor data.");
-        // Fallback to static data if db is not available
         setDoctors(staticSampleDoctors);
       }
       setIsLoading(false);
@@ -75,7 +83,6 @@ export default function VideoConsultationPage() {
     fetchDoctors();
   }, []);
 
-  // Filter doctors who offer video consultations and are verified
   const videoDoctors = doctors.filter(doctor =>
     doctor.verifiedLicense &&
     doctor.videoConsultationFee !== undefined &&
@@ -127,29 +134,47 @@ export default function VideoConsultationPage() {
       </section>
 
       <section className="space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-600">
-        <h2 className="text-2xl font-semibold text-foreground">Join Video Call</h2>
-        <p className="text-muted-foreground">Click the button below to join the video consultation.</p>
-        <Button onClick={() => alert("Video call integration coming soon!")}>Join Now</Button>
-        {/* Placeholder for video call integration */}
-        {/* <iframe src="https://meet.jit.si/testroom" width="800" height="600"></iframe> */}
+        <h2 className="text-2xl font-semibold text-foreground">{pageStaticText.joinCallTitle}</h2>
+        <p className="text-muted-foreground">{pageStaticText.joinCallDescription}</p>
+        <Button asChild>
+            <a href="https://meet.jit.si/NeuroCareTestRoom" target="_blank" rel="noopener noreferrer">
+                {pageStaticText.joinCallButton}
+            </a>
+        </Button>
+        {/* Placeholder for embedded video call integration. You would uncomment and configure this.
+        <div className="mt-4 aspect-video w-full max-w-3xl rounded-lg border bg-muted overflow-hidden">
+           <iframe 
+            src="https://meet.jit.si/NeuroCareTestRoom" // Replace with dynamic room URL
+            allow="camera; microphone; fullscreen; display-capture"
+            className="w-full h-full border-0"
+            title="Video Consultation"
+          ></iframe>
+        </div>
+        */}
       </section>
 
       <section className="space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-800">
-        <h2 className="text-2xl font-semibold text-foreground">Prescription and Follow-up Notes</h2>
+        <h2 className="text-2xl font-semibold text-foreground">{pageStaticText.prescriptionTitle}</h2>
         <p className="text-muted-foreground">
-          {/* Doctor's view: Upload prescription and notes */}
-          {/* Patient's view: Download prescription */}
-          Download your prescription and follow-up notes here.
+          {pageStaticText.prescriptionDescriptionPatient}
+          {/* For doctor's view, you might show: {pageStaticText.prescriptionDescriptionDoctor} */}
         </p>
-        <Button onClick={() => alert("Prescription download coming soon!")}>Download Prescription</Button>
+        <Button asChild variant="outline">
+          <a href="/prescription.pdf" download="prescription.pdf">
+            {pageStaticText.downloadPrescriptionButton}
+          </a>
+        </Button>
+        <p className="text-xs text-muted-foreground mt-1">
+          Note: To test download, create a dummy `prescription.pdf` file in your `public` folder.
+        </p>
       </section>
 
       <section className="space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-1000">
-        <h2 className="text-2xl font-semibold text-foreground">Feedback and Ratings</h2>
+        <h2 className="text-2xl font-semibold text-foreground">{pageStaticText.feedbackTitle}</h2>
         <p className="text-muted-foreground">
-          Share your experience and help us improve our services.
+          {pageStaticText.feedbackDescription}
         </p>
-        <Button onClick={() => alert("Feedback form coming soon!")}>Submit Feedback</Button>
+        <FeedbackForm />
       </section>
     </div>
   );

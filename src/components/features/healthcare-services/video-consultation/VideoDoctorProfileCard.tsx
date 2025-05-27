@@ -3,7 +3,9 @@ import type { Doctor } from '@/types';
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Video, MessageSquareText, CheckCircle2, DollarSign, CalendarClock } from 'lucide-react';
+import { Video, MessageSquareText, CheckCircle2, Download, CalendarClock } from 'lucide-react';
+import { FeedbackForm } from './FeedbackForm';
+import { Button } from '@/components/ui/button';
 
 interface VideoDoctorProfileCardProps {
   doctor: Doctor;
@@ -35,7 +37,7 @@ export function VideoDoctorProfileCard({ doctor }: VideoDoctorProfileCardProps) 
         </div>
       </CardHeader>
       <CardContent className="text-sm text-muted-foreground space-y-2 flex-grow">
-        <p className="flex items-center"><Video className="mr-2 h-4 w-4 text-primary" /> Video Consultation Fee: ₹{doctor.videoConsultationFee}</p>
+        <p className="flex items-center"><Video className="mr-2 h-4 w-4 text-primary" /> Fee: ₹{doctor.videoConsultationFee}</p>
         <p className="flex items-center"><MessageSquareText className="mr-2 h-4 w-4 text-primary" /> Speaks: {doctor.languagesSpoken.join(', ')}</p>
         {doctor.videoAvailabilitySlots && doctor.videoAvailabilitySlots.length > 0 && (
           <div className="flex items-start">
@@ -51,8 +53,18 @@ export function VideoDoctorProfileCard({ doctor }: VideoDoctorProfileCardProps) 
         )}
         {doctor.bio && <p className="mt-2 text-xs italic line-clamp-2">{doctor.bio}</p>}
       </CardContent>
-       <CardFooter className="pt-2">
-         {/* Future: Button to "Book Video Call" specific to this doctor, or "View Full Schedule" */}
+       <CardFooter className="pt-2 flex flex-wrap gap-2 justify-between items-center">
+         <Button size="sm" asChild>
+            <a href="https://meet.jit.si/NeuroCareTestRoom" target="_blank" rel="noopener noreferrer">
+                <Video className="mr-2 h-4 w-4" /> Join Call
+            </a>
+         </Button>
+          <Button size="sm" variant="outline" asChild>
+            <a href="/prescription.pdf" download="prescription.pdf">
+                <Download className="mr-2 h-4 w-4" /> Prescription
+            </a>
+          </Button>
+          <FeedbackForm />
        </CardFooter>
     </Card>
   );
