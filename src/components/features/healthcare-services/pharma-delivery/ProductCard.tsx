@@ -1,3 +1,4 @@
+
 "use client";
 
 import type { PharmacyProduct } from '@/types';
@@ -13,6 +14,21 @@ interface ProductCardProps {
   product: PharmacyProduct;
 }
 
+// Helper function to get the local image path based on product ID
+const getProductImagePath = (productId: string): string | undefined => {
+  switch (productId) {
+    case 'med001': return '/aspirin.webp'; // Aspirin
+    case 'med002': return '/omega.jpg';    // Omega-3
+    case 'med003': return '/para.jpg';     // Paracetamol
+    case 'med004': return '/vitamin.webp'; // Vitamin D3
+    case 'med005': return '/atorvastatin.jpg';// Atorvastatin
+    case 'med006': return '/clopid.png';   // Clopidogrel
+    case 'med007': return '/amlodipine.jpg';// Amlodipine
+    case 'med008': return '/metformin.webp';// Metformin
+    default: return undefined;
+  }
+};
+
 export function ProductCard({ product }: ProductCardProps) {
   const { toast } = useToast();
   const { addToCart } = useCart();
@@ -25,17 +41,25 @@ export function ProductCard({ product }: ProductCardProps) {
     });
   };
 
+  const imagePath = getProductImagePath(product.id) || product.imageUrl;
+  const imageAltText = `Image of ${product.productName}`;
+
   return (
     <Card className="overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200 flex flex-col h-full group">
       <CardHeader className="p-0">
         <div className="relative w-full h-40 bg-muted group-hover:opacity-90 transition-opacity">
           <Image
-            src={product.imageUrl}
-            alt={product.productName}
+            src={imagePath}
+            alt={imageAltText}
             fill
             style={{ objectFit: 'contain' }} // Use 'contain' to see the whole product
             className="p-2"
             data-ai-hint={product.imageHint || product.category.toLowerCase()}
+            onError={(e) => {
+              // Fallback if local image is specified but not found, or if product.imageUrl also fails
+              (e.target as HTMLImageElement).src = `https://placehold.co/300x200.png?text=${encodeURIComponent(product.productName.split(' ')[0])}+Not+Found`;
+              (e.target as HTMLImageElement).alt = `${product.productName} image not found`;
+            }}
           />
         </div>
       </CardHeader>
