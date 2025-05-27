@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -18,8 +17,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/context/CartContext";
-import { CreditCard } from "lucide-react";
+import { CreditCard, Loader2, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 const checkoutFormSchema = z.object({
   fullName: z.string().min(3, { message: "Full name must be at least 3 characters." }),
@@ -37,6 +38,9 @@ export function CheckoutForm() {
   const { toast } = useToast();
   const { cartItems, clearCart } = useCart();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [paymentProcessing, setPaymentProcessing] = useState(false);
+  const [paymentComplete, setPaymentComplete] = useState(false);
 
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutFormSchema),
@@ -53,18 +57,19 @@ export function CheckoutForm() {
 
   async function onSubmit(data: CheckoutFormValues) {
     setIsSubmitting(true);
+    setPaymentProcessing(true);
+    setPaymentComplete(false);
+    setShowPaymentModal(true);
+
     console.log("Checkout Data:", data);
     console.log("Cart Items for Order:", cartItems);
 
-    toast({
-      title: "Processing Order...",
-      description: "Redirecting to secure payment gateway. Please wait.",
-    });
-
     // Simulate payment gateway interaction and delay
-    await new Promise(resolve => setTimeout(resolve, 2500));
+    await new Promise(resolve => setTimeout(resolve, 3000)); // Increased delay for effect
 
-    // Simulate successful payment for now
+    setPaymentProcessing(false);
+    setPaymentComplete(true);
+
     toast({
       title: "Order Placed Successfully!",
       description: (
@@ -76,124 +81,147 @@ export function CheckoutForm() {
       ),
       duration: 7000,
     });
+
+    // Short delay to show success tick before closing modal
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    setShowPaymentModal(false);
+    setPaymentComplete(false);
     
-    // In a real app, you would:
-    // 1. Redirect to a payment gateway or process payment.
-    // 2. On successful payment, save the order to Firestore.
-    // 3. Clear the cart.
-    // 4. Redirect to an order confirmation page.
-    clearCart(); // Clear cart after "successful" simulated order
+    clearCart(); 
     form.reset();
-    // router.push('/order-confirmation/some-order-id'); // Example redirect
     setIsSubmitting(false);
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <FormField
-          control={form.control}
-          name="fullName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Full Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter your full name" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+    <>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <FormField
+            control={form.control}
+            name="fullName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Full Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter your full name" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="streetAddress"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Street Address</FormLabel>
-              <FormControl>
-                <Textarea placeholder="House No., Street Name, Landmark" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="streetAddress"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Street Address</FormLabel>
+                <FormControl>
+                  <Textarea placeholder="House No., Street Name, Landmark" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <FormField
+              control={form.control}
+              name="city"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>City</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your city" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="state"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>State</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your state" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="pincode"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Pincode</FormLabel>
+                  <FormControl>
+                    <Input type="tel" placeholder="6-digit pincode" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
           <FormField
             control={form.control}
-            name="city"
+            name="contactNumber"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>City</FormLabel>
+                <FormLabel>Contact Number</FormLabel>
                 <FormControl>
-                  <Input placeholder="Your city" {...field} />
+                  <Input type="tel" placeholder="10-digit mobile number" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
-            name="state"
+            name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>State</FormLabel>
+                <FormLabel>Email Address</FormLabel>
                 <FormControl>
-                  <Input placeholder="Your state" {...field} />
+                  <Input type="email" placeholder="your.email@example.com" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="pincode"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Pincode</FormLabel>
-                <FormControl>
-                  <Input type="tel" placeholder="6-digit pincode" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+
+          <Button type="submit" className="w-full" disabled={isSubmitting || showPaymentModal}>
+            <CreditCard className="mr-2 h-4 w-4" />
+            Proceed to Payment
+          </Button>
+        </form>
+      </Form>
+
+      {showPaymentModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <Card className="w-64 h-48 shadow-2xl">
+            <CardContent className="flex flex-col items-center justify-center h-full space-y-4">
+              {paymentProcessing && (
+                <>
+                  <Loader2 className="h-16 w-16 animate-spin text-primary" />
+                  <p className="text-muted-foreground">Processing Payment...</p>
+                </>
+              )}
+              {paymentComplete && (
+                <>
+                  <CheckCircle2 className="h-16 w-16 text-green-500" />
+                  <p className="text-green-600 font-semibold">Payment Successful!</p>
+                </>
+              )}
+            </CardContent>
+          </Card>
         </div>
-
-        <FormField
-          control={form.control}
-          name="contactNumber"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Contact Number</FormLabel>
-              <FormControl>
-                <Input type="tel" placeholder="10-digit mobile number" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email Address</FormLabel>
-              <FormControl>
-                <Input type="email" placeholder="your.email@example.com" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <Button type="submit" className="w-full" disabled={isSubmitting}>
-          <CreditCard className="mr-2 h-4 w-4" />
-          {isSubmitting ? "Processing Order..." : "Proceed to Payment"}
-        </Button>
-      </form>
-    </Form>
+      )}
+    </>
   );
 }
