@@ -139,7 +139,7 @@ export const sampleHospitals: Hospital[] = [
     address: '9-4-87/A/23 & 24, Salarjung Colony, Inner Ring Road, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2351 5000',
     services: ['Multi-Speciality Care', 'Emergency Services', 'Diagnostics & Imaging', 'Stroke Unit'],
-    imageUrl: '/olive.webp',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Aga_Khan_University_Hospital_Nairobi.jpg/640px-Aga_Khan_University_Hospital_Nairobi.jpg',
     imageHint: 'modern hospital hyderabad',
   },
   {
@@ -148,16 +148,16 @@ export const sampleHospitals: Hospital[] = [
     address: 'H.No: 12-2-823/A/25, St Ann\'s School Road, Opp: R.T.A Office, Santosh Nagar Colony, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2353 8686',
     services: ['General Medicine', 'Orthopedics', 'Neurology Consultations', '24/7 Pharmacy'],
-    imageUrl: '/premier.jpeg',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Apollo_Hospital_Hyderabad_main_building.jpg/640px-Apollo_Hospital_Hyderabad_main_building.jpg',
     imageHint: 'apollo hospital hyderabad',
   },
   {
     id: '3',
-    name: 'Sarojini Devi Eye Hospital - Hyderabad',
+    name: 'Sarojini Devi Hospital - Hyderabad',
     address: 'Santhosh Nagar, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2334 0119',
     services: ['Specialized Eye Care', 'Emergency Eye Services', 'Outpatient Department'],
-    imageUrl: '/sarojini.avif',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/KEM_Hospital_Building.jpg/640px-KEM_Hospital_Building.jpg',
     imageHint: 'eye hospital hyderabad',
   },
    {
@@ -166,7 +166,7 @@ export const sampleHospitals: Hospital[] = [
     address: '12-2-417/A/2, Main Road, beside Subhash Chandra Bose Statue, near NMDC, Gudimalkapur, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 72073 57861',
     services: ['Multi-Speciality Services', 'Intensive Care Unit', 'Surgical Facilities'],
-    imageUrl: '/ayaan.png',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/BLK_Super_Speciality_Hospital.jpg/640px-BLK_Super_Speciality_Hospital.jpg',
     imageHint: 'multi-speciality hospital hyderabad',
   },
   {
@@ -175,16 +175,16 @@ export const sampleHospitals: Hospital[] = [
     address: '12, Vitthaldas Thackersey Marg, New Marine Lines, Mumbai, Maharashtra 400020, India',
     phone: '+91 22 2206 7676',
     services: ['Emergency Care', 'Cardiology', 'Neurology', 'Advanced Stroke Care'],
-    imageUrl: '/bombay.jpg',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Bombay_Hospital_building.jpg/640px-Bombay_Hospital_building.jpg',
     imageHint: 'city hospital building mumbai',
   },
   {
     id: '6',
     name: 'Max Healthcare Saket - Delhi',
-    address: 'Max Super Speciality Hospital, Saket (Devki Devi Max Hospital), 2, Press Enclave Road, Mandir Marg, Saket, New Delhi, Delhi 110017, India',
+    address: 'Max Super Speciality Hospital, Press Enclave Road, Saket Institutional Area, Saket, New Delhi, Delhi 110017, India',
     phone: '+91 11 2651 5050',
     services: ['Comprehensive Stroke Center', 'Intensive Care', 'Neurosurgery', 'Rehabilitation Services'],
-    imageUrl: '/max hospital.jpg',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Max_Healthcare_Saket.jpg/640px-Max_Healthcare_Saket.jpg',
     imageHint: 'modern medical center delhi',
   },
   {
@@ -217,7 +217,7 @@ export const sampleHospitals: Hospital[] = [
   {
     id: '10',
     name: 'Indraprastha Apollo Hospitals - Delhi',
-    address: 'Delhi Mathura Road, Sarita Vihar, New Delhi, Delhi 110076, India',
+    address: 'Sarita Vihar, Delhi Mathura Road, New Delhi, Delhi 110076, India',
     phone: '+91 11 2692 5858',
     services: ['Advanced Stroke Unit', 'Organ Transplant', 'Cardiac Sciences', 'Neurosciences'],
     imageUrl: '/indraprastha.avif',
@@ -490,3 +490,5 @@ export const sampleConsultationTypes: ConsultationType[] = [
   { id: 'mental_wellness', name: 'Mental Wellness Check-in', description: 'Consultation for emotional support and mental well-being.' },
   { id: 'cardiology', name: 'Cardiology Consultation', description: 'For heart-related concerns and post-stroke cardiac care.' },
 ];
+
+    
