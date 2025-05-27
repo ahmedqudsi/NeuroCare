@@ -136,28 +136,28 @@ export const sampleHospitals: Hospital[] = [
   {
     id: '1',
     name: 'Olive Hospital - Hyderabad',
-    address: '9-4-87/A/23 & 24, Salarjung Colony, Inner Ring Rd, Mehdipatnam, Hyderabad, Telangana 500028, India',
+    address: '9-4-87/A/23 & 24, Salarjung Colony, Inner Ring Road, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2351 5000',
     services: ['Multi-Speciality Care', 'Emergency Services', 'Diagnostics & Imaging', 'Stroke Unit'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Apollo_hospital_hyderabad.jpg/640px-Apollo_hospital_hyderabad.jpg', // Example placeholder
+    imageUrl: '/olive.webp',
     imageHint: 'modern hospital hyderabad',
   },
   {
     id: '2',
     name: 'Premier Hospital - Hyderabad',
-    address: '#12-2-823/A/25, St Ann\'s School Rd, Santosh Nagar, Mehdipatnam, Hyderabad, Telangana 500028, India',
+    address: 'H.No: 12-2-823/A/25, St Ann\'s School Road, Opp: R.T.A Office, Santosh Nagar Colony, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2353 8686',
     services: ['General Medicine', 'Orthopedics', 'Neurology Consultations', '24/7 Pharmacy'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Apollo_hospital_hyderabad.jpg/640px-Apollo_hospital_hyderabad.jpg',
+    imageUrl: '/premier.jpeg',
     imageHint: 'apollo hospital hyderabad',
   },
   {
     id: '3',
     name: 'Sarojini Devi Eye Hospital - Hyderabad',
-    address: 'Santhosh Nagar, Mehdipatnam, Hyderabad, Telangana 500028, India', // Example: Plus Code and more traditional address part
+    address: 'Santhosh Nagar, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2334 0119',
     services: ['Specialized Eye Care', 'Emergency Eye Services', 'Outpatient Department'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Sarojini_Devi_Eye_Hospital_Block.JPG/640px-Sarojini_Devi_Eye_Hospital_Block.JPG',
+    imageUrl: '/sarojini.avif',
     imageHint: 'eye hospital hyderabad',
   },
    {
@@ -166,7 +166,7 @@ export const sampleHospitals: Hospital[] = [
     address: '12-2-417/A/2, Main Road, beside Subhash Chandra Bose Statue, near NMDC, Gudimalkapur, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 72073 57861',
     services: ['Multi-Speciality Services', 'Intensive Care Unit', 'Surgical Facilities'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/KIMS_hospital_Secunderabad.jpg/640px-KIMS_hospital_Secunderabad.jpg', // Example Placeholder
+    imageUrl: '/ayaan.png',
     imageHint: 'multi-speciality hospital hyderabad',
   },
   {
@@ -175,16 +175,16 @@ export const sampleHospitals: Hospital[] = [
     address: '12, Vitthaldas Thackersey Marg, New Marine Lines, Mumbai, Maharashtra 400020, India',
     phone: '+91 22 2206 7676',
     services: ['Emergency Care', 'Cardiology', 'Neurology', 'Advanced Stroke Care'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Bombay_Hospital_in_Mumbai.jpg/640px-Bombay_Hospital_in_Mumbai.jpg',
+    imageUrl: '/bombay.jpg',
     imageHint: 'city hospital building mumbai',
   },
   {
     id: '6',
     name: 'Max Healthcare Saket - Delhi',
-    address: 'Max Super Speciality Hospital, Saket (A unit of Devki Devi Foundation), Press Enclave Road, Mandir Marg, Saket Institutional Area, Saket, New Delhi, Delhi 110017, India',
+    address: 'Max Super Speciality Hospital, Saket (Devki Devi Max Hospital), 2, Press Enclave Road, Mandir Marg, Saket, New Delhi, Delhi 110017, India',
     phone: '+91 11 2651 5050',
     services: ['Comprehensive Stroke Center', 'Intensive Care', 'Neurosurgery', 'Rehabilitation Services'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Max_Hospital_Pitampura_new_delhi.jpg/640px-Max_Hospital_Pitampura_new_delhi.jpg',
+    imageUrl: '/max hospital.jpg',
     imageHint: 'modern medical center delhi',
   },
   {
@@ -193,7 +193,7 @@ export const sampleHospitals: Hospital[] = [
     address: 'Rao Saheb Achutrao Patwardhan Marg, Four Bungalows, Andheri West, Mumbai, Maharashtra 400053, India',
     phone: '+91 22 3066 6666',
     services: ['Multi-Speciality', 'Robotic Surgery', 'Cancer Care', 'Stroke Program'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Kokilaben_Dhirubhai_Ambani_Hospital_building.jpg/640px-Kokilaben_Dhirubhai_Ambani_Hospital_building.jpg',
+    imageUrl: '/kokila.avif',
     imageHint: 'large hospital mumbai',
   },
   {
@@ -202,7 +202,7 @@ export const sampleHospitals: Hospital[] = [
     address: 'A-791, Bandra Reclamation, Bandra (West), Mumbai, Maharashtra 400050, India',
     phone: '+91 22 2675 1000',
     services: ['Neurology', 'Cardiology', 'Oncology', 'Emergency Room'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Lilavati_Hospital_and_Research_Centre%2C_Bandra%2C_Mumbai.jpg/640px-Lilavati_Hospital_and_Research_Centre%2C_Bandra%2C_Mumbai.jpg',
+    imageUrl: '/lilavita.jpg',
     imageHint: 'research hospital mumbai',
   },
   {
@@ -211,16 +211,16 @@ export const sampleHospitals: Hospital[] = [
     address: '60 A, Bhulabhai Desai Road, Breach Candy, Cumballa Hill, Mumbai, Maharashtra 400026, India',
     phone: '+91 22 2367 1888',
     services: ['Critical Care', 'Diagnostic Services', 'Surgical Specialties', 'Neurology'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Breach_Candy_Hospital.jpg/640px-Breach_Candy_Hospital.jpg',
+    imageUrl: '/breach.avif',
     imageHint: 'classic hospital mumbai',
   },
   {
     id: '10',
     name: 'Indraprastha Apollo Hospitals - Delhi',
-    address: 'Indraprastha Apollo Hospitals, Sarita Vihar, Delhi Mathura Road, New Delhi - 110076, India',
+    address: 'Delhi Mathura Road, Sarita Vihar, New Delhi, Delhi 110076, India',
     phone: '+91 11 2692 5858',
     services: ['Advanced Stroke Unit', 'Organ Transplant', 'Cardiac Sciences', 'Neurosciences'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Indraprastha_Apollo_Hospital_Delhi.jpg/640px-Indraprastha_Apollo_Hospital_Delhi.jpg',
+    imageUrl: '/indraprastha.avif',
     imageHint: 'apollo hospital delhi',
   },
   {
@@ -229,7 +229,7 @@ export const sampleHospitals: Hospital[] = [
     address: 'Okhla Road, Sukhdev Vihar Metro Station, New Friends Colony, New Delhi, Delhi 110025, India',
     phone: '+91 11 4713 5000',
     services: ['Cardiac Care', 'Emergency Services', 'Neurology', 'Vascular Surgery'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Fortis_Escorts_Heart_Institute_Okhla_Delhi.jpg/640px-Fortis_Escorts_Heart_Institute_Okhla_Delhi.jpg',
+    imageUrl: '/fortis.jpg',
     imageHint: 'heart institute delhi',
   },
   {
@@ -238,7 +238,7 @@ export const sampleHospitals: Hospital[] = [
     address: 'Sir Ganga Ram Hospital Marg, Old Rajinder Nagar, Rajinder Nagar, New Delhi, Delhi 110060, India',
     phone: '+91 11 2575 0000',
     services: ['Multi-Speciality Care', 'Research Wing', 'Emergency Department', 'Stroke Clinic'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Sir_Ganga_Ram_Hospital_Building.jpg/640px-Sir_Ganga_Ram_Hospital_Building.jpg',
+    imageUrl: '/sir ganga.jpeg',
     imageHint: 'ganga ram hospital delhi',
   }
 ];
@@ -490,4 +490,3 @@ export const sampleConsultationTypes: ConsultationType[] = [
   { id: 'mental_wellness', name: 'Mental Wellness Check-in', description: 'Consultation for emotional support and mental well-being.' },
   { id: 'cardiology', name: 'Cardiology Consultation', description: 'For heart-related concerns and post-stroke cardiac care.' },
 ];
-
