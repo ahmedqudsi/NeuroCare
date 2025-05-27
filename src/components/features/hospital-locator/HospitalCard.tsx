@@ -50,10 +50,10 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
       return '/lilavita.jpg';
     }
     if (hospital.name === 'Breach Candy Hospital Trust - Mumbai') {
-      return '/Breach.jpg'; 
+      return '/Breach.jpg'; // Updated to specific filename
     }
     if (hospital.name === 'Indraprastha Apollo Hospitals - Delhi') {
-      return '/Indraprastha.jpg'; 
+      return '/Indraprastha.jpg'; // Updated to specific filename
     }
     if (hospital.name === 'Fortis Escorts Heart Institute - Delhi') {
       return '/fortis.jpg';
