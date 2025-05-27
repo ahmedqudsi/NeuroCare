@@ -136,19 +136,19 @@ export const sampleHospitals: Hospital[] = [
   {
     id: '1',
     name: 'Olive Hospital - Hyderabad',
-    address: 'Masab Tank, Rd Number 1, Chintal, Resapuvanipalem, Hyderabad, Telangana 500028, India',
+    address: 'Masab Tank, Main Road, Chintal Basti, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2351 5000',
     services: ['Multi-Speciality Care', 'Emergency Services', 'Diagnostics & Imaging', 'Stroke Unit'],
-    imageUrl: '/olive.webp', // Local image
+    imageUrl: '/olive.webp', 
     imageHint: 'modern hospital hyderabad',
   },
   {
     id: '2',
     name: 'Premier Hospital - Hyderabad',
-    address: 'H.No: 12-2-823/A/25, St Ann\'s School Road, Opp: R.T.A Office, Humayun Nagar, Hyderabad, Telangana 500028, India',
+    address: 'H.No: 12-2-823/A/25, St Ann\'s School Road, Opp: R.T.A Office, Humayun Nagar, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2353 8686',
     services: ['General Medicine', 'Orthopedics', 'Neurology Consultations', '24/7 Pharmacy'],
-    imageUrl: '/premier.jpeg', // Local image
+    imageUrl: '/premier.jpeg',
     imageHint: 'apollo hospital hyderabad',
   },
   {
@@ -157,7 +157,7 @@ export const sampleHospitals: Hospital[] = [
     address: 'Santhosh Nagar, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2334 0119',
     services: ['Specialized Eye Care', 'Emergency Eye Services', 'Outpatient Department'],
-    imageUrl: '/sarojini.avif', // Local image
+    imageUrl: '/sarojini.avif', 
     imageHint: 'eye hospital hyderabad',
   },
    {
@@ -166,7 +166,7 @@ export const sampleHospitals: Hospital[] = [
     address: '12-2-417/A/2, Main Road, beside Subhash Chandra Bose Statue, near NMDC, Gudimalkapur, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 72073 57861',
     services: ['Multi-Speciality Services', 'Intensive Care Unit', 'Surgical Facilities'],
-    imageUrl: '/ayaan.png', // Local image
+    imageUrl: '/ayaan.png', 
     imageHint: 'multi-speciality hospital hyderabad',
   },
   {
@@ -175,16 +175,16 @@ export const sampleHospitals: Hospital[] = [
     address: '12, Vitthaldas Thackersey Marg, New Marine Lines, Mumbai, Maharashtra 400020, India',
     phone: '+91 22 2206 7676',
     services: ['Emergency Care', 'Cardiology', 'Neurology', 'Advanced Stroke Care'],
-    imageUrl: '/bombay.jpg', // Local image
+    imageUrl: '/bombay.jpg',
     imageHint: 'city hospital building mumbai',
   },
   {
     id: '6',
     name: 'Max Healthcare Saket - Delhi',
-    address: 'Max Super Speciality Hospital, Saket Institutional Area, Press Enclave Road, Saket, New Delhi, Delhi 110017, India',
+    address: 'Max Super Speciality Hospital, Press Enclave Road, Saket Institutional Area, Saket, New Delhi, Delhi 110017, India',
     phone: '+91 11 2651 5050',
     services: ['Comprehensive Stroke Center', 'Intensive Care', 'Neurosurgery', 'Rehabilitation Services'],
-    imageUrl: '/max hospital.jpg', // Local image
+    imageUrl: '/max hospital.jpg',
     imageHint: 'modern medical center delhi',
   },
   {
@@ -193,7 +193,7 @@ export const sampleHospitals: Hospital[] = [
     address: 'Rao Saheb Achutrao Patwardhan Marg, Four Bungalows, Andheri West, Mumbai, Maharashtra 400053, India',
     phone: '+91 22 3066 6666',
     services: ['Multi-Speciality', 'Robotic Surgery', 'Cancer Care', 'Stroke Program'],
-    imageUrl: '/kokila.avif', // Local image
+    imageUrl: '/kokila.avif',
     imageHint: 'large hospital mumbai',
   },
   {
@@ -202,7 +202,7 @@ export const sampleHospitals: Hospital[] = [
     address: 'A-791, Bandra Reclamation, Bandra (West), Mumbai, Maharashtra 400050, India',
     phone: '+91 22 2675 1000',
     services: ['Neurology', 'Cardiology', 'Oncology', 'Emergency Room'],
-    imageUrl: '/lilavita.jpg', // Local image
+    imageUrl: '/lilavita.jpg',
     imageHint: 'research hospital mumbai',
   },
   {
@@ -211,16 +211,16 @@ export const sampleHospitals: Hospital[] = [
     address: '60 A, Bhulabhai Desai Road, Breach Candy, Cumballa Hill, Mumbai, Maharashtra 400026, India',
     phone: '+91 22 2367 1888',
     services: ['Critical Care', 'Diagnostic Services', 'Surgical Specialties', 'Neurology'],
-    imageUrl: '/breach.avif', // Local image
+    imageUrl: '/breach.avif',
     imageHint: 'classic hospital mumbai',
   },
   {
     id: '10',
     name: 'Indraprastha Apollo Hospitals - Delhi',
-    address: 'Sarita Vihar, Mathura Rd, New Delhi, Delhi 110076, India',
+    address: 'Delhi Mathura Road, Sarita Vihar, New Delhi, Delhi 110076, India',
     phone: '+91 11 2692 5858',
     services: ['Advanced Stroke Unit', 'Organ Transplant', 'Cardiac Sciences', 'Neurosciences'],
-    imageUrl: '/indraprastha.avif', // Local image
+    imageUrl: '/indraprastha.avif',
     imageHint: 'apollo hospital delhi',
   },
   {
@@ -229,7 +229,7 @@ export const sampleHospitals: Hospital[] = [
     address: 'Okhla Road, Sukhdev Vihar Metro Station, New Friends Colony, New Delhi, Delhi 110025, India',
     phone: '+91 11 4713 5000',
     services: ['Cardiac Care', 'Emergency Services', 'Neurology', 'Vascular Surgery'],
-    imageUrl: '/fortis.jpg', // Local image
+    imageUrl: '/fortis.jpg',
     imageHint: 'heart institute delhi',
   },
   {
@@ -238,7 +238,7 @@ export const sampleHospitals: Hospital[] = [
     address: 'Sir Ganga Ram Hospital Marg, Old Rajinder Nagar, Rajinder Nagar, New Delhi, Delhi 110060, India',
     phone: '+91 11 2575 0000',
     services: ['Multi-Speciality Care', 'Research Wing', 'Emergency Department', 'Stroke Clinic'],
-    imageUrl: '/sir ganga.jpeg', // Local image
+    imageUrl: '/sir ganga.jpeg',
     imageHint: 'ganga ram hospital delhi',
   }
 ];
@@ -309,7 +309,7 @@ export const sampleNurses: Nurse[] = [
     imageUrl: 'https://placehold.co/300x300.png',
     imageHint: 'male nurse smiling',
     bio: 'Amit is a highly skilled nurse specializing in complex neurological conditions. He is proficient in advanced wound care techniques and offers compassionate palliative support.',
-    verifiedLicense: false,
+    verifiedLicense: true,
   },
   {
     id: 'nurse003',
@@ -345,7 +345,7 @@ export const sampleNurses: Nurse[] = [
     imageUrl: 'https://placehold.co/300x300.png',
     imageHint: 'female nurse gentle',
     bio: 'Anjali specializes in pediatric home care and is skilled in supporting children with special needs. She is also experienced in home infusion therapies.',
-    verifiedLicense: false,
+    verifiedLicense: true,
   },
   {
     id: 'nurse006',
@@ -381,7 +381,7 @@ export const sampleNurses: Nurse[] = [
     imageUrl: 'https://placehold.co/300x300.png',
     imageHint: 'senior care nurse',
     bio: 'Mohan provides general nursing care and companionship for the elderly, ensuring medication adherence and daily well-being checks.',
-    verifiedLicense: false,
+    verifiedLicense: true,
   }
 ];
 
@@ -445,14 +445,15 @@ export const sampleDoctors: Doctor[] = [
     yearsOfExperience: 18,
     languagesSpoken: ['English', 'Hindi', 'Gujarati'],
     ratings: 4.8,
-    verifiedLicense: false, // Example of an unverified doctor
+    verifiedLicense: true, 
     profilePictureUrl: 'https://placehold.co/300x300.png',
     imageHint: 'male doctor serious',
     locationDescription: 'Pan-Hyderabad coverage for emergency cardiac consultations.',
     consultationFee: 2000,
     availability: 'Available on call for critical cases.',
-    bio: 'Experienced cardiologist providing expert consultations for heart-related conditions. (Note: License verification pending)',
-    // No video consultation for this doctor example
+    bio: 'Experienced cardiologist providing expert consultations for heart-related conditions.',
+    videoConsultationFee: 1800,
+    videoAvailabilitySlots: ['Flexible (On Request)']
   },
   {
     id: 'doc005',
@@ -465,7 +466,7 @@ export const sampleDoctors: Doctor[] = [
     profilePictureUrl: 'https://placehold.co/300x300.png',
     imageHint: 'female doctor friendly',
     locationDescription: 'Specializes in post-stroke speech rehabilitation.',
-    consultationFee: 900, // Assuming this is for in-person if offered
+    consultationFee: 900, 
     availability: 'By appointment',
     bio: 'Dr. Gupta helps patients recover speech and swallowing abilities post-stroke, using evidence-based therapies.',
     videoConsultationFee: 700,
