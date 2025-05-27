@@ -3,7 +3,7 @@ import type { Doctor } from '@/types';
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Video, MessageSquareText, CheckCircle2, Download, CalendarClock } from 'lucide-react';
+import { Video, MessageSquareText, CheckCircle2, CalendarClock } from 'lucide-react'; // Removed Download icon
 import { FeedbackForm } from './FeedbackForm';
 import { Button } from '@/components/ui/button';
 
@@ -59,11 +59,7 @@ export function VideoDoctorProfileCard({ doctor }: VideoDoctorProfileCardProps) 
                 <Video className="mr-2 h-4 w-4" /> Join Call
             </a>
          </Button>
-          <Button size="sm" variant="outline" asChild>
-            <a href="/prescription.pdf" download="prescription.pdf" target="_blank" rel="noopener noreferrer">
-                <Download className="mr-2 h-4 w-4" /> Prescription
-            </a>
-          </Button>
+          {/* Removed Download Prescription button from here */}
           <FeedbackForm />
        </CardFooter>
     </Card>
