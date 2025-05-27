@@ -62,6 +62,7 @@ export interface Nurse {
   imageUrl?: string;
   imageHint?: string;
   bio?: string;
+  verifiedLicense?: boolean; // Added verifiedLicense
 }
 
 export type NurseBookingFormData = {
@@ -119,3 +120,4 @@ export type ConsultationType = {
   name: string;
   description?: string;
 };
+

@@ -136,19 +136,19 @@ export const sampleHospitals: Hospital[] = [
   {
     id: '1',
     name: 'Olive Hospital - Hyderabad',
-    address: '9-4-87/A/23 & 24, Salarjung Colony, Inner Ring Road, Mehdipatnam, Hyderabad, Telangana 500028, India',
+    address: 'Masab Tank, Rd Number 1, Chintal, Resapuvanipalem, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2351 5000',
     services: ['Multi-Speciality Care', 'Emergency Services', 'Diagnostics & Imaging', 'Stroke Unit'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Aga_Khan_University_Hospital_Nairobi.jpg/640px-Aga_Khan_University_Hospital_Nairobi.jpg',
+    imageUrl: '/olive.webp', // Local image
     imageHint: 'modern hospital hyderabad',
   },
   {
     id: '2',
     name: 'Premier Hospital - Hyderabad',
-    address: 'H.No: 12-2-823/A/25, St Ann\'s School Road, Opp: R.T.A Office, Santosh Nagar Colony, Mehdipatnam, Hyderabad, Telangana 500028, India',
+    address: 'H.No: 12-2-823/A/25, St Ann\'s School Road, Opp: R.T.A Office, Humayun Nagar, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2353 8686',
     services: ['General Medicine', 'Orthopedics', 'Neurology Consultations', '24/7 Pharmacy'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Apollo_Hospital_Hyderabad_main_building.jpg/640px-Apollo_Hospital_Hyderabad_main_building.jpg',
+    imageUrl: '/premier.jpeg', // Local image
     imageHint: 'apollo hospital hyderabad',
   },
   {
@@ -157,7 +157,7 @@ export const sampleHospitals: Hospital[] = [
     address: 'Santhosh Nagar, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2334 0119',
     services: ['Specialized Eye Care', 'Emergency Eye Services', 'Outpatient Department'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/KEM_Hospital_Building.jpg/640px-KEM_Hospital_Building.jpg',
+    imageUrl: '/sarojini.avif', // Local image
     imageHint: 'eye hospital hyderabad',
   },
    {
@@ -166,7 +166,7 @@ export const sampleHospitals: Hospital[] = [
     address: '12-2-417/A/2, Main Road, beside Subhash Chandra Bose Statue, near NMDC, Gudimalkapur, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 72073 57861',
     services: ['Multi-Speciality Services', 'Intensive Care Unit', 'Surgical Facilities'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/BLK_Super_Speciality_Hospital.jpg/640px-BLK_Super_Speciality_Hospital.jpg',
+    imageUrl: '/ayaan.png', // Local image
     imageHint: 'multi-speciality hospital hyderabad',
   },
   {
@@ -175,16 +175,16 @@ export const sampleHospitals: Hospital[] = [
     address: '12, Vitthaldas Thackersey Marg, New Marine Lines, Mumbai, Maharashtra 400020, India',
     phone: '+91 22 2206 7676',
     services: ['Emergency Care', 'Cardiology', 'Neurology', 'Advanced Stroke Care'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Bombay_Hospital_building.jpg/640px-Bombay_Hospital_building.jpg',
+    imageUrl: '/bombay.jpg', // Local image
     imageHint: 'city hospital building mumbai',
   },
   {
     id: '6',
     name: 'Max Healthcare Saket - Delhi',
-    address: 'Max Super Speciality Hospital, Press Enclave Road, Saket Institutional Area, Saket, New Delhi, Delhi 110017, India',
+    address: 'Max Super Speciality Hospital, Saket Institutional Area, Press Enclave Road, Saket, New Delhi, Delhi 110017, India',
     phone: '+91 11 2651 5050',
     services: ['Comprehensive Stroke Center', 'Intensive Care', 'Neurosurgery', 'Rehabilitation Services'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Max_Healthcare_Saket.jpg/640px-Max_Healthcare_Saket.jpg',
+    imageUrl: '/max hospital.jpg', // Local image
     imageHint: 'modern medical center delhi',
   },
   {
@@ -193,7 +193,7 @@ export const sampleHospitals: Hospital[] = [
     address: 'Rao Saheb Achutrao Patwardhan Marg, Four Bungalows, Andheri West, Mumbai, Maharashtra 400053, India',
     phone: '+91 22 3066 6666',
     services: ['Multi-Speciality', 'Robotic Surgery', 'Cancer Care', 'Stroke Program'],
-    imageUrl: '/kokila.avif',
+    imageUrl: '/kokila.avif', // Local image
     imageHint: 'large hospital mumbai',
   },
   {
@@ -202,7 +202,7 @@ export const sampleHospitals: Hospital[] = [
     address: 'A-791, Bandra Reclamation, Bandra (West), Mumbai, Maharashtra 400050, India',
     phone: '+91 22 2675 1000',
     services: ['Neurology', 'Cardiology', 'Oncology', 'Emergency Room'],
-    imageUrl: '/lilavita.jpg',
+    imageUrl: '/lilavita.jpg', // Local image
     imageHint: 'research hospital mumbai',
   },
   {
@@ -211,16 +211,16 @@ export const sampleHospitals: Hospital[] = [
     address: '60 A, Bhulabhai Desai Road, Breach Candy, Cumballa Hill, Mumbai, Maharashtra 400026, India',
     phone: '+91 22 2367 1888',
     services: ['Critical Care', 'Diagnostic Services', 'Surgical Specialties', 'Neurology'],
-    imageUrl: '/breach.avif',
+    imageUrl: '/breach.avif', // Local image
     imageHint: 'classic hospital mumbai',
   },
   {
     id: '10',
     name: 'Indraprastha Apollo Hospitals - Delhi',
-    address: 'Sarita Vihar, Delhi Mathura Road, New Delhi, Delhi 110076, India',
+    address: 'Sarita Vihar, Mathura Rd, New Delhi, Delhi 110076, India',
     phone: '+91 11 2692 5858',
     services: ['Advanced Stroke Unit', 'Organ Transplant', 'Cardiac Sciences', 'Neurosciences'],
-    imageUrl: '/indraprastha.avif',
+    imageUrl: '/indraprastha.avif', // Local image
     imageHint: 'apollo hospital delhi',
   },
   {
@@ -229,7 +229,7 @@ export const sampleHospitals: Hospital[] = [
     address: 'Okhla Road, Sukhdev Vihar Metro Station, New Friends Colony, New Delhi, Delhi 110025, India',
     phone: '+91 11 4713 5000',
     services: ['Cardiac Care', 'Emergency Services', 'Neurology', 'Vascular Surgery'],
-    imageUrl: '/fortis.jpg',
+    imageUrl: '/fortis.jpg', // Local image
     imageHint: 'heart institute delhi',
   },
   {
@@ -238,7 +238,7 @@ export const sampleHospitals: Hospital[] = [
     address: 'Sir Ganga Ram Hospital Marg, Old Rajinder Nagar, Rajinder Nagar, New Delhi, Delhi 110060, India',
     phone: '+91 11 2575 0000',
     services: ['Multi-Speciality Care', 'Research Wing', 'Emergency Department', 'Stroke Clinic'],
-    imageUrl: '/sir ganga.jpeg',
+    imageUrl: '/sir ganga.jpeg', // Local image
     imageHint: 'ganga ram hospital delhi',
   }
 ];
@@ -296,7 +296,8 @@ export const sampleNurses: Nurse[] = [
     availability: 'Mon-Sat, 8am-6pm',
     imageUrl: 'https://placehold.co/300x300.png',
     imageHint: 'female nurse professional',
-    bio: 'Priya is a dedicated and compassionate nurse with extensive experience in helping stroke patients regain independence. She is skilled in mobility assistance, medication management, and providing emotional support.'
+    bio: 'Priya is a dedicated and compassionate nurse with extensive experience in helping stroke patients regain independence. She is skilled in mobility assistance, medication management, and providing emotional support.',
+    verifiedLicense: true,
   },
   {
     id: 'nurse002',
@@ -307,7 +308,8 @@ export const sampleNurses: Nurse[] = [
     availability: 'Flexible, including evenings',
     imageUrl: 'https://placehold.co/300x300.png',
     imageHint: 'male nurse smiling',
-    bio: 'Amit is a highly skilled nurse specializing in complex neurological conditions. He is proficient in advanced wound care techniques and offers compassionate palliative support.'
+    bio: 'Amit is a highly skilled nurse specializing in complex neurological conditions. He is proficient in advanced wound care techniques and offers compassionate palliative support.',
+    verifiedLicense: false,
   },
   {
     id: 'nurse003',
@@ -318,7 +320,8 @@ export const sampleNurses: Nurse[] = [
     availability: 'Weekdays, 9am-5pm',
     imageUrl: 'https://placehold.co/300x300.png',
     imageHint: 'nurse with stethoscope',
-    bio: 'Sunita has a strong background in cardiac care and diabetes education. She is passionate about empowering patients and their families with the knowledge to manage chronic conditions effectively at home.'
+    bio: 'Sunita has a strong background in cardiac care and diabetes education. She is passionate about empowering patients and their families with the knowledge to manage chronic conditions effectively at home.',
+    verifiedLicense: true,
   },
   {
     id: 'nurse004',
@@ -329,7 +332,8 @@ export const sampleNurses: Nurse[] = [
     availability: 'Mon-Fri, 7am-7pm',
     imageUrl: 'https://placehold.co/300x300.png',
     imageHint: 'male nurse focused',
-    bio: 'Rajesh is an experienced critical care nurse, adept at handling emergency situations and managing patients requiring intensive care.'
+    bio: 'Rajesh is an experienced critical care nurse, adept at handling emergency situations and managing patients requiring intensive care.',
+    verifiedLicense: true,
   },
   {
     id: 'nurse005',
@@ -340,7 +344,8 @@ export const sampleNurses: Nurse[] = [
     availability: 'Flexible, Weekends preferred',
     imageUrl: 'https://placehold.co/300x300.png',
     imageHint: 'female nurse gentle',
-    bio: 'Anjali specializes in pediatric home care and is skilled in supporting children with special needs. She is also experienced in home infusion therapies.'
+    bio: 'Anjali specializes in pediatric home care and is skilled in supporting children with special needs. She is also experienced in home infusion therapies.',
+    verifiedLicense: false,
   },
   {
     id: 'nurse006',
@@ -351,7 +356,8 @@ export const sampleNurses: Nurse[] = [
     availability: 'Tue-Sat, 10am-6pm',
     imageUrl: 'https://placehold.co/300x300.png',
     imageHint: 'nurse assisting patient',
-    bio: 'Vikram has a strong background in orthopedic nursing, assisting patients with recovery after surgery and managing chronic pain conditions.'
+    bio: 'Vikram has a strong background in orthopedic nursing, assisting patients with recovery after surgery and managing chronic pain conditions.',
+    verifiedLicense: true,
   },
   {
     id: 'nurse007',
@@ -362,7 +368,8 @@ export const sampleNurses: Nurse[] = [
     availability: 'Mon, Wed, Fri, 9am-3pm',
     imageUrl: 'https://placehold.co/300x300.png',
     imageHint: 'female nurse empathetic',
-    bio: 'Deepa is a compassionate nurse focusing on mental health and dementia care, providing both medical support and counseling to patients and families.'
+    bio: 'Deepa is a compassionate nurse focusing on mental health and dementia care, providing both medical support and counseling to patients and families.',
+    verifiedLicense: true,
   },
   {
     id: 'nurse008',
@@ -373,7 +380,8 @@ export const sampleNurses: Nurse[] = [
     availability: 'Daily, 4-hour shifts',
     imageUrl: 'https://placehold.co/300x300.png',
     imageHint: 'senior care nurse',
-    bio: 'Mohan provides general nursing care and companionship for the elderly, ensuring medication adherence and daily well-being checks.'
+    bio: 'Mohan provides general nursing care and companionship for the elderly, ensuring medication adherence and daily well-being checks.',
+    verifiedLicense: false,
   }
 ];
 

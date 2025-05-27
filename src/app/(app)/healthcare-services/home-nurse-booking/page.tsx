@@ -6,7 +6,7 @@ import type { Nurse } from '@/types';
 import { HomeNurseBookingForm } from '@/components/features/healthcare-services/HomeNurseBookingForm';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Star, DollarSign, ArrowLeft, BriefcaseMedical } from 'lucide-react';
+import { Star, DollarSign, ArrowLeft, BriefcaseMedical, CheckCircle2, XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
@@ -65,6 +65,15 @@ export default function HomeNurseBookingPage() {
                     <CardTitle className="text-xl group-hover:text-primary transition-colors">{nurse.name}</CardTitle>
                     {nurse.specializations.length > 0 && (
                       <CardDescription className="text-sm text-primary">{nurse.specializations[0]}</CardDescription>
+                    )}
+                    {nurse.verifiedLicense ? (
+                      <Badge variant="default" className="mt-1 bg-green-500 hover:bg-green-600 text-xs">
+                        <CheckCircle2 className="mr-1 h-3 w-3" /> Verified
+                      </Badge>
+                    ) : (
+                      <Badge variant="destructive" className="mt-1 text-xs">
+                        <XCircle className="mr-1 h-3 w-3" /> Not Verified
+                      </Badge>
                     )}
                     <div className="flex flex-wrap gap-1 mt-2">
                       {nurse.specializations.slice(1, 3).map(spec => (
