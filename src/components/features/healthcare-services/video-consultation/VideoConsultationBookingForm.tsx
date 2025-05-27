@@ -26,13 +26,13 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
-import { CalendarIcon, AlertTriangle, CheckCircle2, Loader2 } from 'lucide-react'; // Added CheckCircle2 and Loader2
+import { CalendarIcon, AlertTriangle, CheckCircle2, Loader2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { db } from '@/lib/firebase';
-import { collection, addDoc, serverTimestamp, Timestamp } from 'firebase/firestore'; // Added Timestamp
+import { collection, addDoc, serverTimestamp, Timestamp } from 'firebase/firestore';
 import { sendBookingConfirmation } from '@/lib/notifications';
 
 const videoBookingFormSchema = z.object({
@@ -64,6 +64,8 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionStatus, setSubmissionStatus] = useState<'success' | 'error' | null>(null);
+  const [submissionError, setSubmissionError] = useState<string | null>(null);
+
 
   const form = useForm<z.infer<typeof videoBookingFormSchema>>({
     resolver: zodResolver(videoBookingFormSchema),
@@ -78,35 +80,38 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
 
   async function onSubmit(values: z.infer<typeof videoBookingFormSchema>) {
     setIsSubmitting(true);
-    setSubmissionStatus(null); // Clear previous status immediately
+    setSubmissionStatus(null);
+    setSubmissionError(null);
 
-    const patientId = "mock-patient-123"; // Placeholder for actual patient ID
+    const patientId = "mock-patient-123"; 
 
     try {
       if (!db) {
-        throw new Error("Database not initialized. Please ensure Firebase is correctly configured and try again later.");
+        const firebaseConfigError = "Database not initialized. Please ensure your Firebase project is correctly set up and all necessary API keys (NEXT_PUBLIC_FIREBASE_API_KEY, NEXT_PUBLIC_FIREBASE_PROJECT_ID, etc.) are present in your .env file.";
+        setSubmissionError(firebaseConfigError);
+        throw new Error(firebaseConfigError);
       }
 
       const selectedDoctor = doctors.find(d => d.id === values.selectedDoctorId);
       if (!selectedDoctor) {
-        throw new Error("Selected doctor not found. Please select a valid doctor.");
+        const doctorNotFoundError = "Selected doctor not found. Please select a valid doctor from the list.";
+        setSubmissionError(doctorNotFoundError);
+        throw new Error(doctorNotFoundError);
       }
 
-      // This is the Firestore operation. Its speed depends on network and Firestore performance.
-      const docRef = await addDoc(collection(db, "video_consultations"), {
+      await addDoc(collection(db, "video_consultations"), {
         doctorId: values.selectedDoctorId,
         patientId: patientId,
         patientName: values.patientName,
         doctorName: selectedDoctor.fullName,
         consultationType: values.consultationType,
-        scheduledDate: Timestamp.fromDate(values.preferredDate), // Store as Firestore Timestamp
+        scheduledDate: Timestamp.fromDate(values.preferredDate),
         timeSlot: values.preferredTimeSlot,
         symptoms: values.symptoms,
         status: "pending",
         uploadedReports: [],
         createdAt: serverTimestamp(),
       });
-
 
       const consultationDateTime = `${format(values.preferredDate, "PPP")} at ${values.preferredTimeSlot}`;
       sendBookingConfirmation(values.patientName, selectedDoctor.fullName, consultationDateTime);
@@ -128,14 +133,23 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
         duration: 8000,
       });
       setSubmissionStatus('success');
+      setSubmissionError(null);
       form.reset();
     } catch (error: any) {
       console.error("Error submitting video consultation request: ", error);
       setSubmissionStatus('error');
+      let errorMessage = error.message || "An unexpected error occurred. Please try again.";
+      if (errorMessage.includes("Database not initialized")) {
+        errorMessage = "Connection to the booking service failed. Please ensure your Firebase configuration (API keys in .env) is correct and try again. Contact support if the issue persists.";
+      } else if (errorMessage.includes("Missing or insufficient permissions")) {
+        errorMessage = "There was an issue saving your booking. This might be due to a configuration problem. Please try again later or contact support.";
+      }
+      setSubmissionError(errorMessage);
       toast({
         variant: "destructive",
         title: "Booking Failed",
-        description: error.message || "An unexpected error occurred. Please try again.",
+        description: errorMessage,
+        duration: 10000, 
       });
     } finally {
       setIsSubmitting(false);
@@ -244,7 +258,7 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
                       selected={field.value}
                       onSelect={field.onChange}
                       disabled={(date) =>
-                        date < new Date(new Date().setDate(new Date().getDate() -1)) // Disable past dates
+                        date < new Date(new Date().setDate(new Date().getDate() -1)) 
                       }
                       initialFocus
                     />
@@ -311,12 +325,12 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
           </Alert>
         )}
 
-        {submissionStatus === 'error' && (
+        {submissionStatus === 'error' && submissionError && (
           <Alert variant="destructive">
             <AlertTriangle className="h-4 w-4" />
-            <AlertTitle>Submission Failed</AlertTitle>
+            <AlertTitle>Booking Failed</AlertTitle>
             <AlertDescription>
-              There was an error submitting your request. Please check your connection and try again.
+              {submissionError}
             </AlertDescription>
           </Alert>
         )}
