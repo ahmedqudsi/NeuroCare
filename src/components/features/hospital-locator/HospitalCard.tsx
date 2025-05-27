@@ -23,16 +23,32 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
     getDirectionsButton: "Get Directions"
   };
 
+  const getImagePath = () => {
+    if (hospital.name === 'Olive Hospital - Hyderabad') {
+      return '/olive.webp';
+    }
+    if (hospital.name === 'Premier Hospital - Hyderabad') {
+      return '/premier.jpeg';
+    }
+    return hospital.imageUrl;
+  };
+
   return (
     <Card className="overflow-hidden shadow-lg hover:shadow-xl hover:scale-[1.02] transform transition-all duration-300 flex flex-col h-full">
-      {hospital.imageUrl && ( // This condition might need adjustment if olive.webp is primary and imageUrl is just a fallback
+      {hospital.imageUrl && ( 
          <div className="relative w-full h-48 bg-secondary">
             <Image
-              src={hospital.name === 'Olive Hospital - Hyderabad' ? '/olive.webp' : hospital.imageUrl}
+              src={getImagePath()}
               alt={`Image of ${hospital.name}`}
               fill
               style={{ objectFit: 'cover' }}
               data-ai-hint={hospital.imageHint || "hospital building"}
+              onError={(e) => {
+                // Fallback for local images if they are not found or error out
+                if (hospital.name === 'Olive Hospital - Hyderabad' || hospital.name === 'Premier Hospital - Hyderabad') {
+                  (e.target as HTMLImageElement).src = 'https://placehold.co/600x400.png?text=Image+Not+Found';
+                }
+              }}
             />
          </div>
       )}
