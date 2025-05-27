@@ -24,6 +24,20 @@ export default function HomeNurseBookingPage() {
     backButtonText: "Back to Healthcare Services",
   };
 
+  const getNurseImagePath = (nurse: Nurse): string => {
+    switch (nurse.id) {
+      case 'nurse001': return '/Priya Sharma.jpg';
+      case 'nurse002': return '/Amit Singh.avif';
+      case 'nurse003': return '/Sunita Reddy.jpg';
+      case 'nurse004': return '/Rajesh Kumar.jpg';
+      case 'nurse005': return '/Anjali Mehta.webp';
+      case 'nurse006': return '/Vikram Patel.webp';
+      case 'nurse007': return '/Deepa Iyer.avif';
+      case 'nurse008': return '/Mohan Das.jpeg';
+      default: return nurse.imageUrl || 'https://placehold.co/300x300.png'; // Fallback to constant or generic
+    }
+  };
+
   return (
     <div className="space-y-10">
       <div className="animate-in fade-in slide-in-from-top-8 duration-700">
@@ -50,17 +64,19 @@ export default function HomeNurseBookingPage() {
             <Card key={nurse.id} className="overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200 flex flex-col h-full group">
               <CardHeader className="pb-3">
                 <div className="flex items-start space-x-4">
-                  {nurse.imageUrl && (
-                    <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-primary flex-shrink-0">
-                      <Image
-                        src={nurse.imageUrl}
-                        alt={`Photo of ${nurse.name}`}
-                        fill
-                        style={{ objectFit: 'cover' }}
-                        data-ai-hint={nurse.imageHint || "professional nurse"}
-                      />
-                    </div>
-                  )}
+                  <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-primary flex-shrink-0">
+                    <Image
+                      src={getNurseImagePath(nurse)}
+                      alt={`Photo of ${nurse.name}`}
+                      fill
+                      style={{ objectFit: 'cover' }}
+                      data-ai-hint={nurse.imageHint || "professional nurse"}
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = `https://placehold.co/300x300.png?text=${encodeURIComponent(nurse.name.split(' ')[0])}`;
+                        (e.target as HTMLImageElement).alt = `${nurse.name} image not found`;
+                      }}
+                    />
+                  </div>
                   <div className="flex-1">
                     <CardTitle className="text-xl group-hover:text-primary transition-colors">{nurse.name}</CardTitle>
                     {nurse.specializations.length > 0 && (
