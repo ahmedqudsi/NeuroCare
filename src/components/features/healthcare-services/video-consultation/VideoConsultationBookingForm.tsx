@@ -32,7 +32,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { db } from '@/lib/firebase';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'; // Added serverTimestamp
 import { sendBookingConfirmation } from '@/lib/notifications';
 
 const videoBookingFormSchema = z.object({
@@ -82,53 +82,61 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
     setSubmissionStatus(null);
     console.log("Video Consultation Request Submitted:", values);
 
+    // In a real app, you'd get the actual authenticated patient ID
+    const patientId = "mock-patient-123"; // Placeholder
+
     try {
-      // Hardcoded patient ID for now (replace with actual user authentication)
-      const patientId = "test-patient-id";
-
-      if (db) {
-        const docRef = await addDoc(collection(db, "video_consultations"), {
-          doctor_id: values.selectedDoctorId,
-          patient_id: patientId,
-          scheduled_time: values.preferredDate,
-          time_slot: values.preferredTimeSlot,
-          consultation_type: values.consultationType,
-          symptoms: values.symptoms,
-          status: "pending",
-          uploaded_reports: [], // Implement file upload later
-        });
-
-        console.log("Document written with ID: ", docRef.id);
-
-        const selectedDoctor = doctors.find(d => d.id === values.selectedDoctorId)?.fullName || 'the selected doctor';
-        const consultationDateTime = format(values.preferredDate, "PPP") + " at " + values.preferredTimeSlot;
-
-        sendBookingConfirmation(values.patientName, selectedDoctor, consultationDateTime);
-    
-        toast({
-          title: "Video Consultation Request Submitted!",
-          description: `Thank you, ${values.patientName}. Your request for a video consultation with ${selectedDoctor} on ${format(values.preferredDate, "PPP")} at ${values.preferredTimeSlot} has been received. We will contact you shortly to confirm.`,
-          duration: 7000,
-        });
-        setSubmissionStatus('success');
-        form.reset();
-      } else {
-        console.error("Firebase not initialized");
-        toast({
-          title: "Error Submitting Request",
-          description: "Firebase not initialized. Please try again.",
-          variant: "destructive",
-        });
-        setSubmissionStatus('error');
+      if (!db) {
+        throw new Error("Database not initialized. Please try again later.");
       }
-    } catch (error: any) {
-      console.error("Error adding document: ", error);
-      toast({
-        title: "Error Submitting Request",
-        description: error.message || "There was an error submitting your request. Please try again.",
-        variant: "destructive",
+
+      const selectedDoctor = doctors.find(d => d.id === values.selectedDoctorId);
+      if (!selectedDoctor) {
+        throw new Error("Selected doctor not found. Please select a valid doctor.");
+      }
+
+      const docRef = await addDoc(collection(db, "video_consultations"), {
+        doctorId: values.selectedDoctorId,
+        patientId: patientId,
+        patientName: values.patientName, // Storing patient name for easier display
+        doctorName: selectedDoctor.fullName, // Storing doctor name
+        consultationType: values.consultationType,
+        scheduledDate: values.preferredDate, // Storing as Firestore Timestamp will happen automatically
+        timeSlot: values.preferredTimeSlot,
+        symptoms: values.symptoms,
+        status: "pending", // Initial status
+        uploadedReports: [], // Placeholder for future report uploads
+        createdAt: serverTimestamp(), // Record creation time
+        // video_room_url and prescription_url would be added later
       });
+
+      console.log("Video consultation booking stored with ID: ", docRef.id);
+
+      // Simulate sending notification
+      const consultationDateTime = `${format(values.preferredDate, "PPP")} at ${values.preferredTimeSlot}`;
+      sendBookingConfirmation(values.patientName, selectedDoctor.fullName, consultationDateTime);
+
+      toast({
+        title: "✨ Booking Request Successful! ✨",
+        description: (
+          <div>
+            <p>Thank you, <strong>{values.patientName}</strong>!</p>
+            <p>Your video consultation with <strong>{selectedDoctor.fullName}</strong> for <strong>{values.preferredTimeSlot}</strong> on <strong>{format(values.preferredDate, "EEEE, MMMM do, yyyy")}</strong> has been successfully requested.</p>
+            <p className="mt-2 text-xs">We will notify you once it's confirmed. Please check your "My Appointments" section for updates.</p>
+          </div>
+        ),
+        duration: 8000, // Increased duration for better readability
+      });
+      setSubmissionStatus('success');
+      form.reset();
+    } catch (error: any) {
+      console.error("Error submitting video consultation request: ", error);
       setSubmissionStatus('error');
+      toast({
+        variant: "destructive",
+        title: "Booking Failed",
+        description: error.message || "There was an issue submitting your request. Please try again.",
+      });
     } finally {
       setIsSubmitting(false);
     }
