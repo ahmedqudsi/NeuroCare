@@ -5,11 +5,10 @@ import type { Hospital as HospitalType } from '@/types';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { MapPin, Phone, Stethoscope } from 'lucide-react'; // Removed Map import
+import { Phone, Stethoscope } from 'lucide-react'; 
 
 interface HospitalCardProps {
   hospital: HospitalType;
-  // dictionary prop removed
 }
 
 export function HospitalCard({ hospital }: HospitalCardProps) {
@@ -19,7 +18,6 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
     window.open(mapsUrl, '_blank', 'noopener,noreferrer');
   };
 
-  // Static text, previously from dictionary
   const cardStaticText = {
     servicesTitle: "Services:",
     getDirectionsButton: "Get Directions"
@@ -41,7 +39,10 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
       <CardHeader>
         <CardTitle className="text-xl font-semibold">{hospital.name}</CardTitle>
         <CardDescription className="flex items-center text-muted-foreground pt-1">
-          <MapPin className="mr-2 h-4 w-4" /> {hospital.address}
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-geo-alt-fill mr-2 h-4 w-4" viewBox="0 0 16 16">
+            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
+          </svg>
+          {hospital.address}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-3 flex-grow">

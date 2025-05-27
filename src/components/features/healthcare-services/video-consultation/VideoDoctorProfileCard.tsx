@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Video, MessageSquareText, CheckCircle2, CalendarClock } from 'lucide-react';
-// FeedbackForm removed
 import { Button } from '@/components/ui/button';
 
 interface VideoDoctorProfileCardProps {
@@ -54,8 +53,6 @@ export function VideoDoctorProfileCard({ doctor }: VideoDoctorProfileCardProps) 
         {doctor.bio && <p className="mt-2 text-xs italic line-clamp-2">{doctor.bio}</p>}
       </CardContent>
        <CardFooter className="pt-2 flex flex-wrap gap-2 justify-between items-center">
-         {/* Removed Join Call button */}
-         {/* Removed FeedbackForm component */}
        </CardFooter>
     </Card>
   );

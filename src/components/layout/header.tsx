@@ -1,13 +1,10 @@
 
 "use client";
 
-"use client";
-
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { siteConfig } from '@/config/site';
 import { ThemeToggleButton } from './theme-toggle-button';
-// LanguageSwitcher removed
 import { Brain, Menu } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -30,7 +27,7 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2 sm:gap-4">
           <Link href="/dashboard" className="flex items-center space-x-2">
-            <Brain className="h-6 w-6 text-primary" /> {/* Animation removed here */}
+            <Brain className="h-6 w-6 text-primary" />
             <span className="hidden sm:inline-block font-bold">{appName}</span>
           </Link>
         </div>
@@ -57,7 +54,6 @@ export function Header() {
         </nav>
 
         <div className="flex items-center space-x-2">
-          {/* LanguageSwitcher removed */}
           <ThemeToggleButton />
           <div className="md:hidden">
             <Sheet>
@@ -70,7 +66,7 @@ export function Header() {
               <SheetContent side="left" className="w-full max-w-xs p-6">
                  <div className="mb-6">
                    <Link href="/dashboard" className="flex items-center space-x-2">
-                     <Brain className="h-7 w-7 text-primary" /> {/* Animation removed here */}
+                     <Brain className="h-7 w-7 text-primary" />
                      <span className="text-lg font-semibold">
                        {appName}
                      </span>

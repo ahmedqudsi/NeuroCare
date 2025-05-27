@@ -14,14 +14,11 @@ export function ThemeToggleButton() {
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
-  // To avoid hydration mismatch, ensure the theme is loaded before rendering the button content
   const [mounted, setMounted] = React.useState(false);
   React.useEffect(() => setMounted(true), []);
 
   if (!mounted) {
     // Render a placeholder or null until the theme is determined client-side
-    // It's good practice to show an icon that matches the default theme or a neutral one.
-    // Assuming default is light, we can show Sun initially.
     return <Button variant="outline" size="icon" disabled><Sun className="h-[1.2rem] w-[1.2rem]" /></Button>;
   }
 

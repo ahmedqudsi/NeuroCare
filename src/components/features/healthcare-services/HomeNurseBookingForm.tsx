@@ -168,7 +168,7 @@ export function HomeNurseBookingForm({ nurses }: HomeNurseBookingFormProps) {
                       <Button
                         variant={"outline"}
                         className={cn(
-                          "w-full pl-3 text-left font-normal",
+                          "w-full pl-3 text-left font-normal hover:bg-accent hover:text-accent-foreground transition-colors",
                           !field.value && "text-muted-foreground"
                         )}
                       >
@@ -202,7 +202,7 @@ export function HomeNurseBookingForm({ nurses }: HomeNurseBookingFormProps) {
             control={form.control}
             name="bookingTime"
             render={({ field }) => (
-              <FormItem className="flex flex-col"> {/* Added flex flex-col here */}
+              <FormItem className="flex flex-col"> 
                 <FormLabel>Preferred Time Slot</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>

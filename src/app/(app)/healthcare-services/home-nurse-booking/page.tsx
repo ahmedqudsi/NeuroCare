@@ -6,7 +6,7 @@ import type { Nurse } from '@/types';
 import { HomeNurseBookingForm } from '@/components/features/healthcare-services/HomeNurseBookingForm';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Star, DollarSign, ArrowLeft } from 'lucide-react'; // Using Star as a generic rating/experience icon
+import { Star, DollarSign, ArrowLeft } from 'lucide-react'; 
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
@@ -62,7 +62,7 @@ export default function HomeNurseBookingPage() {
                 )}
                 <CardTitle className="text-xl">{nurse.name}</CardTitle>
                 <div className="flex flex-wrap gap-1 mt-1">
-                  {nurse.specializations.slice(0, 2).map(spec => ( // Show max 2 specializations
+                  {nurse.specializations.slice(0, 2).map(spec => ( 
                      <Badge key={spec} variant="secondary" className="text-xs">{spec}</Badge>
                   ))}
                   {nurse.specializations.length > 2 && <Badge variant="outline" className="text-xs">+{nurse.specializations.length - 2} more</Badge>}

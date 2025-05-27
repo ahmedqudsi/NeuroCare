@@ -28,7 +28,7 @@ export const siteConfig = {
     },
     {
       href: '/healthcare-services',
-      label: 'Healthcare Services', // New Navigation Item
+      label: 'Healthcare Services',
       icon: BriefcaseMedical,
     },
   ] as NavigationItem[],

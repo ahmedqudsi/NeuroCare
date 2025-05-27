@@ -15,14 +15,12 @@ export function ExerciseCard({ exercise }: ExerciseCardProps) {
     if (exercise.videoUrl) {
       window.open(exercise.videoUrl, '_blank', 'noopener,noreferrer');
     } else {
-      // Fallback if no specific video URL is provided (though ideally it should be)
       const searchQuery = `${exercise.name} stroke rehabilitation exercise guide`;
       const youtubeSearchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(searchQuery)}`;
       window.open(youtubeSearchUrl, '_blank', 'noopener,noreferrer');
     }
   };
 
-  // Static text, previously from dictionary
   const cardStaticText = {
     instructionsTitle: "Instructions:",
     watchVideoButton: "Watch Video"

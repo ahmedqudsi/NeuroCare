@@ -3,7 +3,7 @@ import type { Doctor } from '@/types';
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Star, Languages, MapPin, BriefcaseMedical, CheckCircle2, XCircle } from 'lucide-react'; // Added CheckCircle2, XCircle
+import { Star, Languages, MapPin, BriefcaseMedical, CheckCircle2, XCircle } from 'lucide-react'; 
 
 interface DoctorProfileCardProps {
   doctor: Doctor;
