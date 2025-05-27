@@ -19,8 +19,8 @@ import { FeedbackForm } from '@/components/features/healthcare-services/video-co
 // For App Router, metadata is usually in server components.
 
 export default function VideoConsultationPage() {
-  const [doctors, setDoctors] = useState<Doctor[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [doctors, setDoctors] = useState<Doctor[]>(staticSampleDoctors); // Initialize with static data
+  const [isLoading, setIsLoading] = useState(true); // Still used to manage fetching logic
 
   const pageStaticText = {
     mainTitle: 'Video Consultation with Doctors',
@@ -28,7 +28,7 @@ export default function VideoConsultationPage() {
     availableDoctorsTitle: 'Doctors Available for Video Consultation',
     bookingFormTitle: 'Book Your Video Consultation',
     backButtonText: "Back to Healthcare Services",
-    loadingDoctors: "Loading doctors...",
+    // loadingDoctors: "Loading doctors...", // Removed this
     joinCallTitle: "Join Video Call",
     joinCallDescription: "Click the button below to join the video consultation. Ensure you have a stable internet connection.",
     joinCallButton: "Join Meeting Now",
@@ -68,14 +68,14 @@ export default function VideoConsultationPage() {
               videoAvailabilitySlots: data.videoAvailabilitySlots || [],
             } as Doctor);
           });
-          setDoctors(doctorsData);
+          setDoctors(doctorsData.length > 0 ? doctorsData : staticSampleDoctors); // Use fetched data or fallback
         } catch (error) {
           console.error("Error fetching doctors from Firestore:", error);
-          setDoctors(staticSampleDoctors);
+          setDoctors(staticSampleDoctors); // Fallback to static data on error
         }
       } else {
         console.warn("Firebase not initialized, using static doctor data.");
-        setDoctors(staticSampleDoctors);
+        setDoctors(staticSampleDoctors); // Fallback if Firebase isn't ready
       }
       setIsLoading(false);
     };
@@ -111,16 +111,17 @@ export default function VideoConsultationPage() {
 
       <section className="space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
         <h2 className="text-2xl font-semibold text-foreground">{pageStaticText.availableDoctorsTitle}</h2>
-        {isLoading ? (
-          <p className="text-muted-foreground">{pageStaticText.loadingDoctors}</p>
-        ) : videoDoctors.length > 0 ? (
+        {/* Removed explicit loading text. The list will be empty or show "No doctors..." if data isn't ready/available */}
+        {videoDoctors.length > 0 ? (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {videoDoctors.map((doctor: Doctor) => (
               <VideoDoctorProfileCard key={doctor.id} doctor={doctor} />
             ))}
           </div>
         ) : (
-          <p className="text-muted-foreground">No doctors currently available for video consultation. Please check back later.</p>
+          <p className="text-muted-foreground">
+            {isLoading ? "Fetching doctor profiles..." : "No doctors currently available for video consultation. Please check back later."}
+          </p>
         )}
       </section>
 
@@ -143,7 +144,7 @@ export default function VideoConsultationPage() {
         </Button>
         {/* Placeholder for embedded video call integration. You would uncomment and configure this.
         <div className="mt-4 aspect-video w-full max-w-3xl rounded-lg border bg-muted overflow-hidden">
-           <iframe 
+           <iframe
             src="https://meet.jit.si/NeuroCareTestRoom" // Replace with dynamic room URL
             allow="camera; microphone; fullscreen; display-capture"
             className="w-full h-full border-0"
