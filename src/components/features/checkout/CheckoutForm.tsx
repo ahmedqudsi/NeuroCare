@@ -17,12 +17,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/context/CartContext";
-import { CreditCard, Loader2, CheckCircle2 } from "lucide-react";
+import { CreditCard, Loader2, CheckCircle2, ShieldCheck } from "lucide-react";
 import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 const checkoutFormSchema = z.object({
+  // Shipping Details
   fullName: z.string().min(3, { message: "Full name must be at least 3 characters." }),
   streetAddress: z.string().min(5, { message: "Street address is required." }),
   city: z.string().min(2, { message: "City is required." }),
@@ -30,6 +31,15 @@ const checkoutFormSchema = z.object({
   pincode: z.string().regex(/^\d{6}$/, { message: "Pincode must be 6 digits." }),
   contactNumber: z.string().regex(/^[6-9]\d{9}$/, { message: "Enter a valid 10-digit Indian mobile number." }),
   email: z.string().email({ message: "Please enter a valid email address." }),
+
+  // Payment Details (for UI demo only)
+  cardholderName: z.string().min(3, { message: "Cardholder name must be at least 3 characters." }),
+  cardNumber: z.string()
+    .min(15, { message: "Card number must be between 15 and 19 digits."}) // Common lengths for Visa/Mastercard/Amex
+    .max(19, { message: "Card number must be between 15 and 19 digits."})
+    .regex(/^(\d{4} ?){3,4}\d{3,4}$/, { message: "Enter a valid card number (e.g., XXXX XXXX XXXX XXXX)." }),
+  expiryDate: z.string().regex(/^(0[1-9]|1[0-2])\/\d{2}$/, { message: "Enter expiry date in MM/YY format (e.g., 08/25)." }),
+  cvv: z.string().regex(/^\d{3,4}$/, { message: "CVV must be 3 or 4 digits." }),
 });
 
 type CheckoutFormValues = z.infer<typeof checkoutFormSchema>;
@@ -52,6 +62,10 @@ export function CheckoutForm() {
       pincode: "",
       contactNumber: "",
       email: "",
+      cardholderName: "",
+      cardNumber: "",
+      expiryDate: "",
+      cvv: "",
     },
   });
 
@@ -61,11 +75,12 @@ export function CheckoutForm() {
     setPaymentComplete(false);
     setShowPaymentModal(true);
 
-    console.log("Checkout Data:", data);
+    console.log("Checkout Data (DEMO - DO NOT USE REAL CARD INFO):", data);
+    // IMPORTANT: In a real app, send data.cardNumber, data.expiryDate, data.cvv securely to a PCI compliant payment gateway.
+    // DO NOT log or store raw card details, especially CVV.
     console.log("Cart Items for Order:", cartItems);
 
-    // Simulate payment gateway interaction and delay
-    await new Promise(resolve => setTimeout(resolve, 3000)); // Increased delay for effect
+    await new Promise(resolve => setTimeout(resolve, 3000));
 
     setPaymentProcessing(false);
     setPaymentComplete(true);
@@ -76,13 +91,12 @@ export function CheckoutForm() {
         <div>
           <p>Thank you, {data.fullName}! Your order has been received.</p>
           <p>Details have been sent to {data.email}.</p>
-          <p className="mt-2 text-xs">This is a demo. No real payment was processed or order stored.</p>
+          <p className="mt-2 text-xs text-destructive">This is a demo. No real payment was processed. Do not enter real card details.</p>
         </div>
       ),
       duration: 7000,
     });
 
-    // Short delay to show success tick before closing modal
     await new Promise(resolve => setTimeout(resolve, 2000));
 
     setShowPaymentModal(false);
@@ -97,6 +111,7 @@ export function CheckoutForm() {
     <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          {/* Shipping Information Section */}
           <FormField
             control={form.control}
             name="fullName"
@@ -195,9 +210,81 @@ export function CheckoutForm() {
             )}
           />
 
-          <Button type="submit" className="w-full" disabled={isSubmitting || showPaymentModal}>
+          {/* Payment Details Section - DEMO ONLY */}
+          <Card className="mt-8 pt-6 border-primary/50 shadow-md">
+             <CardHeader className="pb-2 pt-0">
+                <CardTitle className="text-xl flex items-center">
+                    <ShieldCheck className="mr-2 h-5 w-5 text-primary" />
+                    Payment Details (Demo Only)
+                </CardTitle>
+                <CardDescription className="text-xs text-destructive">
+                    Do not enter real card information. This section is for UI demonstration.
+                </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <FormField
+                control={form.control}
+                name="cardholderName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Cardholder Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Name as on card" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="cardNumber"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Card Number</FormLabel>
+                    <FormControl>
+                      <Input type="text" inputMode="numeric" placeholder="XXXX XXXX XXXX XXXX" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <div className="grid grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name="expiryDate"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Expiry Date</FormLabel>
+                      <FormControl>
+                        <Input placeholder="MM/YY" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="cvv"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>CVV</FormLabel>
+                      <FormControl>
+                        <Input type="password" inputMode="numeric" placeholder="XXX" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </CardContent>
+          </Card>
+
+
+          <Button type="submit" className="w-full mt-8" disabled={isSubmitting || showPaymentModal}>
             <CreditCard className="mr-2 h-4 w-4" />
-            Proceed to Payment
+            Place Order & Proceed to Payment
           </Button>
         </form>
       </Form>
