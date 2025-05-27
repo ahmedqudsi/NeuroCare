@@ -66,16 +66,16 @@ export default function CheckoutPage() {
   });
 
   useEffect(() => {
-    if (cartItems.length === 0 && !isSubmitting && !paymentComplete) { // Avoid redirect during submission
+    if (cartItems.length === 0 && !isSubmitting && !paymentComplete) { 
       router.push('/healthcare-services/pharma-delivery');
     }
   }, [cartItems, router, isSubmitting, paymentComplete]);
 
   useEffect(() => {
     if (paymentComplete && !paymentProcessing) {
-      const duration = 2 * 1000; // Confetti for 2 seconds
+      const duration = 2 * 1000; 
       const animationEnd = Date.now() + duration;
-      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 2000 }; // zIndex higher than modal
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 2000 };
 
       function randomInRange(min: number, max: number) {
         return Math.random() * (max - min) + min;
@@ -93,7 +93,6 @@ export default function CheckoutPage() {
         confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
       }, 250);
       
-      // Cleanup interval on component unmount or if dependencies change
       return () => clearInterval(interval);
     }
   }, [paymentComplete, paymentProcessing]);
@@ -109,36 +108,56 @@ export default function CheckoutPage() {
     setPaymentComplete(false);
     setShowPaymentModal(true);
 
-    console.log("Checkout Data (DEMO - DO NOT USE REAL CARD INFO):", data);
+    console.log("Checkout Data:", data);
     console.log("Cart Items for Order:", cartItems);
 
-    await new Promise(resolve => setTimeout(resolve, 3000)); // Simulate payment processing
+    await new Promise(resolve => setTimeout(resolve, 3000)); 
 
     setPaymentProcessing(false);
     setPaymentComplete(true);
+
+    const mockOrderId = `NC-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+    const orderData = {
+      orderId: mockOrderId,
+      items: cartItems.map(item => ({ name: item.product.productName, quantity: item.quantity })),
+      total: calculateTotal(),
+      shippingAddress: {
+        fullName: data.fullName,
+        streetAddress: data.streetAddress,
+        city: data.city,
+        state: data.state,
+        pincode: data.pincode,
+      },
+      status: "Processing",
+      timestamp: new Date().toISOString(),
+    };
+
+    if (typeof window !== "undefined") {
+      localStorage.setItem('neuroCareLastOrder', JSON.stringify(orderData));
+    }
+    
 
     toast({
       title: "Order Placed Successfully!",
       description: (
         <div>
-          <p>Thank you, {data.fullName}! Your order has been received.</p>
+          <p>Thank you, {data.fullName}! Your order #{mockOrderId} has been received.</p>
           <p>Details have been sent to {data.email}.</p>
         </div>
       ),
       duration: 7000,
     });
 
-    await new Promise(resolve => setTimeout(resolve, 2000)); // Display success tick longer
+    await new Promise(resolve => setTimeout(resolve, 2000)); 
 
     setShowPaymentModal(false);
-    // Reset payment states for next transaction
     setPaymentProcessing(false); 
     setPaymentComplete(false);
     
     clearCart(); 
     form.reset();
     setIsSubmitting(false);
-    router.push('/dashboard'); // Redirect to dashboard or an order confirmation page
+    router.push('/dashboard'); 
   }
 
   if (cartItems.length === 0 && !isSubmitting && !paymentComplete) {
@@ -245,3 +264,5 @@ export default function CheckoutPage() {
     </div>
   );
 }
+
+    

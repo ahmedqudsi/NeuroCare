@@ -87,7 +87,7 @@ export default function PharmaDeliveryPage() {
         </div>
       </div>
 
-      {/* Action Buttons: View Cart & Track Order - Placeholder */}
+      {/* Action Buttons: View Cart & Track Order */}
       <div className="flex flex-col sm:flex-row gap-4 animate-in fade-in duration-700 delay-200">
         <Button asChild variant="default" size="lg" className="flex-1">
           <Link href="/cart">
@@ -95,9 +95,11 @@ export default function PharmaDeliveryPage() {
             {pageStaticText.viewCartButton}
           </Link>
         </Button>
-        <Button variant="outline" size="lg" className="flex-1" disabled>
-          <PackageSearch className="mr-2 h-5 w-5" />
-          {pageStaticText.trackOrderButton} (Coming Soon)
+        <Button asChild variant="outline" size="lg" className="flex-1">
+          <Link href="/order-status">
+            <PackageSearch className="mr-2 h-5 w-5" />
+            {pageStaticText.trackOrderButton}
+          </Link>
         </Button>
       </div>
 
@@ -150,3 +152,5 @@ export default function PharmaDeliveryPage() {
     </div>
   );
 }
+
+    
