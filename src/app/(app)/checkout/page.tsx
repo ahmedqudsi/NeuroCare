@@ -100,9 +100,11 @@ export default function CheckoutPage() {
       duration: 7000,
     });
 
-    await new Promise(resolve => setTimeout(resolve, 2000)); // Display success tick
+    await new Promise(resolve => setTimeout(resolve, 2000)); // Display success tick longer
 
     setShowPaymentModal(false);
+    // Reset payment states for next transaction
+    setPaymentProcessing(false); 
     setPaymentComplete(false);
     
     clearCart(); 
@@ -188,7 +190,7 @@ export default function CheckoutPage() {
           <div className="mt-8 flex justify-center">
             <Button type="submit" size="lg" className="w-full max-w-md" disabled={isSubmitting || showPaymentModal}>
               <CreditCard className="mr-2 h-4 w-4" />
-              {isSubmitting ? "Processing..." : "Place Order &amp; Proceed to Payment"}
+              {isSubmitting ? "Processing..." : "Place Order & Proceed to Payment"}
             </Button>
           </div>
         </form>
@@ -196,7 +198,7 @@ export default function CheckoutPage() {
 
       {showPaymentModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-          <Card className="w-64 h-48 shadow-2xl">
+          <Card className={`w-64 h-48 shadow-2xl transform transition-all duration-300 ease-out ${paymentComplete ? 'scale-110' : 'scale-100'}`}>
             <CardContent className="flex flex-col items-center justify-center h-full space-y-4">
               {paymentProcessing && (
                 <>
@@ -205,10 +207,11 @@ export default function CheckoutPage() {
                 </>
               )}
               {paymentComplete && (
-                <>
-                  <CheckCircle2 className="h-16 w-16 text-green-500" />
-                  <p className="text-green-600 font-semibold">Payment Successful!</p>
-                </>
+                <div className="flex flex-col items-center justify-center text-center animate-in fade-in zoom-in-50 duration-500">
+                  <CheckCircle2 className="h-20 w-20 text-green-500 mb-2 animate-bounce" />
+                  <p className="text-green-600 font-semibold text-lg">Payment Successful!</p>
+                  <p className="text-xs text-muted-foreground">Your order is confirmed.</p>
+                </div>
               )}
             </CardContent>
           </Card>
