@@ -6,7 +6,7 @@ import type { Nurse } from '@/types';
 import { HomeNurseBookingForm } from '@/components/features/healthcare-services/HomeNurseBookingForm';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Star, DollarSign, ArrowLeft, BriefcaseMedical, CheckCircle2, XCircle } from 'lucide-react';
+import { Star, DollarSign, ArrowLeft, BriefcaseMedical, CheckCircle2 } from 'lucide-react'; // XCircle removed as all are verified
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
@@ -34,7 +34,7 @@ export default function HomeNurseBookingPage() {
       case 'nurse006': return '/Vikram Patel.webp';
       case 'nurse007': return '/Deepa Iyer.avif';
       case 'nurse008': return '/Mohan Das.jpeg';
-      default: return nurse.imageUrl || 'https://placehold.co/300x300.png'; // Fallback to constant or generic
+      default: return nurse.imageUrl || 'https://placehold.co/300x300.png'; // Fallback if ID not matched
     }
   };
 
@@ -71,10 +71,7 @@ export default function HomeNurseBookingPage() {
                       fill
                       style={{ objectFit: 'cover' }}
                       data-ai-hint={nurse.imageHint || "professional nurse"}
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = `https://placehold.co/300x300.png?text=${encodeURIComponent(nurse.name.split(' ')[0])}`;
-                        (e.target as HTMLImageElement).alt = `${nurse.name} image not found`;
-                      }}
+                      // onError prop removed to prevent client component error
                     />
                   </div>
                   <div className="flex-1">
@@ -82,13 +79,9 @@ export default function HomeNurseBookingPage() {
                     {nurse.specializations.length > 0 && (
                       <CardDescription className="text-sm text-primary">{nurse.specializations[0]}</CardDescription>
                     )}
-                    {nurse.verifiedLicense ? (
+                    {nurse.verifiedLicense && ( // All nurses are now verified
                       <Badge variant="default" className="mt-1 bg-green-500 hover:bg-green-600 text-xs">
                         <CheckCircle2 className="mr-1 h-3 w-3" /> Verified
-                      </Badge>
-                    ) : (
-                      <Badge variant="destructive" className="mt-1 text-xs">
-                        <XCircle className="mr-1 h-3 w-3" /> Not Verified
                       </Badge>
                     )}
                     <div className="flex flex-wrap gap-1 mt-2">
