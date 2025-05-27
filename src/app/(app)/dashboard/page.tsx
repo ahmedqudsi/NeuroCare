@@ -6,6 +6,7 @@ import { Lightbulb, Brain, Users, ShieldCheck, Clock, Heart, Activity, Stethosco
 import { Button } from '@/components/ui/button';
 import { siteConfig } from '@/config/site'; 
 import type { Metadata } from 'next';
+import FeaturedInsights from '@/components/features/FeaturedInsights';
 
 
 export const metadata: Metadata = {
@@ -27,10 +28,10 @@ export default async function DashboardPage() {
   const commonTranslations = {
     quickTipsTitle: "Quick Tips",
     quickTipsDescription: "Important reminders for your well-being.",
-    tipExploreFAST: "Explore the FAST Test to learn about stroke symptoms.",
-    tipRehabExercises: "Check out Rehabilitation Exercises to aid your recovery.",
+    tipExploreFAST: `Explore the <span style="color: #87CEEB;">FAST Test</span> to learn about stroke symptoms.`,
+    tipRehabExercises: `Check out <span style="color: #87CEEB;">Rehabilitation Exercises</span> to aid your recovery.`,
     // tipSpeechTherapy: "Use the AI Speech Therapy tool to practice your speech.", // Removed as Speech Therapy AI is removed
-    tipStayPositive: "Stay positive and consistent with your recovery plan."
+    tipStayPositive: `Stay healthy and positive by freely utilizing our <span style="color: #87CEEB;">Healthcare Services</span>`
   };
 
   return (
@@ -113,13 +114,14 @@ export default async function DashboardPage() {
         </CardHeader>
         <CardContent>
           <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
-            <li className="hover:scale-105 hover:text-foreground/90 transform transition-transform duration-200 ease-in-out origin-left">{commonTranslations.tipExploreFAST}</li>
-            <li className="hover:scale-105 hover:text-foreground/90 transform transition-transform duration-200 ease-in-out origin-left">{commonTranslations.tipRehabExercises}</li>
+            <li className="hover:scale-105 hover:text-foreground/90 transform transition-transform duration-200 ease-in-out origin-left" dangerouslySetInnerHTML={{ __html: commonTranslations.tipExploreFAST }} />
+            <li className="hover:scale-105 hover:text-foreground/90 transform transition-transform duration-200 ease-in-out origin-left" dangerouslySetInnerHTML={{ __html: commonTranslations.tipRehabExercises }} />
             {/* <li className="hover:scale-105 hover:text-foreground/90 transform transition-transform duration-200 ease-in-out origin-left">{commonTranslations.tipSpeechTherapy}</li> */}
-            <li className="hover:scale-105 hover:text-foreground/90 transform transition-transform duration-200 ease-in-out origin-left">{commonTranslations.tipStayPositive}</li>
+            <li className="hover:scale-105 hover:text-foreground/90 transform transition-transform duration-200 ease-in-out origin-left" dangerouslySetInnerHTML={{ __html: commonTranslations.tipStayPositive }} />
           </ul>
         </CardContent>
       </Card>
+      <FeaturedInsights />
     </div>
   );
 }

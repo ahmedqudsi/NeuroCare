@@ -13,6 +13,9 @@ export default {
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
+        veryDarkNavy: "#040c2c",
+        darkCard: "#0e1a4a",
+        neonBorder: "#1e2a66",
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'

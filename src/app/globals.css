@@ -115,3 +115,18 @@ body {
 .blue-glow {
   box-shadow: 0 0 10px 3px rgba(71, 150, 255, 0.5);
 }
+
+.neon-text {
+  text-shadow:
+    0 0 5px rgba(138, 43, 226, 0.8),
+    0 0 10px rgba(138, 43, 226, 0.8),
+    0 0 20px rgba(138, 43, 226, 0.8);
+}
+
+.neonBorder {
+  box-shadow:
+    0 0 5px rgba(138, 43, 226, 0.5),
+    0 0 10px rgba(138, 43, 226, 0.5),
+    0 0 20px rgba(138, 43, 226, 0.5);
+  border: 1px solid rgba(138, 43, 226, 0.3);
+}

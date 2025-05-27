@@ -5,7 +5,7 @@ import { fastTestSteps } from '@/lib/constants';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { PhoneOutgoing, AlertTriangle } from 'lucide-react';
+import { PhoneOutgoing, AlertTriangle, Camera } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import type { FASTStep } from '@/types';
 import { cn } from '@/lib/utils';
@@ -97,6 +97,35 @@ export function InteractiveFASTTestClient() {
           >
             <PhoneOutgoing className="mr-2 h-5 w-5" />
             {pageStaticText.emergencyCallButton}
+          </Button>
+          <Button
+            size="lg"
+            className="ml-4 w-full max-w-md shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 ease-in-out transform"
+            style={{ backgroundColor: '#87CEFA' }}
+            onClick={() => {
+              navigator.mediaDevices.getUserMedia({ video: true })
+                .then((stream) => {
+                  // Handle the stream (e.g., display it in a video element)
+                  console.log("Camera access granted", stream);
+                  toast({
+                    title: "Camera Access",
+                    description: "Camera access granted. You can now use the camera.",
+                  });
+                })
+                .catch((error) => {
+                  // Handle errors
+                  console.error("Error accessing camera", error);
+                  toast({
+                    title: "Camera Access Error",
+                    description: "Error accessing camera: " + error.message,
+                    variant: "destructive",
+                  });
+                });
+            }}
+            aria-label="Start Test"
+          >
+            <Camera className="mr-2 h-5 w-5" />
+            Start Test
           </Button>
           <p className="mt-3 text-sm text-muted-foreground">
             If you suspect a stroke, every second counts. Do not delay.
