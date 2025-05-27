@@ -26,13 +26,13 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
-import { CalendarIcon, AlertTriangle } from 'lucide-react';
+import { CalendarIcon, AlertTriangle, CheckCircle2 } from 'lucide-react'; // Added CheckCircle2
 import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { db } from '@/lib/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore'; // Added serverTimestamp
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { sendBookingConfirmation } from '@/lib/notifications';
 
 const videoBookingFormSchema = z.object({
@@ -55,7 +55,6 @@ interface VideoConsultationBookingFormProps {
   consultationTypes: ConsultationType[];
 }
 
-// Sample generic time slots (in a real app, these would be dynamic based on doctor's availability for the selected date)
 const genericTimeSlots = [
   "09:00 AM - 09:30 AM", "09:30 AM - 10:00 AM", "10:00 AM - 10:30 AM", "10:30 AM - 11:00 AM",
   "02:00 PM - 02:30 PM", "02:30 PM - 03:00 PM", "03:00 PM - 03:30 PM", "03:30 PM - 04:00 PM",
@@ -80,14 +79,13 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
   async function onSubmit(values: z.infer<typeof videoBookingFormSchema>) {
     setIsSubmitting(true);
     setSubmissionStatus(null);
-    console.log("Video Consultation Request Submitted:", values);
+    // console.log("Video Consultation Request Submitted:", values); // For debugging
 
-    // In a real app, you'd get the actual authenticated patient ID
-    const patientId = "mock-patient-123"; // Placeholder
+    const patientId = "mock-patient-123"; // Placeholder for actual patient ID
 
     try {
       if (!db) {
-        throw new Error("Database not initialized. Please try again later.");
+        throw new Error("Database not initialized. Please ensure Firebase is correctly configured and try again later.");
       }
 
       const selectedDoctor = doctors.find(d => d.id === values.selectedDoctorId);
@@ -95,37 +93,41 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
         throw new Error("Selected doctor not found. Please select a valid doctor.");
       }
 
+      // This is the Firestore operation. Its speed depends on network and Firestore performance.
       const docRef = await addDoc(collection(db, "video_consultations"), {
         doctorId: values.selectedDoctorId,
         patientId: patientId,
-        patientName: values.patientName, // Storing patient name for easier display
-        doctorName: selectedDoctor.fullName, // Storing doctor name
+        patientName: values.patientName,
+        doctorName: selectedDoctor.fullName,
         consultationType: values.consultationType,
-        scheduledDate: values.preferredDate, // Storing as Firestore Timestamp will happen automatically
+        scheduledDate: values.preferredDate, 
         timeSlot: values.preferredTimeSlot,
         symptoms: values.symptoms,
-        status: "pending", // Initial status
-        uploadedReports: [], // Placeholder for future report uploads
-        createdAt: serverTimestamp(), // Record creation time
-        // video_room_url and prescription_url would be added later
+        status: "pending",
+        uploadedReports: [],
+        createdAt: serverTimestamp(),
       });
 
-      console.log("Video consultation booking stored with ID: ", docRef.id);
+      // console.log("Video consultation booking stored with ID: ", docRef.id); // For debugging
 
-      // Simulate sending notification
       const consultationDateTime = `${format(values.preferredDate, "PPP")} at ${values.preferredTimeSlot}`;
       sendBookingConfirmation(values.patientName, selectedDoctor.fullName, consultationDateTime);
 
       toast({
-        title: "✨ Booking Request Successful! ✨",
-        description: (
-          <div>
-            <p>Thank you, <strong>{values.patientName}</strong>!</p>
-            <p>Your video consultation with <strong>{selectedDoctor.fullName}</strong> for <strong>{values.preferredTimeSlot}</strong> on <strong>{format(values.preferredDate, "EEEE, MMMM do, yyyy")}</strong> has been successfully requested.</p>
-            <p className="mt-2 text-xs">We will notify you once it's confirmed. Please check your "My Appointments" section for updates.</p>
+        title: (
+          <div className="flex items-center">
+            <CheckCircle2 className="h-5 w-5 mr-2 text-green-500" />
+            Booking Request Successful!
           </div>
         ),
-        duration: 8000, // Increased duration for better readability
+        description: (
+          <div className="text-sm">
+            <p>Thank you, <strong>{values.patientName}</strong>!</p>
+            <p>Your video consultation with <strong>Dr. {selectedDoctor.fullName}</strong> for <strong>{values.preferredTimeSlot}</strong> on <strong>{format(values.preferredDate, "EEEE, MMMM do, yyyy")}</strong> has been requested.</p>
+            <p className="mt-2 text-xs text-muted-foreground">We'll notify you once confirmed. Check "My Appointments" for updates.</p>
+          </div>
+        ),
+        duration: 8000,
       });
       setSubmissionStatus('success');
       form.reset();
@@ -135,7 +137,7 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
       toast({
         variant: "destructive",
         title: "Booking Failed",
-        description: error.message || "There was an issue submitting your request. Please try again.",
+        description: error.message || "An unexpected error occurred. Please try again.",
       });
     } finally {
       setIsSubmitting(false);
@@ -303,10 +305,10 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
 
         {submissionStatus === 'success' && (
           <Alert variant="default" className="bg-green-50 border-green-300 text-green-700 dark:bg-green-900/30 dark:border-green-700 dark:text-green-300">
-            <AlertTriangle className="h-4 w-4 !text-green-600 dark:!text-green-400" />
-            <AlertTitle>Request Sent!</AlertTitle>
+            <CheckCircle2 className="h-4 w-4 !text-green-600 dark:!text-green-400" /> {/* Using CheckCircle2 */}
+            <AlertTitle>Request Submitted & Awaiting Confirmation!</AlertTitle>
             <AlertDescription>
-              Your video consultation request has been successfully submitted. We will contact you soon to confirm.
+              Your video consultation request has been sent. We'll notify you upon confirmation.
             </AlertDescription>
           </Alert>
         )}
@@ -316,7 +318,7 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
             <AlertTriangle className="h-4 w-4" />
             <AlertTitle>Submission Failed</AlertTitle>
             <AlertDescription>
-              There was an error submitting your request. Please try again.
+              There was an error submitting your request. Please check your connection and try again.
             </AlertDescription>
           </Alert>
         )}
