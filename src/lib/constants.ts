@@ -1,6 +1,6 @@
 
 import type { Quote, Exercise, Hospital, FASTStep, HealthcareService, Nurse, Doctor, ConsultationType, PharmacyProduct } from '@/types';
-import { Smile, Users, MessageSquare, Clock, UserRoundPlus, Home, Video, Truck, TestTube2, Pill } from 'lucide-react';
+import { Smile, Users, MessageSquare, Clock, UserRoundPlus, Home, Video, Truck, TestTube2, Pill, CheckCircle2, XCircle } from 'lucide-react';
 
 export const motivationalQuotes: Quote[] = [
   { id: '1', text: "The greatest glory in living lies not in never falling, but in rising every time we fall.", author: "Nelson Mandela" },
@@ -136,7 +136,7 @@ export const sampleHospitals: Hospital[] = [
   {
     id: '1',
     name: 'Olive Hospital - Hyderabad',
-    address: 'Masab Tank, Main Road, Chintal Basti, Hyderabad, Telangana 500028, India',
+    address: 'Nanal Nagar Rd, near Chintal Basti, NBT Nagar, Masab Tank, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2351 5000',
     services: ['Multi-Speciality Care', 'Emergency Services', 'Diagnostics & Imaging', 'Stroke Unit'],
     imageUrl: '/olive.webp',
@@ -145,7 +145,7 @@ export const sampleHospitals: Hospital[] = [
   {
     id: '2',
     name: 'Premier Hospital - Hyderabad',
-    address: 'H.No: 12-2-823/A/25, St Ann\'s School Road, Opp: R.T.A Office, Humayun Nagar, Mehdipatnam, Hyderabad, Telangana 500028, India',
+    address: 'H.No: 12-2-823/A/25, St Ann\'s School Rd, near R.T.A Office, Humayun Nagar, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2353 8686',
     services: ['General Medicine', 'Orthopedics', 'Neurology Consultations', '24/7 Pharmacy'],
     imageUrl: '/premier.jpeg',
@@ -181,7 +181,7 @@ export const sampleHospitals: Hospital[] = [
   {
     id: '6',
     name: 'Max Healthcare Saket - Delhi',
-    address: 'Max Super Speciality Hospital, Press Enclave Road, Saket Institutional Area, Saket, New Delhi, Delhi 110017, India',
+    address: 'Max Super Speciality Hospital, Press Enclave Marg, Saket Institutional Area, Saket, New Delhi, Delhi 110017, India',
     phone: '+91 11 2651 5050',
     services: ['Comprehensive Stroke Center', 'Intensive Care', 'Neurosurgery', 'Rehabilitation Services'],
     imageUrl: '/max hospital.jpg',
@@ -559,6 +559,42 @@ export const samplePharmacyProducts: PharmacyProduct[] = [
     inStock: true,
     description: 'Used to lower cholesterol and reduce the risk of heart disease and stroke.',
     tags: ['cholesterol', 'heart health', 'stroke prevention'],
+    prescriptionRequired: true,
+  },
+  {
+    id: 'med006',
+    productName: 'Clopidogrel 75mg Tablets (Strip of 10)',
+    category: 'Blood Thinners',
+    imageUrl: 'https://placehold.co/300x200.png',
+    imageHint: 'clopidogrel tablets',
+    price: 95,
+    inStock: true,
+    description: 'Antiplatelet medication used to prevent heart attacks and strokes in persons with heart disease.',
+    tags: ['stroke prevention', 'heart health', 'antiplatelet'],
+    prescriptionRequired: true,
+  },
+  {
+    id: 'med007',
+    productName: 'Amlodipine 5mg Tablets (Strip of 10)',
+    category: 'Blood Pressure',
+    imageUrl: 'https://placehold.co/300x200.png',
+    imageHint: 'amlodipine tablets',
+    price: 40,
+    inStock: true,
+    description: 'Calcium channel blocker used to treat high blood pressure and angina (chest pain).',
+    tags: ['high blood pressure', 'hypertension', 'stroke risk'],
+    prescriptionRequired: true,
+  },
+  {
+    id: 'med008',
+    productName: 'Metformin 500mg Tablets (Strip of 10)',
+    category: 'Diabetes',
+    imageUrl: 'https://placehold.co/300x200.png',
+    imageHint: 'metformin tablets',
+    price: 35,
+    inStock: true,
+    description: 'Used to control blood sugar levels in people with type 2 diabetes.',
+    tags: ['diabetes', 'blood sugar', 'stroke risk'],
     prescriptionRequired: true,
   },
 ];
