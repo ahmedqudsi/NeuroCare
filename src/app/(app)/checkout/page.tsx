@@ -182,12 +182,14 @@ export default function CheckoutPage() {
                   <PaymentDetailsForm />
                 </CardContent>
               </Card>
-              
-              <Button type="submit" className="w-full" disabled={isSubmitting || showPaymentModal}>
-                <CreditCard className="mr-2 h-4 w-4" />
-                {isSubmitting ? "Processing..." : "Place Order & Proceed to Payment"}
-              </Button>
             </div>
+          </div>
+          
+          <div className="mt-8 flex justify-center">
+            <Button type="submit" size="lg" className="w-full max-w-md" disabled={isSubmitting || showPaymentModal}>
+              <CreditCard className="mr-2 h-4 w-4" />
+              {isSubmitting ? "Processing..." : "Place Order &amp; Proceed to Payment"}
+            </Button>
           </div>
         </form>
       </Form>
