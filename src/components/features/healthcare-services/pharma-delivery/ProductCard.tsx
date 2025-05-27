@@ -1,13 +1,13 @@
-
 "use client";
 
 import type { PharmacyProduct } from '@/types';
 import Image from 'next/image';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Pill, ShoppingCart, TriangleAlert } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useCart } from '@/context/CartContext';
 
 interface ProductCardProps {
   product: PharmacyProduct;
@@ -15,14 +15,14 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const { toast } = useToast();
+  const { addToCart } = useCart();
 
   const handleAddToCart = () => {
-    // Placeholder functionality
+    addToCart(product);
     toast({
-      title: `${product.productName} added to cart (Demo)`,
-      description: "In a real app, this would update your cart.",
+      title: `${product.productName} added to cart`,
+      description: "View your cart to proceed to checkout.",
     });
-    console.log("Added to cart (demo):", product.id);
   };
 
   return (
