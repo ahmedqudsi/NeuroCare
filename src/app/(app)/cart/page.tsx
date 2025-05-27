@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useCart } from '@/context/CartContext';
@@ -89,11 +90,13 @@ const CartPage = () => {
           </div>
           <div className="mt-6 flex justify-between items-center">
             <h2 className="text-2xl font-semibold">Total: ₹{calculateTotal().toFixed(2)}</h2>
-            <Button variant="default" >
-              Proceed to Checkout
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button variant="default" >
+                Proceed to Checkout
+              </Button>
+              <Button variant="destructive" onClick={clearCart}>Clear Cart</Button>
+            </div>
           </div>
-          <Button variant="destructive" onClick={clearCart}>Clear Cart</Button>
         </>
       )}
     </div>
