@@ -6,7 +6,7 @@ import type { Nurse } from '@/types';
 import { HomeNurseBookingForm } from '@/components/features/healthcare-services/HomeNurseBookingForm';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Star, DollarSign, ArrowLeft } from 'lucide-react'; 
+import { Star, DollarSign, ArrowLeft, BriefcaseMedical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
@@ -47,29 +47,36 @@ export default function HomeNurseBookingPage() {
         <h2 className="text-2xl font-semibold text-foreground">{pageStaticText.availableNursesTitle}</h2>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {sampleNurses.map((nurse: Nurse) => (
-            <Card key={nurse.id} className="overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200 flex flex-col">
+            <Card key={nurse.id} className="overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200 flex flex-col h-full group">
               <CardHeader className="pb-3">
-                {nurse.imageUrl && (
-                  <div className="relative w-full h-40 mb-3 rounded-md overflow-hidden bg-muted">
-                    <Image
-                      src={nurse.imageUrl}
-                      alt={`Photo of ${nurse.name}`}
-                      fill
-                      style={{ objectFit: 'cover' }}
-                      data-ai-hint={nurse.imageHint || "professional nurse"}
-                    />
+                <div className="flex items-start space-x-4">
+                  {nurse.imageUrl && (
+                    <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-primary flex-shrink-0">
+                      <Image
+                        src={nurse.imageUrl}
+                        alt={`Photo of ${nurse.name}`}
+                        fill
+                        style={{ objectFit: 'cover' }}
+                        data-ai-hint={nurse.imageHint || "professional nurse"}
+                      />
+                    </div>
+                  )}
+                  <div className="flex-1">
+                    <CardTitle className="text-xl group-hover:text-primary transition-colors">{nurse.name}</CardTitle>
+                    {nurse.specializations.length > 0 && (
+                      <CardDescription className="text-sm text-primary">{nurse.specializations[0]}</CardDescription>
+                    )}
+                    <div className="flex flex-wrap gap-1 mt-2">
+                      {nurse.specializations.slice(1, 3).map(spec => (
+                         <Badge key={spec} variant="secondary" className="text-xs">{spec}</Badge>
+                      ))}
+                      {nurse.specializations.length > 3 && <Badge variant="outline" className="text-xs">+{nurse.specializations.length - 3} more</Badge>}
+                    </div>
                   </div>
-                )}
-                <CardTitle className="text-xl">{nurse.name}</CardTitle>
-                <div className="flex flex-wrap gap-1 mt-1">
-                  {nurse.specializations.slice(0, 2).map(spec => ( 
-                     <Badge key={spec} variant="secondary" className="text-xs">{spec}</Badge>
-                  ))}
-                  {nurse.specializations.length > 2 && <Badge variant="outline" className="text-xs">+{nurse.specializations.length - 2} more</Badge>}
                 </div>
               </CardHeader>
               <CardContent className="text-sm text-muted-foreground space-y-2 flex-grow">
-                <p className="flex items-center"><Star className="mr-2 h-4 w-4 text-primary" /> {nurse.experienceYears} years experience</p>
+                <p className="flex items-center"><BriefcaseMedical className="mr-2 h-4 w-4 text-primary" /> {nurse.experienceYears} years experience</p>
                 <p className="flex items-center"><DollarSign className="mr-2 h-4 w-4 text-primary" /> ₹{nurse.hourlyRate}/hour</p>
                 <p><strong>Availability:</strong> {nurse.availability}</p>
                 {nurse.bio && <p className="mt-2 text-xs italic line-clamp-3">{nurse.bio}</p>}
