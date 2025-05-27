@@ -57,6 +57,7 @@ const CartPage = () => {
                         variant="outline"
                         size="sm"
                         onClick={() => handleUpdateQuantity(item.product.id, item.quantity - 1)}
+                        disabled={item.quantity <= 1}
                       >
                         -
                       </Button>
@@ -65,7 +66,8 @@ const CartPage = () => {
                         className="w-20 text-center mx-2"
                         value={quantities[item.product.id] !== undefined ? quantities[item.product.id] : item.quantity}
                         onChange={(e) => handleQuantityChange(item.product.id, parseInt(e.target.value))}
-                        onBlur={(e) => handleUpdateQuantity(item.product.id, parseInt(e.target.value))}
+                        onBlur={(e) => handleUpdateQuantity(item.product.id, parseInt(e.target.value) || 1)}
+                        min="1"
                       />
                       <Button
                         variant="outline"
@@ -91,8 +93,10 @@ const CartPage = () => {
           <div className="mt-6 flex justify-between items-center">
             <h2 className="text-2xl font-semibold">Total: ₹{calculateTotal().toFixed(2)}</h2>
             <div className="flex items-center gap-2">
-              <Button variant="default" >
-                Proceed to Checkout
+              <Button asChild variant="default">
+                <Link href="/checkout">
+                  Proceed to Checkout
+                </Link>
               </Button>
               <Button variant="destructive" onClick={clearCart}>Clear Cart</Button>
             </div>
