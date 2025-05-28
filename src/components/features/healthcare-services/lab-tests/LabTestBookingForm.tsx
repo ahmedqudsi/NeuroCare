@@ -55,8 +55,6 @@ const labTestBookingFormSchema = z.object({
   fastingConfirmed: z.boolean().optional(),
   notes: z.string().max(500, { message: "Notes cannot exceed 500 characters." }).optional(),
 }).refine(data => {
-  // Conditional validation for fastingConfirmed
-  // Use testPackages passed as props to check if any selected test requires fasting
   const selectedTestsInfo = data.selectedTestIds.map(id => 
     (window as any).__labTestPackages_for_refine?.find((p: LabTestPackage) => p.id === id)
   ).filter(Boolean);
@@ -72,7 +70,6 @@ const labTestBookingFormSchema = z.object({
 });
 
 
-// Sample time slots - can be dynamic based on lab availability later
 const sampleTimeSlotsForTests = [
   "07:00 AM - 08:00 AM (Fasting Preferred)",
   "08:00 AM - 09:00 AM (Fasting Preferred)",
@@ -89,7 +86,6 @@ export function LabTestBookingForm({ testPackages }: LabTestBookingFormProps) {
   const [submissionStatus, setSubmissionStatus] = useState<'success' | 'error' | null>(null);
   const [selectedTestsDetails, setSelectedTestsDetails] = useState<LabTestPackage[]>([]);
 
-  // Make testPackages available to the refine function in schema
   useEffect(() => {
     (window as any).__labTestPackages_for_refine = testPackages;
     return () => {
@@ -119,12 +115,11 @@ export function LabTestBookingForm({ testPackages }: LabTestBookingFormProps) {
     } else {
       setSelectedTestsDetails([]);
     }
-  }, [watchedSelectedTestIds, testPackages]);
+  }, [watchedSelectedTestIds, testPackages, form]); // Added form to dependencies
   
   const fastingRequiredForAnySelectedTest = selectedTestsDetails.some(test => test.fastingRequired);
 
   useEffect(() => {
-      // Reset fastingConfirmed if no selected test requires fasting
       if (!fastingRequiredForAnySelectedTest) {
           form.setValue("fastingConfirmed", false);
       }
@@ -136,8 +131,6 @@ export function LabTestBookingForm({ testPackages }: LabTestBookingFormProps) {
     setSubmissionStatus(null);
 
     console.log("Lab Test Booking Request Submitted (Simulated):", values);
-
-    // Simulate API call delay
     await new Promise(resolve => setTimeout(resolve, 1500));
 
     const selectedTestNames = selectedTestsDetails.map(t => t.testName).join(', ');
@@ -173,7 +166,7 @@ export function LabTestBookingForm({ testPackages }: LabTestBookingFormProps) {
         <FormField
           control={form.control}
           name="selectedTestIds"
-          render={() => (
+          render={({ field }) => (
             <FormItem>
               <div className="mb-4">
                 <FormLabel className="text-base">Select Tests or Packages</FormLabel>
@@ -182,50 +175,31 @@ export function LabTestBookingForm({ testPackages }: LabTestBookingFormProps) {
                 </FormDescription>
               </div>
               <div className="space-y-3 rounded-md border p-4 shadow-sm">
-                {testPackages.map((pkg) => (
-                  <FormField
-                    key={pkg.id}
-                    control={form.control}
-                    name="selectedTestIds"
-                    render={({ field }) => {
-                      return (
-                        <FormItem
-                          key={pkg.id}
-                          className="flex flex-row items-center space-x-3 space-y-0 p-2 hover:bg-accent/50 rounded-md transition-colors cursor-pointer"
-                          onClick={() => {
-                             const currentSelected = field.value || [];
-                             const isCurrentlySelected = currentSelected.includes(pkg.id);
-                             const newSelected = isCurrentlySelected
-                               ? currentSelected.filter(id => id !== pkg.id)
-                               : [...currentSelected, pkg.id];
-                             field.onChange(newSelected);
-                          }}
-                        >
-                          <FormControl>
-                            <Checkbox
-                              checked={field.value?.includes(pkg.id)}
-                              onCheckedChange={(checked) => {
-                                // This onCheckedChange is technically redundant due to FormItem onClick,
-                                // but kept for direct checkbox interaction if needed.
-                                return checked
-                                  ? field.onChange([...(field.value || []), pkg.id])
-                                  : field.onChange(
-                                      (field.value || []).filter(
-                                        (value) => value !== pkg.id
-                                      )
-                                    );
-                              }}
-                            />
-                          </FormControl>
-                          <FormLabel className="font-normal flex-1 cursor-pointer">
-                            {pkg.testName} (₹{pkg.price.toFixed(2)})
-                            {pkg.fastingRequired && <span className="text-amber-700 text-xs ml-1 font-medium">(Fasting Required)</span>}
-                          </FormLabel>
-                        </FormItem>
-                      );
-                    }}
-                  />
-                ))}
+                {testPackages.map((pkg) => {
+                  const isSelected = field.value?.includes(pkg.id);
+                  return (
+                    <div
+                      key={pkg.id}
+                      onClick={() => {
+                         const currentSelected = field.value || [];
+                         const newSelected = isSelected
+                           ? currentSelected.filter(id => id !== pkg.id)
+                           : [...currentSelected, pkg.id];
+                         field.onChange(newSelected);
+                      }}
+                      className={cn(
+                        "flex items-center justify-between p-3 border rounded-md cursor-pointer transition-all hover:shadow-md",
+                        isSelected ? "bg-primary/10 border-primary ring-2 ring-primary ring-offset-1" : "bg-card hover:bg-accent/50",
+                      )}
+                    >
+                      <div className="flex-1">
+                        <span className="font-medium">{pkg.testName}</span> (₹{pkg.price.toFixed(2)})
+                        {pkg.fastingRequired && <span className="text-amber-700 text-xs ml-1 font-medium">(Fasting Required)</span>}
+                      </div>
+                      {isSelected && <CheckCircle2 className="h-5 w-5 text-primary ml-3 flex-shrink-0" />}
+                    </div>
+                  );
+                })}
               </div>
               <FormMessage />
             </FormItem>
@@ -405,3 +379,5 @@ export function LabTestBookingForm({ testPackages }: LabTestBookingFormProps) {
     </Form>
   );
 }
+
+    
