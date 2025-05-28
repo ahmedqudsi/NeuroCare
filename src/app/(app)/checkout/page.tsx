@@ -124,9 +124,6 @@ export default function CheckoutPage() {
     setPaymentComplete(false);
     setShowPaymentModal(true);
 
-    console.log("Checkout Data (raw card number stored):", data);
-    console.log("Cart Items for Order:", cartItems);
-
     // Simulate payment processing
     await new Promise(resolve => setTimeout(resolve, 3000)); 
 
@@ -149,7 +146,6 @@ export default function CheckoutPage() {
       timestamp: new Date().toISOString(),
     };
 
-    // Save to localStorage
     if (typeof window !== "undefined") {
       let existingOrders: StoredOrder[] = [];
       const storedOrdersData = localStorage.getItem('neuroCareOrders');
@@ -162,14 +158,13 @@ export default function CheckoutPage() {
           existingOrders = [];
         }
       }
-      // Mark the previous "Processing" order as "Delivered"
       if (existingOrders.length > 0 && existingOrders[0].status === "Processing") {
         existingOrders[0].status = "Delivered";
       }
       const updatedOrders = [newOrderData, ...existingOrders];
       localStorage.setItem('neuroCareOrders', JSON.stringify(updatedOrders));
 
-      // Generate email content
+      // Attempt to generate email content
       try {
         const emailInput: OrderConfirmationEmailInput = {
           orderId: newOrderData.orderId,
@@ -182,11 +177,10 @@ export default function CheckoutPage() {
         };
         const emailContent = await generateOrderConfirmationEmail(emailInput);
         console.log("Generated Order Confirmation Email Content:", emailContent);
-        // In a real app, you would now pass `emailContent.subject` and `emailContent.htmlBody`
+        // In a real app, you would pass `emailContent.subject` and `emailContent.htmlBody`
         // to a backend function that actually sends the email.
       } catch (emailError: any) {
         console.error("Error generating order confirmation email (full error object):", emailError);
-        // Ensure description is a string and reasonably short for the toast
         let errorDesc = "An unexpected error occurred while preparing the email.";
         if (emailError instanceof Error) {
           errorDesc = emailError.message;
@@ -194,17 +188,17 @@ export default function CheckoutPage() {
           errorDesc = emailError;
         } else {
           try {
-            // Try to stringify, but catch if it's a circular structure or too complex
             errorDesc = JSON.stringify(emailError).substring(0, 150) + "..."; 
           } catch {
-            errorDesc = "Could not get detailed error message.";
+            // Fallback if stringifying the error itself fails
+            errorDesc = "Could not retrieve detailed error message for email generation.";
           }
         }
         toast({
           variant: "destructive",
           title: "Email Generation Failed",
           description: `Could not prepare order confirmation email: ${errorDesc}`,
-          duration: 8000, // Increased duration for better readability
+          duration: 8000,
         });
       }
     }
@@ -220,12 +214,9 @@ export default function CheckoutPage() {
       duration: 7000,
     });
 
-    await new Promise(resolve => setTimeout(resolve, 2000)); // Allow user to see success
+    await new Promise(resolve => setTimeout(resolve, 2000)); 
 
     setShowPaymentModal(false);
-    // No need to set paymentProcessing and paymentComplete to false here,
-    // as they are reset when a new submission starts or if the component unmounts.
-
     clearCart();
     form.reset();
     setIsSubmitting(false);
@@ -252,7 +243,6 @@ export default function CheckoutPage() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Left Column: Shipping Info */}
             <div className="md:col-span-2">
               <Card className="shadow-lg">
                 <CardHeader>
@@ -264,7 +254,6 @@ export default function CheckoutPage() {
               </Card>
             </div>
 
-            {/* Right Column: Order Summary THEN Payment Info */}
             <div className="md:col-span-1 space-y-8">
               <Card className="shadow-lg sticky top-24">
                 <CardHeader>
@@ -335,5 +324,3 @@ export default function CheckoutPage() {
     </div>
   );
 }
-
-    

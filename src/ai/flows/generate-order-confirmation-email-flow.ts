@@ -24,6 +24,7 @@ const ShippingAddressSchema = z.object({
   pincode: z.string(),
 });
 
+// Removed export from schema constant
 const OrderConfirmationEmailInputSchema = z.object({
   orderId: z.string().describe('The unique ID of the order.'),
   items: z.array(OrderItemSchema).describe('A list of items in the order.'),
@@ -35,6 +36,7 @@ const OrderConfirmationEmailInputSchema = z.object({
 });
 export type OrderConfirmationEmailInput = z.infer<typeof OrderConfirmationEmailInputSchema>;
 
+// Removed export from schema constant
 const OrderConfirmationEmailOutputSchema = z.object({
   subject: z.string().describe('The subject line for the email.'),
   htmlBody: z.string().describe('The HTML content of the email body.'),
