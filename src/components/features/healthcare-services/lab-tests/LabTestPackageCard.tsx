@@ -80,14 +80,7 @@ export function LabTestPackageCard({ testPackage }: LabTestPackageCardProps) {
          <p className="text-lg font-bold text-primary pt-1">₹{testPackage.price.toFixed(2)}</p>
       </CardContent>
       <CardFooter className="p-4">
-        <Button 
-          variant="outline" 
-          className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
-          onClick={handleSelectTest}
-        >
-          <FlaskConical className="mr-2 h-4 w-4" />
-          Select Test
-        </Button>
+        {/* "Select Test" button removed from here */}
       </CardFooter>
     </Card>
   );
