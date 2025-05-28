@@ -184,13 +184,27 @@ export default function CheckoutPage() {
         console.log("Generated Order Confirmation Email Content:", emailContent);
         // In a real app, you would now pass `emailContent.subject` and `emailContent.htmlBody`
         // to a backend function that actually sends the email.
-      } catch (emailError) {
-        console.error("Error generating order confirmation email:", emailError);
+      } catch (emailError: any) {
+        console.error("Error generating order confirmation email (full error object):", emailError);
+        // Ensure description is a string and reasonably short for the toast
+        let errorDesc = "An unexpected error occurred while preparing the email.";
+        if (emailError instanceof Error) {
+          errorDesc = emailError.message;
+        } else if (typeof emailError === 'string') {
+          errorDesc = emailError;
+        } else {
+          try {
+            // Try to stringify, but catch if it's a circular structure or too complex
+            errorDesc = JSON.stringify(emailError).substring(0, 150) + "..."; 
+          } catch {
+            errorDesc = "Could not get detailed error message.";
+          }
+        }
         toast({
           variant: "destructive",
           title: "Email Generation Failed",
-          description: "Could not prepare the order confirmation email content.",
-          duration: 5000,
+          description: `Could not prepare order confirmation email: ${errorDesc}`,
+          duration: 8000, // Increased duration for better readability
         });
       }
     }
@@ -322,3 +336,4 @@ export default function CheckoutPage() {
   );
 }
 
+    
