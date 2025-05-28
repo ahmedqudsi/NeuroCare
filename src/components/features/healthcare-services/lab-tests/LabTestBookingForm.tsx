@@ -33,15 +33,18 @@ import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
 import { useState, useEffect } from 'react';
 import { Alert, AlertDescription, AlertTitle as AlertTitleUi } from '@/components/ui/alert';
-// Firebase imports removed: import { db } from '@/lib/firebase';
-// Firebase imports removed: import { collection, addDoc, Timestamp, serverTimestamp } from 'firebase/firestore';
-import { sampleLabTestPackages } from '@/lib/constants'; // Used for refining fasting confirmed logic
+
+interface LabTestBookingFormProps {
+  testPackages: LabTestPackage[];
+}
 
 const labTestBookingFormSchema = z.object({
   patientName: z.string().min(2, {
     message: "Patient name must be at least 2 characters.",
   }),
-  selectedTestId: z.string().min(1, { message: "Please select a test or package." }),
+  selectedTestIds: z.array(z.string()).min(1, { 
+    message: "Please select at least one test or package." 
+  }),
   preferredDate: z.date({
     required_error: "A preferred booking date is required.",
   }),
@@ -53,21 +56,21 @@ const labTestBookingFormSchema = z.object({
   notes: z.string().max(500, { message: "Notes cannot exceed 500 characters." }).optional(),
 }).refine(data => {
   // Conditional validation for fastingConfirmed
-  // Use sampleLabTestPackages to check if the selected test requires fasting, as it's static data
-  const selectedTestInfo = sampleLabTestPackages.find(p => p.id === data.selectedTestId);
-  if (selectedTestInfo && selectedTestInfo.fastingRequired) {
+  // Use testPackages passed as props to check if any selected test requires fasting
+  const selectedTestsInfo = data.selectedTestIds.map(id => 
+    (window as any).__labTestPackages_for_refine?.find((p: LabTestPackage) => p.id === id)
+  ).filter(Boolean);
+
+  const anyRequiresFasting = selectedTestsInfo.some(p => p?.fastingRequired);
+  if (anyRequiresFasting) {
     return data.fastingConfirmed === true;
   }
   return true;
 }, {
-  message: "Please confirm you will be fasting if the selected test requires it.",
+  message: "Please confirm you will be fasting as one or more selected tests require it.",
   path: ["fastingConfirmed"], 
 });
 
-
-interface LabTestBookingFormProps {
-  testPackages: LabTestPackage[];
-}
 
 // Sample time slots - can be dynamic based on lab availability later
 const sampleTimeSlotsForTests = [
@@ -84,13 +87,22 @@ export function LabTestBookingForm({ testPackages }: LabTestBookingFormProps) {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionStatus, setSubmissionStatus] = useState<'success' | 'error' | null>(null);
-  const [currentSelectedTest, setCurrentSelectedTest] = useState<LabTestPackage | null>(null);
+  const [selectedTestsDetails, setSelectedTestsDetails] = useState<LabTestPackage[]>([]);
+
+  // Make testPackages available to the refine function in schema
+  useEffect(() => {
+    (window as any).__labTestPackages_for_refine = testPackages;
+    return () => {
+      delete (window as any).__labTestPackages_for_refine;
+    };
+  }, [testPackages]);
+
 
   const form = useForm<z.infer<typeof labTestBookingFormSchema>>({
     resolver: zodResolver(labTestBookingFormSchema),
     defaultValues: {
       patientName: "",
-      selectedTestId: "",
+      selectedTestIds: [],
       address: "",
       notes: "",
       preferredTimeSlot: "",
@@ -98,19 +110,26 @@ export function LabTestBookingForm({ testPackages }: LabTestBookingFormProps) {
     },
   });
 
-  const selectedTestId = form.watch("selectedTestId");
+  const watchedSelectedTestIds = form.watch("selectedTestIds");
 
   useEffect(() => {
-    if (selectedTestId) {
-      const test = testPackages.find(pkg => pkg.id === selectedTestId);
-      setCurrentSelectedTest(test || null);
-      if (test && !test.fastingRequired) {
-        form.setValue("fastingConfirmed", false);
-      }
+    if (watchedSelectedTestIds && watchedSelectedTestIds.length > 0) {
+      const tests = testPackages.filter(pkg => watchedSelectedTestIds.includes(pkg.id));
+      setSelectedTestsDetails(tests);
     } else {
-      setCurrentSelectedTest(null);
+      setSelectedTestsDetails([]);
     }
-  }, [selectedTestId, testPackages, form]);
+  }, [watchedSelectedTestIds, testPackages]);
+  
+  const fastingRequiredForAnySelectedTest = selectedTestsDetails.some(test => test.fastingRequired);
+
+  useEffect(() => {
+      // Reset fastingConfirmed if no selected test requires fasting
+      if (!fastingRequiredForAnySelectedTest) {
+          form.setValue("fastingConfirmed", false);
+      }
+  }, [fastingRequiredForAnySelectedTest, form]);
+
 
   async function onSubmit(values: z.infer<typeof labTestBookingFormSchema>) {
     setIsSubmitting(true);
@@ -121,14 +140,16 @@ export function LabTestBookingForm({ testPackages }: LabTestBookingFormProps) {
     // Simulate API call delay
     await new Promise(resolve => setTimeout(resolve, 1500));
 
+    const selectedTestNames = selectedTestsDetails.map(t => t.testName).join(', ');
+
     toast({
       title: "Booking Request Submitted!",
-      description: `Thank you, ${values.patientName}. Your request for ${currentSelectedTest?.testName || 'the selected test'} on ${format(values.preferredDate, "PPP")} at ${values.preferredTimeSlot} has been received. Our team will contact you shortly to confirm.`,
+      description: `Thank you, ${values.patientName}. Your request for ${selectedTestNames || 'the selected tests'} on ${format(values.preferredDate, "PPP")} at ${values.preferredTimeSlot} has been received. Our team will contact you shortly to confirm.`,
       duration: 7000,
     });
     setSubmissionStatus('success');
     form.reset();
-    setCurrentSelectedTest(null);
+    setSelectedTestsDetails([]);
     setIsSubmitting(false);
   }
 
@@ -151,30 +172,67 @@ export function LabTestBookingForm({ testPackages }: LabTestBookingFormProps) {
 
         <FormField
           control={form.control}
-          name="selectedTestId"
-          render={({ field }) => (
+          name="selectedTestIds"
+          render={() => (
             <FormItem>
-              <FormLabel>Select Test or Package</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger className={cn("hover:bg-accent hover:text-accent-foreground transition-colors")}>
-                    <SelectValue placeholder="Choose a test or package" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {testPackages.map((pkg) => (
-                    <SelectItem key={pkg.id} value={pkg.id}>
-                      {pkg.testName} (₹{pkg.price}) {pkg.fastingRequired ? "- Fasting Required" : ""}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <div className="mb-4">
+                <FormLabel className="text-base">Select Tests or Packages</FormLabel>
+                <FormDescription>
+                  Choose one or more tests you&apos;d like to book.
+                </FormDescription>
+              </div>
+              <div className="space-y-3 rounded-md border p-4 shadow-sm">
+                {testPackages.map((pkg) => (
+                  <FormField
+                    key={pkg.id}
+                    control={form.control}
+                    name="selectedTestIds"
+                    render={({ field }) => {
+                      return (
+                        <FormItem
+                          key={pkg.id}
+                          className="flex flex-row items-center space-x-3 space-y-0 p-2 hover:bg-accent/50 rounded-md transition-colors cursor-pointer"
+                          onClick={() => {
+                             const currentSelected = field.value || [];
+                             const isCurrentlySelected = currentSelected.includes(pkg.id);
+                             const newSelected = isCurrentlySelected
+                               ? currentSelected.filter(id => id !== pkg.id)
+                               : [...currentSelected, pkg.id];
+                             field.onChange(newSelected);
+                          }}
+                        >
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value?.includes(pkg.id)}
+                              onCheckedChange={(checked) => {
+                                // This onCheckedChange is technically redundant due to FormItem onClick,
+                                // but kept for direct checkbox interaction if needed.
+                                return checked
+                                  ? field.onChange([...(field.value || []), pkg.id])
+                                  : field.onChange(
+                                      (field.value || []).filter(
+                                        (value) => value !== pkg.id
+                                      )
+                                    );
+                              }}
+                            />
+                          </FormControl>
+                          <FormLabel className="font-normal flex-1 cursor-pointer">
+                            {pkg.testName} (₹{pkg.price.toFixed(2)})
+                            {pkg.fastingRequired && <span className="text-amber-700 text-xs ml-1 font-medium">(Fasting Required)</span>}
+                          </FormLabel>
+                        </FormItem>
+                      );
+                    }}
+                  />
+                ))}
+              </div>
               <FormMessage />
             </FormItem>
           )}
         />
         
-        {currentSelectedTest?.fastingRequired && (
+        {fastingRequiredForAnySelectedTest && (
             <FormField
               control={form.control}
               name="fastingConfirmed"
@@ -184,11 +242,12 @@ export function LabTestBookingForm({ testPackages }: LabTestBookingFormProps) {
                     <Checkbox
                       checked={field.value}
                       onCheckedChange={field.onChange}
+                      id="fastingConfirmed"
                     />
                   </FormControl>
                   <div className="space-y-1 leading-none">
-                    <FormLabel className="text-amber-700">
-                      Confirm Fasting: <span className="font-normal">This test requires fasting (typically 8-12 hours before sample collection). Please confirm you will adhere to this.</span>
+                    <FormLabel htmlFor="fastingConfirmed" className="text-amber-700 cursor-pointer">
+                      Confirm Fasting: <span className="font-normal">One or more selected tests require fasting (typically 8-12 hours before sample collection). Please confirm you will adhere to this.</span>
                     </FormLabel>
                     <FormDescription className="text-xs text-amber-600">
                       Do not eat or drink anything other than water for the specified period before your test.
@@ -318,7 +377,7 @@ export function LabTestBookingForm({ testPackages }: LabTestBookingFormProps) {
           </Alert>
         )}
 
-        {submissionStatus === 'error' && ( // Kept for general client-side form errors, though less likely now
+        {submissionStatus === 'error' && (
           <Alert variant="destructive">
             <AlertTriangle className="h-4 w-4" />
             <AlertTitleUi>Submission Failed</AlertTitleUi>
@@ -328,7 +387,11 @@ export function LabTestBookingForm({ testPackages }: LabTestBookingFormProps) {
           </Alert>
         )}
 
-        <Button type="submit" className="w-full sm:w-auto" disabled={isSubmitting || (currentSelectedTest?.fastingRequired && !form.getValues("fastingConfirmed"))}>
+        <Button 
+          type="submit" 
+          className="w-full sm:w-auto" 
+          disabled={isSubmitting || (fastingRequiredForAnySelectedTest && !form.getValues("fastingConfirmed"))}
+        >
           {isSubmitting ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />

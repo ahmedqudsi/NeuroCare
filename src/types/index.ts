@@ -151,10 +151,11 @@ export interface LabTestPackage {
 
 export type LabTestBookingFormData = {
   patientName: string;
-  selectedTestId: string;
+  selectedTestIds: string[]; // Changed from selectedTestId: string
   preferredDate: Date;
   preferredTimeSlot: string;
   address: string;
   fastingConfirmed?: boolean; // If test requires fasting
   notes?: string;
 };
+
