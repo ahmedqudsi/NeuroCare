@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { PackageSearch, ArrowLeft, Timer, ShoppingBag, AlertTriangle, CheckCircle, RefreshCw, TruckIcon } from 'lucide-react';
@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { format, formatDistanceToNow } from 'date-fns';
 import { Alert, AlertDescription, AlertTitle as AlertTitleUi } from "@/components/ui/alert";
 import { Separator } from '@/components/ui/separator';
+import { useToast } from '@/hooks/use-toast';
 
 interface OrderItem {
   name: string;
@@ -29,46 +30,76 @@ interface StoredOrder {
   timestamp: string;
 }
 
+const SIMULATED_DELIVERY_DURATION = 12000; // 12 seconds for demo
+
 export default function OrderStatusPage() {
   const [orders, setOrders] = useState<StoredOrder[]>([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { toast } = useToast();
+  const deliveryTimers = useRef<Record<string, NodeJS.Timeout>>({});
 
   useEffect(() => {
     setLoading(true);
     setErrorMessage(null);
 
+    let currentOrders: StoredOrder[] = [];
     if (typeof window !== "undefined") {
       const storedOrdersData = localStorage.getItem('neuroCareOrders');
-      console.log("OrderStatusPage: Raw data from localStorage for 'neuroCareOrders':", storedOrdersData);
-
       if (storedOrdersData) {
         try {
-          const parsedOrders: StoredOrder[] = JSON.parse(storedOrdersData);
-
+          const parsedOrders = JSON.parse(storedOrdersData);
           if (Array.isArray(parsedOrders) && parsedOrders.every(order => order && typeof order.orderId === 'string')) {
-            setOrders(parsedOrders);
+            currentOrders = parsedOrders;
           } else {
-            console.error("OrderStatusPage: Parsed orders data is not a valid array or items are malformed.", parsedOrders);
-            setErrorMessage("The stored order history is incomplete or malformed. Please try placing a new order to refresh it.");
-            // localStorage.removeItem('neuroCareOrders'); // Optionally clear malformed data
-            setOrders([]);
+            setErrorMessage("The stored order history is incomplete or malformed.");
+            currentOrders = [];
           }
         } catch (e: any) {
-          console.error("OrderStatusPage: Error parsing order data from localStorage.", e);
-          setErrorMessage(`Failed to load your order history: ${e.message}. The stored data might be corrupted. Please try placing a new order.`);
-          // localStorage.removeItem('neuroCareOrders'); // Optionally clear corrupted data
-          setOrders([]);
+          setErrorMessage(`Failed to load your order history: ${e.message}.`);
+          currentOrders = [];
         }
-      } else {
-        console.log("OrderStatusPage: No order history found in localStorage for 'neuroCareOrders'.");
-        setOrders([]);
       }
     } else {
       setErrorMessage("Unable to access order storage. This feature requires a browser environment.");
     }
+    setOrders(currentOrders);
     setLoading(false);
-  }, []);
+
+    // Clear existing timers before setting new ones
+    Object.values(deliveryTimers.current).forEach(clearTimeout);
+    deliveryTimers.current = {};
+
+    // Set up timers for "Out for Delivery" orders
+    currentOrders.forEach(order => {
+      if (order.status === "Out for Delivery" && !deliveryTimers.current[order.orderId]) {
+        console.log(`Setting up delivery timer for order ${order.orderId}`);
+        deliveryTimers.current[order.orderId] = setTimeout(() => {
+          console.log(`Delivery timer expired for order ${order.orderId}`);
+          setOrders(prevOrders => {
+            const updatedOrders = prevOrders.map(o => 
+              o.orderId === order.orderId ? { ...o, status: "Delivered" as const } : o
+            );
+            if (typeof window !== "undefined") {
+              localStorage.setItem('neuroCareOrders', JSON.stringify(updatedOrders));
+            }
+            return updatedOrders;
+          });
+          toast({
+            title: "Order Delivered!",
+            description: `Your order #${order.orderId} has been successfully delivered.`,
+            variant: "default", // Use a non-destructive variant for success
+          });
+          delete deliveryTimers.current[order.orderId];
+        }, SIMULATED_DELIVERY_DURATION);
+      }
+    });
+    
+    return () => {
+      // Cleanup timers on component unmount
+      Object.values(deliveryTimers.current).forEach(clearTimeout);
+    };
+  }, []); // Run once on mount, then orders state will trigger re-evaluations if needed
 
   const pageStaticText = {
     title: "Order History & Status",
@@ -83,7 +114,7 @@ export default function OrderStatusPage() {
     processingMessage: "Your order is being prepared.",
     outForDeliveryMessage: "Your order is out for delivery!",
     deliveredMessage: "This order was successfully delivered!",
-    estimatedDelivery: "Estimated delivery in 10-15 minutes.",
+    estimatedDelivery: `Estimated delivery in approx. ${SIMULATED_DELIVERY_DURATION/1000} seconds (simulated).`,
     errorLoadingOrder: "Error Loading Order History",
   };
 
@@ -160,7 +191,7 @@ export default function OrderStatusPage() {
                   </p>
                 </div>
 
-                {order.status !== "Delivered" && (
+                {order.status === "Out for Delivery" && (
                   <div className="flex items-center text-md text-muted-foreground">
                     <Timer className="mr-2 h-5 w-5 text-primary" />
                     <span>{pageStaticText.estimatedDelivery}</span>
@@ -211,3 +242,5 @@ export default function OrderStatusPage() {
     </div>
   );
 }
+
+    

@@ -124,13 +124,11 @@ export default function CheckoutPage() {
     setPaymentComplete(false);
     setShowPaymentModal(true);
 
-    // Simulate payment processing
     await new Promise(resolve => setTimeout(resolve, 3000)); 
 
     setPaymentProcessing(false);
     setPaymentComplete(true);
 
-    // Show success toast immediately after payment simulation
     toast({
       title: "Order Placed Successfully!",
       description: (
@@ -170,13 +168,14 @@ export default function CheckoutPage() {
           existingOrders = [];
         }
       }
+      
       if (existingOrders.length > 0 && existingOrders[0].status === "Processing") {
-        existingOrders[0].status = "Delivered";
+        existingOrders[0].status = "Out for Delivery"; // Set previous processing order to Out for Delivery
       }
+      
       const updatedOrders = [newOrderData, ...existingOrders];
       localStorage.setItem('neuroCareOrders', JSON.stringify(updatedOrders));
 
-      // Attempt to generate email content
       try {
         const emailInput: OrderConfirmationEmailInput = {
           orderId: newOrderData.orderId,
@@ -189,8 +188,6 @@ export default function CheckoutPage() {
         };
         const emailContent = await generateOrderConfirmationEmail(emailInput);
         console.log("Generated Order Confirmation Email Content:", emailContent);
-        // In a real app, you would pass `emailContent.subject` and `emailContent.htmlBody`
-        // to a backend function that actually sends the email.
       } catch (emailError: any) {
         console.error("Error generating order confirmation email (full error object):", emailError);
         let errorDesc = "An unexpected error occurred while preparing the email.";
@@ -202,7 +199,6 @@ export default function CheckoutPage() {
           try {
             errorDesc = JSON.stringify(emailError).substring(0, 150) + "..."; 
           } catch {
-            // Fallback if stringifying the error itself fails
             errorDesc = "Could not retrieve detailed error message for email generation.";
           }
         }
@@ -215,7 +211,6 @@ export default function CheckoutPage() {
       }
     }
 
-    // Keep this delay to allow user to see the success modal & confetti
     await new Promise(resolve => setTimeout(resolve, 2000)); 
 
     setShowPaymentModal(false);
@@ -326,3 +321,5 @@ export default function CheckoutPage() {
     </div>
   );
 }
+
+    
