@@ -143,7 +143,7 @@ export function InteractiveFASTTestClient() {
           <Button
             size="lg"
             className="ml-4 w-full max-w-md shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 ease-in-out transform"
-            style={{ backgroundColor: '#87CEFA' }}
+            style={{ backgroundColor: '#87CEFA', color: 'black' }}
             onClick={() => {
               const constraints: MediaStreamConstraints = {
                 video: laptopCameraId ? { deviceId: { exact: laptopCameraId } } : true,
