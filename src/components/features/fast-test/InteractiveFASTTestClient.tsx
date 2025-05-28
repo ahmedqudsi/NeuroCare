@@ -104,10 +104,10 @@ export function InteractiveFASTTestClient() {
                 value={step.id}
                 key={step.id}
                 className={cn(
-                  "relative border bg-card rounded-lg shadow-sm transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-[1.02]", // Added relative
+                  "relative border bg-card rounded-lg shadow-sm transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-[1.02]",
                   "animate-in fade-in-0 slide-in-from-bottom-4 duration-500", 
                   itemAnimationDelays[index % itemAnimationDelays.length],
-                  "will-change-transform will-change-opacity" // Added will-change
+                  "will-change-transform will-change-opacity"
                 )}
               >
                 <AccordionTrigger className="p-6 text-lg font-semibold hover:no-underline">
@@ -175,10 +175,10 @@ export function InteractiveFASTTestClient() {
                   });
                 });
             }}
-            aria-label="Start Test"
+            aria-label="Start AI Scan Test"
           >
             <Camera className="mr-2 h-5 w-5" />
-            Start Test
+            AI Scan Test
           </Button>
           <p className="mt-3 text-sm text-muted-foreground">
             If you suspect a stroke, every second counts. Do not delay.
