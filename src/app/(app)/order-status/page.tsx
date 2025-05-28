@@ -30,7 +30,7 @@ interface StoredOrder {
   timestamp: string;
 }
 
-const SIMULATED_DELIVERY_DURATION = 12000; // 12 seconds for demo
+const SIMULATED_DELIVERY_DURATION = 12000; // 12 seconds for demo simulation
 
 export default function OrderStatusPage() {
   const [orders, setOrders] = useState<StoredOrder[]>([]);
@@ -38,6 +38,23 @@ export default function OrderStatusPage() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { toast } = useToast();
   const deliveryTimers = useRef<Record<string, NodeJS.Timeout>>({});
+
+  const pageStaticText = {
+    title: "Order History & Status",
+    backButton: "Back to Pharmacy",
+    noOrdersFound: "You have no orders in your history.",
+    orderIdLabel: "Order ID:",
+    statusLabel: "Status:",
+    placedLabel: "Placed:",
+    itemsLabel: "Items:",
+    totalLabel: "Total:",
+    shippingToLabel: "Shipping To:",
+    processingMessage: "Your order is being prepared.",
+    outForDeliveryMessage: "Your order is out for delivery!",
+    deliveredMessage: "This order was successfully delivered!",
+    estimatedDelivery: `Estimated delivery: 10-15 minutes (Simulated)`,
+    errorLoadingOrder: "Error Loading Order History",
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -54,10 +71,13 @@ export default function OrderStatusPage() {
           } else {
             setErrorMessage("The stored order history is incomplete or malformed.");
             currentOrders = [];
+            localStorage.removeItem('neuroCareOrders'); // Clear malformed data
           }
         } catch (e: any) {
-          setErrorMessage(`Failed to load your order history: ${e.message}.`);
+          console.error("Error parsing orders from localStorage:", e);
+          setErrorMessage(`Failed to load your order history: ${e.message}. The history has been cleared.`);
           currentOrders = [];
+          localStorage.removeItem('neuroCareOrders'); // Clear corrupted data
         }
       }
     } else {
@@ -99,24 +119,7 @@ export default function OrderStatusPage() {
       // Cleanup timers on component unmount
       Object.values(deliveryTimers.current).forEach(clearTimeout);
     };
-  }, [toast]); // Re-run effect if orders state changes (e.g. new order placed and navigating here)
-
-  const pageStaticText = {
-    title: "Order History & Status",
-    backButton: "Back to Pharmacy",
-    noOrdersFound: "You have no orders in your history.",
-    orderIdLabel: "Order ID:",
-    statusLabel: "Status:",
-    placedLabel: "Placed:",
-    itemsLabel: "Items:",
-    totalLabel: "Total:",
-    shippingToLabel: "Shipping To:",
-    processingMessage: "Your order is being prepared.",
-    outForDeliveryMessage: "Your order is out for delivery!",
-    deliveredMessage: "This order was successfully delivered!",
-    estimatedDelivery: `Estimated delivery in approx. ${SIMULATED_DELIVERY_DURATION/1000} seconds (simulated).`,
-    errorLoadingOrder: "Error Loading Order History",
-  };
+  }, [toast]); 
 
   const getStatusIcon = (status: StoredOrder['status']) => {
     switch (status) {
@@ -242,5 +245,3 @@ export default function OrderStatusPage() {
     </div>
   );
 }
-
-    
