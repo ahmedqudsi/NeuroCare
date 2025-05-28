@@ -88,7 +88,7 @@ export default function OrderStatusPage() {
           toast({
             title: "Order Delivered!",
             description: `Your order #${order.orderId} has been successfully delivered.`,
-            variant: "default", // Use a non-destructive variant for success
+            variant: "default", 
           });
           delete deliveryTimers.current[order.orderId];
         }, SIMULATED_DELIVERY_DURATION);
@@ -99,7 +99,7 @@ export default function OrderStatusPage() {
       // Cleanup timers on component unmount
       Object.values(deliveryTimers.current).forEach(clearTimeout);
     };
-  }, []); // Run once on mount, then orders state will trigger re-evaluations if needed
+  }, [toast]); // Re-run effect if orders state changes (e.g. new order placed and navigating here)
 
   const pageStaticText = {
     title: "Order History & Status",
