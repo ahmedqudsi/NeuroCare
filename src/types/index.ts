@@ -135,34 +135,26 @@ export interface PharmacyProduct {
   prescriptionRequired?: boolean;
 }
 
-// // Future types for cart & order (can be expanded later)
-// export interface CartItem {
-//   productId: string;
-//   quantity: number;
-// }
+// Types for Lab Tests
+export interface LabTestPackage {
+  id: string;
+  testName: string;
+  testType: 'single' | 'package';
+  description: string;
+  recommendedFor?: string[]; // e.g., ['post-stroke', 'diabetes']
+  price: number; // in INR
+  fastingRequired: boolean;
+  imageUrl?: string; // Optional image for the test/package
+  imageHint?: string;
+  includes?: string[]; // For packages, list of tests included
+}
 
-// export interface Cart {
-//   userId: string;
-//   items: CartItem[];
-//   totalPrice: number;
-//   updatedAt: Date;
-// }
-
-// export interface OrderItem {
-//   productId: string;
-//   quantity: number;
-//   unitPrice: number;
-// }
-
-// export interface Order {
-//   orderId: string;
-//   userId: string;
-//   orderItems: OrderItem[];
-//   totalAmount: number;
-//   shippingAddress: string;
-//   orderStatus: 'pending' | 'processing' | 'out_for_delivery' | 'delivered' | 'cancelled';
-//   placedAt: Date;
-//   estimatedDeliveryDate?: Date;
-//   paymentStatus: 'paid' | 'unpaid' | 'cod';
-//   prescriptionUrl?: string;
-// }
+export type LabTestBookingFormData = {
+  patientName: string;
+  selectedTestId: string;
+  preferredDate: Date;
+  preferredTimeSlot: string;
+  address: string;
+  fastingConfirmed?: boolean; // If test requires fasting
+  notes?: string;
+};

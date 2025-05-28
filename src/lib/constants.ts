@@ -1,5 +1,5 @@
 
-import type { Quote, Exercise, Hospital, FASTStep, HealthcareService, Nurse, Doctor, ConsultationType, PharmacyProduct } from '@/types';
+import type { Quote, Exercise, Hospital, FASTStep, HealthcareService, Nurse, Doctor, ConsultationType, PharmacyProduct, LabTestPackage } from '@/types';
 import { Smile, Users, MessageSquare, Clock, UserRoundPlus, Home, Video, Truck, TestTube2, Pill, CheckCircle2, XCircle } from 'lucide-react';
 
 export const motivationalQuotes: Quote[] = [
@@ -181,7 +181,7 @@ export const sampleHospitals: Hospital[] = [
   {
     id: '6',
     name: 'Max Healthcare Saket - Delhi',
-    address: 'Max Super Speciality Hospital, Press Enclave Marg, Saket Institutional Area, Saket, New Delhi, Delhi 110017, India',
+    address: 'Max Super Speciality Hospital, 1, 2, Press Enclave Marg, Saket Institutional Area, Saket, New Delhi, Delhi 110017, India',
     phone: '+91 11 2651 5050',
     services: ['Comprehensive Stroke Center', 'Intensive Care', 'Neurosurgery', 'Rehabilitation Services'],
     imageUrl: '/max hospital.jpg',
@@ -597,4 +597,64 @@ export const samplePharmacyProducts: PharmacyProduct[] = [
     tags: ['diabetes', 'blood sugar', 'stroke risk'],
     prescriptionRequired: true,
   },
+];
+
+export const sampleLabTestPackages: LabTestPackage[] = [
+  {
+    id: 'ltp001',
+    testName: 'Post-Stroke Recovery Panel',
+    testType: 'package',
+    description: 'A comprehensive panel to monitor key health indicators after a stroke.',
+    recommendedFor: ['post-stroke', 'cardiovascular health'],
+    price: 2500,
+    fastingRequired: true,
+    imageUrl: 'https://placehold.co/400x300.png',
+    imageHint: 'blood test package',
+    includes: ['Lipid Profile', 'HbA1c', 'Complete Blood Count (CBC)', 'Kidney Function Test (KFT)'],
+  },
+  {
+    id: 'ltp002',
+    testName: 'Lipid Profile',
+    testType: 'single',
+    description: 'Measures cholesterol and triglyceride levels, crucial for heart health.',
+    recommendedFor: ['cardiovascular health', 'cholesterol monitoring'],
+    price: 600,
+    fastingRequired: true,
+    imageUrl: 'https://placehold.co/400x300.png',
+    imageHint: 'lipid profile test',
+  },
+  {
+    id: 'ltp003',
+    testName: 'Complete Blood Count (CBC)',
+    testType: 'single',
+    description: 'Evaluates overall health and detects a wide range of disorders.',
+    recommendedFor: ['general health', 'infection detection'],
+    price: 300,
+    fastingRequired: false,
+    imageUrl: 'https://placehold.co/400x300.png',
+    imageHint: 'cbc blood test',
+  },
+  {
+    id: 'ltp004',
+    testName: 'Diabetes Care Package - Basic',
+    testType: 'package',
+    description: 'Essential tests for monitoring blood sugar levels and diabetes management.',
+    recommendedFor: ['diabetes'],
+    price: 800,
+    fastingRequired: true,
+    imageUrl: 'https://placehold.co/400x300.png',
+    imageHint: 'diabetes test package',
+    includes: ['Fasting Blood Sugar', 'Post Prandial Blood Sugar', 'HbA1c'],
+  },
+  {
+    id: 'ltp005',
+    testName: 'Thyroid Function Test (TFT)',
+    testType: 'single',
+    description: 'Measures thyroid hormone levels to assess thyroid gland function.',
+    recommendedFor: ['thyroid disorders', 'general wellness'],
+    price: 700,
+    fastingRequired: false,
+    imageUrl: 'https://placehold.co/400x300.png',
+    imageHint: 'thyroid test',
+  }
 ];
