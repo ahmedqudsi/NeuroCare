@@ -80,10 +80,6 @@ export default function LabTestsPage() {
         </div>
         <div className="flex space-x-2 mb-4">
           <Button variant="outline" size="sm" onClick={() => {
-            const strokeTests = ["Complete blood count (CBC)", "Serum electrolytes", "Blood clotting tests", "Heart attack tests", "Thyroid tests", "Blood glucose", "Cholesterol tests", "C-reactive protein test and blood protein test"];
-            setFilteredPackages(allPackages.filter(pkg => strokeTests.includes(pkg.testName)));
-          }}>Stroke-Specific</Button>
-          <Button variant="outline" size="sm" onClick={() => {
             setFilteredPackages(allPackages.filter(pkg => pkg.fastingRequired));
           }}>Fasting</Button>
           <Button variant="outline" size="sm" onClick={() => {
@@ -91,20 +87,24 @@ export default function LabTestsPage() {
           }}>Non-Fasting</Button>
           <select className="border rounded px-2 py-1" onChange={(e) => {
             const budget = e.target.value;
-            if (budget === "0-50") {
-              setFilteredPackages(allPackages.filter(pkg => pkg.price >= 0 && pkg.price <= 50));
-            } else if (budget === "50-100") {
-              setFilteredPackages(allPackages.filter(pkg => pkg.price > 50 && pkg.price <= 100));
-            } else if (budget === "100-150") {
-              setFilteredPackages(allPackages.filter(pkg => pkg.price > 100 && pkg.price <= 150));
-            } else {
+            if (budget === "0-500") {
+              setFilteredPackages(allPackages.filter(pkg => pkg.price >= 0 && pkg.price <= 500));
+            } else if (budget === "500-1000") {
+              setFilteredPackages(allPackages.filter(pkg => pkg.price > 500 && pkg.price <= 1000));
+            } else if (budget === "1000-2500") {
+              setFilteredPackages(allPackages.filter(pkg => pkg.price > 1000 && pkg.price <= 2500));
+            } else if (budget === "2500-5000") {
+                setFilteredPackages(allPackages.filter(pkg => pkg.price > 2500 && pkg.price <= 5000));
+            }
+             else {
               setFilteredPackages(allPackages);
             }
           }}>
             <option value="">Budget</option>
-            <option value="0-50">$0 - $50</option>
-            <option value="50-100">$50 - $100</option>
-            <option value="100-150">$100 - $150</option>
+            <option value="0-500">₹0 - ₹500</option>
+            <option value="500-1000">₹500 - ₹1000</option>
+            <option value="1000-2500">₹1000 - ₹2500</option>
+            <option value="2500-5000">₹2500 - ₹5000</option>
           </select>
         </div>
         {filteredPackages.length > 0 ? (
