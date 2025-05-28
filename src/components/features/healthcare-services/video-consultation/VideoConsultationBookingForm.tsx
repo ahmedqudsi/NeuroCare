@@ -83,7 +83,7 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
     setSubmissionStatus(null);
     setSubmissionError(null);
 
-    const patientId = "mock-patient-123"; 
+    const patientId = "mock-patient-123"; // Replace with actual patient ID from auth
 
     try {
       if (!db) {
@@ -108,11 +108,12 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
         scheduledDate: Timestamp.fromDate(values.preferredDate),
         timeSlot: values.preferredTimeSlot,
         symptoms: values.symptoms,
-        status: "pending",
-        uploadedReports: [],
+        status: "pending", // Initial status
+        uploadedReports: [], // Placeholder for report URLs
         createdAt: serverTimestamp(),
       });
 
+      // Simulate sending confirmation (in a real app, this would be a backend call)
       const consultationDateTime = `${format(values.preferredDate, "PPP")} at ${values.preferredTimeSlot}`;
       sendBookingConfirmation(values.patientName, selectedDoctor.fullName, consultationDateTime);
 
@@ -142,7 +143,7 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
       if (errorMessage.includes("Database not initialized")) {
         errorMessage = "Connection to the booking service failed. Please ensure your Firebase configuration (API keys in .env) is correct and try again. Contact support if the issue persists.";
       } else if (errorMessage.includes("Missing or insufficient permissions")) {
-        errorMessage = "There was an issue saving your booking. This might be due to a configuration problem. Please try again later or contact support.";
+        errorMessage = "There was an issue saving your booking. This might be due to a configuration problem (e.g. Firestore security rules). Please try again later or contact support.";
       }
       setSubmissionError(errorMessage);
       toast({
@@ -318,7 +319,7 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
         {submissionStatus === 'success' && (
           <Alert variant="default" className="bg-green-50 border-green-300 text-green-700 dark:bg-green-900/30 dark:border-green-700 dark:text-green-300">
             <CheckCircle2 className="h-4 w-4 !text-green-600 dark:!text-green-400" />
-            <AlertTitle>Request Submitted & Awaiting Confirmation!</AlertTitle>
+            <AlertTitle>Request Submitted &amp; Awaiting Confirmation!</AlertTitle>
             <AlertDescription>
               Your video consultation request has been sent. We'll notify you upon confirmation.
             </AlertDescription>

@@ -8,21 +8,17 @@ import type { Doctor, ConsultationType } from '@/types';
 import { VideoDoctorProfileCard } from '@/components/features/healthcare-services/video-consultation/VideoDoctorProfileCard';
 import { VideoConsultationBookingForm } from '@/components/features/healthcare-services/video-consultation/VideoConsultationBookingForm';
 import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, UploadCloud, Video as VideoIcon } from 'lucide-react';
-import { useEffect, useState, type ChangeEvent } from 'react';
+import { ArrowLeft, Video as VideoIcon } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import { FeedbackForm } from '@/components/features/healthcare-services/video-consultation/FeedbackForm';
-import { Input } from '@/components/ui/input';
-import { useToast } from '@/hooks/use-toast';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-
+// Removed Input, useToast, Alert, AlertDescription, AlertTitle imports as they are no longer used directly on this page for prescription uploads.
 
 export default function VideoConsultationPage() {
   const [doctors, setDoctors] = useState<Doctor[]>(staticSampleDoctors);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const { toast } = useToast();
+  // Removed selectedFile and toast as they were for the removed prescription upload.
 
   const pageStaticText = {
     mainTitle: 'Video Consultation with Doctors',
@@ -33,15 +29,10 @@ export default function VideoConsultationPage() {
     joinCallTitle: "Join Video Call",
     joinCallDescription: "Click the button below to join the video consultation. Ensure you have a stable internet connection.",
     joinCallButton: "Video Call", 
-    prescriptionTitle: "Prescription and Follow-up Notes",
-    prescriptionDescriptionPatient: "Upload prescription and notes for the patient here (PDF/JPG accepted). The actual file upload to cloud storage will be implemented in a future update.",
-    prescriptionDescriptionDoctor: "Upload prescription and notes for the patient here.",
-    uploadPrescriptionButton: "Upload Prescription",
+    // Prescription related text removed
     feedbackTitle: "Feedback and Ratings",
     feedbackDescription: "Share your experience and help us improve our services.",
     submitFeedbackButton: "Submit Feedback",
-    noFileSelectedError: "Please select a file to upload.",
-    fileSelectedSuccess: "File selected and ready for upload.",
   };
 
   useEffect(() => {
@@ -92,31 +83,6 @@ export default function VideoConsultationPage() {
     doctor.videoAvailabilitySlots &&
     doctor.videoAvailabilitySlots.length > 0
   );
-
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      setSelectedFile(event.target.files[0]);
-    } else {
-      setSelectedFile(null);
-    }
-  };
-
-  const handleUpload = () => {
-    if (selectedFile) {
-      console.log('File selected for upload:', selectedFile);
-      // Here you would typically implement the actual upload to Firebase Storage
-      toast({
-        title: pageStaticText.fileSelectedSuccess,
-        description: `File: ${selectedFile.name} (${(selectedFile.size / 1024).toFixed(2)} KB)`,
-      });
-    } else {
-      toast({
-        title: "No File Selected",
-        description: pageStaticText.noFileSelectedError,
-        variant: "destructive",
-      });
-    }
-  };
 
   return (
     <div className="space-y-10">
@@ -174,33 +140,7 @@ export default function VideoConsultationPage() {
         </Button>
       </section>
 
-      <section className="space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-800">
-        <h2 className="text-2xl font-semibold text-foreground">{pageStaticText.prescriptionTitle}</h2>
-        <p className="text-muted-foreground">
-          {pageStaticText.prescriptionDescriptionPatient}
-        </p>
-        <div className="flex flex-col sm:flex-row items-center gap-4 p-4 border rounded-lg bg-card shadow">
-          <Input
-            id="prescriptionUpload"
-            type="file"
-            accept=".pdf,.jpg,.jpeg"
-            onChange={handleFileChange}
-            className="flex-grow"
-          />
-          <Button onClick={handleUpload} variant="outline" className="w-full sm:w-auto">
-            <UploadCloud className="mr-2 h-4 w-4" />
-            {pageStaticText.uploadPrescriptionButton}
-          </Button>
-        </div>
-        {selectedFile && (
-          <Alert variant="default" className="mt-4">
-            <AlertTitle>File Ready</AlertTitle>
-            <AlertDescription>
-              Selected: {selectedFile.name} ({(selectedFile.size / 1024).toFixed(2)} KB). Click upload to proceed.
-            </AlertDescription>
-          </Alert>
-        )}
-      </section>
+      {/* Prescription upload section removed */}
 
       <section className="space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-1000">
         <h2 className="text-2xl font-semibold text-foreground">{pageStaticText.feedbackTitle}</h2>
