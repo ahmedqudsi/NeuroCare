@@ -31,7 +31,6 @@ import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-// Removed Firestore and notification imports
 
 const videoBookingFormSchema = z.object({
   patientName: z.string().min(2, {
@@ -62,7 +61,6 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionStatus, setSubmissionStatus] = useState<'success' | 'error' | null>(null);
-  // Removed submissionError state
 
   const form = useForm<z.infer<typeof videoBookingFormSchema>>({
     resolver: zodResolver(videoBookingFormSchema),
@@ -81,8 +79,8 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
 
     console.log("Video Consultation Booking Submitted (Simulated):", values);
 
-    // Simulate a very quick process
-    // await new Promise(resolve => setTimeout(resolve, 200)); // Short delay for visual feedback of "Processing..."
+    // Simulate a short processing delay
+    await new Promise(resolve => setTimeout(resolve, 1500)); 
 
     const selectedDoctor = doctors.find(d => d.id === values.selectedDoctorId);
     const doctorName = selectedDoctor ? selectedDoctor.fullName : "the selected doctor";
@@ -276,8 +274,6 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
             </AlertDescription>
           </Alert>
         )}
-
-        {/* Removed submissionError Alert as Firestore logic is removed */}
 
         <Button type="submit" className="w-full sm:w-auto" disabled={isSubmitting}>
           {isSubmitting ? (
