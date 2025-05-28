@@ -16,6 +16,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ShippingAddressForm } from '@/components/features/checkout/ShippingAddressForm';
 import { PaymentDetailsForm } from '@/components/features/checkout/PaymentDetailsForm';
 import confetti from 'canvas-confetti';
+import { generateOrderConfirmationEmail, type OrderConfirmationEmailInput } from '@/ai/flows/generate-order-confirmation-email-flow';
 
 const checkoutFormSchema = z.object({
   // Shipping Details
@@ -126,7 +127,8 @@ export default function CheckoutPage() {
     console.log("Checkout Data (raw card number stored):", data);
     console.log("Cart Items for Order:", cartItems);
 
-    await new Promise(resolve => setTimeout(resolve, 3000));
+    // Simulate payment processing
+    await new Promise(resolve => setTimeout(resolve, 3000)); 
 
     setPaymentProcessing(false);
     setPaymentComplete(true);
@@ -147,6 +149,7 @@ export default function CheckoutPage() {
       timestamp: new Date().toISOString(),
     };
 
+    // Save to localStorage
     if (typeof window !== "undefined") {
       let existingOrders: StoredOrder[] = [];
       const storedOrdersData = localStorage.getItem('neuroCareOrders');
@@ -159,32 +162,55 @@ export default function CheckoutPage() {
           existingOrders = [];
         }
       }
-
+      // Mark the previous "Processing" order as "Delivered"
       if (existingOrders.length > 0 && existingOrders[0].status === "Processing") {
         existingOrders[0].status = "Delivered";
       }
-
       const updatedOrders = [newOrderData, ...existingOrders];
       localStorage.setItem('neuroCareOrders', JSON.stringify(updatedOrders));
-    }
 
+      // Generate email content
+      try {
+        const emailInput: OrderConfirmationEmailInput = {
+          orderId: newOrderData.orderId,
+          items: newOrderData.items,
+          total: newOrderData.total,
+          shippingAddress: newOrderData.shippingAddress,
+          userEmail: data.email,
+          customerName: data.fullName,
+          appBaseUrl: window.location.origin,
+        };
+        const emailContent = await generateOrderConfirmationEmail(emailInput);
+        console.log("Generated Order Confirmation Email Content:", emailContent);
+        // In a real app, you would now pass `emailContent.subject` and `emailContent.htmlBody`
+        // to a backend function that actually sends the email.
+      } catch (emailError) {
+        console.error("Error generating order confirmation email:", emailError);
+        toast({
+          variant: "destructive",
+          title: "Email Generation Failed",
+          description: "Could not prepare the order confirmation email content.",
+          duration: 5000,
+        });
+      }
+    }
 
     toast({
       title: "Order Placed Successfully!",
       description: (
         <div>
           <p>Thank you, {data.fullName}! Your order #{mockOrderId} has been received.</p>
-          <p>Details have been sent to {data.email}.</p>
+          <p>A confirmation email with tracking details will be sent to {data.email}.</p>
         </div>
       ),
       duration: 7000,
     });
 
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, 2000)); // Allow user to see success
 
     setShowPaymentModal(false);
-    setPaymentProcessing(false);
-    setPaymentComplete(false);
+    // No need to set paymentProcessing and paymentComplete to false here,
+    // as they are reset when a new submission starts or if the component unmounts.
 
     clearCart();
     form.reset();
@@ -295,3 +321,4 @@ export default function CheckoutPage() {
     </div>
   );
 }
+
