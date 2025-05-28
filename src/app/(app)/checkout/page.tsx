@@ -130,6 +130,18 @@ export default function CheckoutPage() {
     setPaymentProcessing(false);
     setPaymentComplete(true);
 
+    // Show success toast immediately after payment simulation
+    toast({
+      title: "Order Placed Successfully!",
+      description: (
+        <div>
+          <p>Thank you, {data.fullName}! Your order has been received.</p>
+          <p>A confirmation email with tracking details will be sent to {data.email}.</p>
+        </div>
+      ),
+      duration: 7000,
+    });
+
     const mockOrderId = `NC-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
     const newOrderData: StoredOrder = {
       orderId: mockOrderId,
@@ -197,23 +209,13 @@ export default function CheckoutPage() {
         toast({
           variant: "destructive",
           title: "Email Generation Failed",
-          description: `Could not prepare order confirmation email: ${errorDesc}`,
+          description: `Could not prepare order confirmation email: ${errorDesc}. Your order has still been placed.`,
           duration: 8000,
         });
       }
     }
 
-    toast({
-      title: "Order Placed Successfully!",
-      description: (
-        <div>
-          <p>Thank you, {data.fullName}! Your order #{mockOrderId} has been received.</p>
-          <p>A confirmation email with tracking details will be sent to {data.email}.</p>
-        </div>
-      ),
-      duration: 7000,
-    });
-
+    // Keep this delay to allow user to see the success modal & confetti
     await new Promise(resolve => setTimeout(resolve, 2000)); 
 
     setShowPaymentModal(false);
