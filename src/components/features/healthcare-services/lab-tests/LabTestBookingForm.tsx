@@ -32,7 +32,10 @@ import { CalendarIcon, AlertTriangle, CheckCircle2, Loader2 } from 'lucide-react
 import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
 import { useState, useEffect } from 'react';
-import { Alert, AlertDescription, AlertTitle as AlertTitleUi } from '@/components/ui/alert'; // Renamed to avoid conflict
+import { Alert, AlertDescription, AlertTitle as AlertTitleUi } from '@/components/ui/alert';
+// Firebase imports removed: import { db } from '@/lib/firebase';
+// Firebase imports removed: import { collection, addDoc, Timestamp, serverTimestamp } from 'firebase/firestore';
+import { sampleLabTestPackages } from '@/lib/constants'; // Used for refining fasting confirmed logic
 
 const labTestBookingFormSchema = z.object({
   patientName: z.string().min(2, {
@@ -50,14 +53,15 @@ const labTestBookingFormSchema = z.object({
   notes: z.string().max(500, { message: "Notes cannot exceed 500 characters." }).optional(),
 }).refine(data => {
   // Conditional validation for fastingConfirmed
-  const selectedTest = sampleTimeSlotsForTests.find(t => t.id === data.selectedTestId); // Use a placeholder or actual data source
-  if (selectedTest && (sampleLabTestPackages.find(p => p.id === data.selectedTestId)?.fastingRequired)) {
+  // Use sampleLabTestPackages to check if the selected test requires fasting, as it's static data
+  const selectedTestInfo = sampleLabTestPackages.find(p => p.id === data.selectedTestId);
+  if (selectedTestInfo && selectedTestInfo.fastingRequired) {
     return data.fastingConfirmed === true;
   }
   return true;
 }, {
   message: "Please confirm you will be fasting if the selected test requires it.",
-  path: ["fastingConfirmed"], // Specify the path of the error
+  path: ["fastingConfirmed"], 
 });
 
 
@@ -100,7 +104,6 @@ export function LabTestBookingForm({ testPackages }: LabTestBookingFormProps) {
     if (selectedTestId) {
       const test = testPackages.find(pkg => pkg.id === selectedTestId);
       setCurrentSelectedTest(test || null);
-      // Reset fastingConfirmed if the new test doesn't require fasting
       if (test && !test.fastingRequired) {
         form.setValue("fastingConfirmed", false);
       }
@@ -112,25 +115,11 @@ export function LabTestBookingForm({ testPackages }: LabTestBookingFormProps) {
   async function onSubmit(values: z.infer<typeof labTestBookingFormSchema>) {
     setIsSubmitting(true);
     setSubmissionStatus(null);
-    console.log("Lab Test Booking Request Submitted:", values);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
 
-    // In a real app, integrate with Firebase Firestore here.
-    // Example:
-    // try {
-    //   const docRef = await addDoc(collection(db, "lab_test_bookings"), {
-    //     ...values,
-    //     preferredDate: Timestamp.fromDate(values.preferredDate),
-    //     status: "pending",
-    //     createdAt: serverTimestamp(),
-    //   });
-    //   setSubmissionStatus('success');
-    //   form.reset();
-    // } catch (e) {
-    //   setSubmissionStatus('error');
-    // }
+    console.log("Lab Test Booking Request Submitted (Simulated):", values);
+
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 1500));
 
     toast({
       title: "Booking Request Submitted!",
@@ -329,7 +318,7 @@ export function LabTestBookingForm({ testPackages }: LabTestBookingFormProps) {
           </Alert>
         )}
 
-        {submissionStatus === 'error' && (
+        {submissionStatus === 'error' && ( // Kept for general client-side form errors, though less likely now
           <Alert variant="destructive">
             <AlertTriangle className="h-4 w-4" />
             <AlertTitleUi>Submission Failed</AlertTitleUi>

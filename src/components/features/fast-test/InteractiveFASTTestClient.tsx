@@ -9,10 +9,52 @@ import { PhoneOutgoing, AlertTriangle, Camera } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import type { FASTStep } from '@/types';
 import { cn } from '@/lib/utils';
+import { useEffect, useState } from 'react';
 
 
 export function InteractiveFASTTestClient() {
   const { toast } = useToast();
+  const [laptopCameraId, setLaptopCameraId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const getLaptopCamera = async () => {
+      try {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const videoDevices = devices.filter((device) => device.kind === 'videoinput');
+
+        // Attempt to identify the laptop camera based on the label
+        let laptopCamera = videoDevices.find((device) =>
+          device.label.toLowerCase().includes('laptop') ||
+          device.label.toLowerCase().includes('built-in')
+        );
+
+        // If no specific laptop camera is found, use the first video input device
+        if (!laptopCamera && videoDevices.length > 0) {
+          laptopCamera = videoDevices[0];
+        }
+
+        if (laptopCamera) {
+          setLaptopCameraId(laptopCamera.deviceId);
+        } else {
+          console.warn("No camera found");
+          toast({
+            title: "No Camera Found",
+            description: "No camera was found on this device.",
+            variant: "default",
+          });
+        }
+      } catch (error) {
+        console.error("Error enumerating devices", error);
+        toast({
+          title: "Camera Error",
+          description: "Error accessing camera devices: " + (error as any).message,
+          variant: "destructive",
+        });
+      }
+    };
+
+    getLaptopCamera();
+  }, [toast]);
 
   // Static text, previously from dictionary
   const pageStaticText = {
@@ -103,13 +145,24 @@ export function InteractiveFASTTestClient() {
             className="ml-4 w-full max-w-md shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 ease-in-out transform"
             style={{ backgroundColor: '#87CEFA' }}
             onClick={() => {
-              navigator.mediaDevices.getUserMedia({ video: true })
+              const constraints: MediaStreamConstraints = {
+                video: laptopCameraId ? { deviceId: { exact: laptopCameraId } } : true,
+                audio: false,
+              };
+
+              navigator.mediaDevices.getUserMedia(constraints)
                 .then((stream) => {
                   // Handle the stream (e.g., display it in a video element)
                   console.log("Camera access granted", stream);
+                  // You can add a video element to the page and set its source to the stream
+                  // For example:
+                  // const video = document.createElement('video');
+                  // video.srcObject = stream;
+                  // video.play();
+                  // document.body.appendChild(video);
                   toast({
                     title: "Camera Access",
-                    description: "Camera access granted. You can now use the camera.",
+                    description: "Laptop camera access granted. The camera stream is now available.",
                   });
                 })
                 .catch((error) => {
@@ -117,7 +170,7 @@ export function InteractiveFASTTestClient() {
                   console.error("Error accessing camera", error);
                   toast({
                     title: "Camera Access Error",
-                    description: "Error accessing camera: " + error.message,
+                    description: "Error accessing laptop camera: " + error.message,
                     variant: "destructive",
                   });
                 });

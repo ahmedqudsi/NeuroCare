@@ -1,9 +1,8 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { LabTestPackage } from '@/types';
-import { sampleLabTestPackages } from '@/lib/constants';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowLeft, Beaker, Search } from 'lucide-react';
@@ -11,9 +10,12 @@ import { LabTestPackageCard } from '@/components/features/healthcare-services/la
 import { LabTestBookingForm } from '@/components/features/healthcare-services/lab-tests/LabTestBookingForm';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { sampleLabTestPackages } from '@/lib/constants'; // Import sample data
 
 export default function LabTestsPage() {
   const [searchTerm, setSearchTerm] = useState('');
+  // Initialize with sample data
+  const [allPackages, setAllPackages] = useState<LabTestPackage[]>(sampleLabTestPackages);
   const [filteredPackages, setFilteredPackages] = useState<LabTestPackage[]>(sampleLabTestPackages);
 
   const pageStaticText = {
@@ -30,10 +32,10 @@ export default function LabTestsPage() {
     const term = event.target.value.toLowerCase();
     setSearchTerm(term);
     if (term === '') {
-      setFilteredPackages(sampleLabTestPackages);
+      setFilteredPackages(allPackages);
     } else {
       setFilteredPackages(
-        sampleLabTestPackages.filter(
+        allPackages.filter(
           (pkg) =>
             pkg.testName.toLowerCase().includes(term) ||
             pkg.description.toLowerCase().includes(term) ||
@@ -76,6 +78,35 @@ export default function LabTestsPage() {
           />
           <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
         </div>
+        <div className="flex space-x-2 mb-4">
+          <Button variant="outline" size="sm" onClick={() => {
+            const strokeTests = ["Complete blood count (CBC)", "Serum electrolytes", "Blood clotting tests", "Heart attack tests", "Thyroid tests", "Blood glucose", "Cholesterol tests", "C-reactive protein test and blood protein test"];
+            setFilteredPackages(allPackages.filter(pkg => strokeTests.includes(pkg.testName)));
+          }}>Stroke-Specific</Button>
+          <Button variant="outline" size="sm" onClick={() => {
+            setFilteredPackages(allPackages.filter(pkg => pkg.fastingRequired));
+          }}>Fasting</Button>
+          <Button variant="outline" size="sm" onClick={() => {
+            setFilteredPackages(allPackages.filter(pkg => !pkg.fastingRequired));
+          }}>Non-Fasting</Button>
+          <select className="border rounded px-2 py-1" onChange={(e) => {
+            const budget = e.target.value;
+            if (budget === "0-50") {
+              setFilteredPackages(allPackages.filter(pkg => pkg.price >= 0 && pkg.price <= 50));
+            } else if (budget === "50-100") {
+              setFilteredPackages(allPackages.filter(pkg => pkg.price > 50 && pkg.price <= 100));
+            } else if (budget === "100-150") {
+              setFilteredPackages(allPackages.filter(pkg => pkg.price > 100 && pkg.price <= 150));
+            } else {
+              setFilteredPackages(allPackages);
+            }
+          }}>
+            <option value="">Budget</option>
+            <option value="0-50">$0 - $50</option>
+            <option value="50-100">$50 - $100</option>
+            <option value="100-150">$100 - $150</option>
+          </select>
+        </div>
         {filteredPackages.length > 0 ? (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {filteredPackages.map((pkg) => (
@@ -91,7 +122,8 @@ export default function LabTestsPage() {
         <h2 className="text-2xl font-semibold text-foreground">{pageStaticText.bookingFormTitle}</h2>
         <Card className="shadow-lg">
           <CardContent className="p-6">
-            <LabTestBookingForm testPackages={sampleLabTestPackages} />
+            {/* Pass allPackages (which is sampleLabTestPackages) to the form */}
+            <LabTestBookingForm testPackages={allPackages} />
           </CardContent>
         </Card>
       </section>
