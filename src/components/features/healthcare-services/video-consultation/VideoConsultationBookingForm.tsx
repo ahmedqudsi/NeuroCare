@@ -31,9 +31,7 @@ import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { db } from '@/lib/firebase';
-import { collection, addDoc, serverTimestamp, Timestamp } from 'firebase/firestore';
-import { sendBookingConfirmation } from '@/lib/notifications';
+// Removed Firestore and notification imports
 
 const videoBookingFormSchema = z.object({
   patientName: z.string().min(2, {
@@ -64,8 +62,7 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionStatus, setSubmissionStatus] = useState<'success' | 'error' | null>(null);
-  const [submissionError, setSubmissionError] = useState<string | null>(null);
-
+  // Removed submissionError state
 
   const form = useForm<z.infer<typeof videoBookingFormSchema>>({
     resolver: zodResolver(videoBookingFormSchema),
@@ -81,80 +78,34 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
   async function onSubmit(values: z.infer<typeof videoBookingFormSchema>) {
     setIsSubmitting(true);
     setSubmissionStatus(null);
-    setSubmissionError(null);
 
-    const patientId = "mock-patient-123"; // Replace with actual patient ID from auth
+    console.log("Video Consultation Booking Submitted (Simulated):", values);
 
-    try {
-      if (!db) {
-        const firebaseConfigError = "Database not initialized. Please ensure your Firebase project is correctly set up and all necessary API keys (NEXT_PUBLIC_FIREBASE_API_KEY, NEXT_PUBLIC_FIREBASE_PROJECT_ID, etc.) are present in your .env file.";
-        setSubmissionError(firebaseConfigError);
-        throw new Error(firebaseConfigError);
-      }
+    // Simulate a very quick process
+    // await new Promise(resolve => setTimeout(resolve, 200)); // Short delay for visual feedback of "Processing..."
 
-      const selectedDoctor = doctors.find(d => d.id === values.selectedDoctorId);
-      if (!selectedDoctor) {
-        const doctorNotFoundError = "Selected doctor not found. Please select a valid doctor from the list.";
-        setSubmissionError(doctorNotFoundError);
-        throw new Error(doctorNotFoundError);
-      }
+    const selectedDoctor = doctors.find(d => d.id === values.selectedDoctorId);
+    const doctorName = selectedDoctor ? selectedDoctor.fullName : "the selected doctor";
 
-      await addDoc(collection(db, "video_consultations"), {
-        doctorId: values.selectedDoctorId,
-        patientId: patientId,
-        patientName: values.patientName,
-        doctorName: selectedDoctor.fullName,
-        consultationType: values.consultationType,
-        scheduledDate: Timestamp.fromDate(values.preferredDate),
-        timeSlot: values.preferredTimeSlot,
-        symptoms: values.symptoms,
-        status: "pending", // Initial status
-        uploadedReports: [], // Placeholder for report URLs
-        createdAt: serverTimestamp(),
-      });
-
-      // Simulate sending confirmation (in a real app, this would be a backend call)
-      const consultationDateTime = `${format(values.preferredDate, "PPP")} at ${values.preferredTimeSlot}`;
-      sendBookingConfirmation(values.patientName, selectedDoctor.fullName, consultationDateTime);
-
-      toast({
-        title: (
-          <div className="flex items-center">
-            <CheckCircle2 className="h-5 w-5 mr-2 text-green-500" />
-            Booking Request Successful!
-          </div>
-        ),
-        description: (
-          <div className="text-sm">
-            <p>Thank you, <strong>{values.patientName}</strong>!</p>
-            <p>Your video consultation with <strong>Dr. {selectedDoctor.fullName}</strong> for <strong>{values.preferredTimeSlot}</strong> on <strong>{format(values.preferredDate, "EEEE, MMMM do, yyyy")}</strong> has been requested.</p>
-            <p className="mt-2 text-xs text-muted-foreground">We'll notify you once confirmed. Check "My Appointments" for updates.</p>
-          </div>
-        ),
-        duration: 8000,
-      });
-      setSubmissionStatus('success');
-      setSubmissionError(null);
-      form.reset();
-    } catch (error: any) {
-      console.error("Error submitting video consultation request: ", error);
-      setSubmissionStatus('error');
-      let errorMessage = error.message || "An unexpected error occurred. Please try again.";
-      if (errorMessage.includes("Database not initialized")) {
-        errorMessage = "Connection to the booking service failed. Please ensure your Firebase configuration (API keys in .env) is correct and try again. Contact support if the issue persists.";
-      } else if (errorMessage.includes("Missing or insufficient permissions")) {
-        errorMessage = "There was an issue saving your booking. This might be due to a configuration problem (e.g. Firestore security rules). Please try again later or contact support.";
-      }
-      setSubmissionError(errorMessage);
-      toast({
-        variant: "destructive",
-        title: "Booking Failed",
-        description: errorMessage,
-        duration: 10000, 
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    toast({
+      title: (
+        <div className="flex items-center">
+          <CheckCircle2 className="h-5 w-5 mr-2 text-green-500" />
+          Booking Request Successful!
+        </div>
+      ),
+      description: (
+        <div className="text-sm">
+          <p>Thank you, <strong>{values.patientName}</strong>!</p>
+          <p>Your video consultation with <strong>Dr. {doctorName}</strong> for <strong>{values.preferredTimeSlot}</strong> on <strong>{format(values.preferredDate, "EEEE, MMMM do, yyyy")}</strong> has been requested.</p>
+          <p className="mt-2 text-xs text-muted-foreground">We'll notify you once confirmed. Check "My Appointments" for updates.</p>
+        </div>
+      ),
+      duration: 8000,
+    });
+    setSubmissionStatus('success');
+    form.reset();
+    setIsSubmitting(false);
   }
 
   return (
@@ -326,15 +277,7 @@ export function VideoConsultationBookingForm({ doctors, consultationTypes }: Vid
           </Alert>
         )}
 
-        {submissionStatus === 'error' && submissionError && (
-          <Alert variant="destructive">
-            <AlertTriangle className="h-4 w-4" />
-            <AlertTitle>Booking Failed</AlertTitle>
-            <AlertDescription>
-              {submissionError}
-            </AlertDescription>
-          </Alert>
-        )}
+        {/* Removed submissionError Alert as Firestore logic is removed */}
 
         <Button type="submit" className="w-full sm:w-auto" disabled={isSubmitting}>
           {isSubmitting ? (
