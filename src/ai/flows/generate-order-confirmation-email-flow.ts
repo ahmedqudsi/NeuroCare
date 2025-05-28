@@ -24,7 +24,7 @@ const ShippingAddressSchema = z.object({
   pincode: z.string(),
 });
 
-export const OrderConfirmationEmailInputSchema = z.object({
+const OrderConfirmationEmailInputSchema = z.object({
   orderId: z.string().describe('The unique ID of the order.'),
   items: z.array(OrderItemSchema).describe('A list of items in the order.'),
   total: z.string().describe('The total amount of the order (e.g., "₹1250.00").'),
@@ -35,7 +35,7 @@ export const OrderConfirmationEmailInputSchema = z.object({
 });
 export type OrderConfirmationEmailInput = z.infer<typeof OrderConfirmationEmailInputSchema>;
 
-export const OrderConfirmationEmailOutputSchema = z.object({
+const OrderConfirmationEmailOutputSchema = z.object({
   subject: z.string().describe('The subject line for the email.'),
   htmlBody: z.string().describe('The HTML content of the email body.'),
 });
