@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { siteConfig } from '@/config/site'; 
 import type { Metadata } from 'next';
 import FeaturedInsights from '@/components/features/FeaturedInsights';
+import CreditsSection from '@/components/CreditsSection';
 
 
 export const metadata: Metadata = {
@@ -122,6 +123,7 @@ export default async function DashboardPage() {
         </CardContent>
       </Card>
       <FeaturedInsights />
+      <CreditsSection />
     </div>
   );
 }

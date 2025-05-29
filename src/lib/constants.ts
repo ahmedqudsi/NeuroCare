@@ -24,7 +24,7 @@ export const rehabilitationExercises: Exercise[] = [
       'Slowly lower your arm back down.',
       'Repeat 10-15 times.'
     ],
-    videoUrl: 'https://www.youtube.com/results?search_query=Arm+Raises+%28Shoulder+Flexion%29+stroke+rehabilitation+exercise+guide',
+    videoUrl: 'https://www.youtube.com/watch?v=_ELCjpovYTk&ab_channel=PostStroke',
   },
   {
     id: '2',
@@ -38,7 +38,7 @@ export const rehabilitationExercises: Exercise[] = [
       'Turn your palm down and repeat, bending your wrist upwards.',
       'Repeat each direction 10-15 times.'
     ],
-    videoUrl: 'https://www.youtube.com/results?search_query=Wrist+Bends+%28Wrist+Flexion%2FExtension%29+stroke+rehabilitation+exercise+guide',
+    videoUrl: 'https://www.youtube.com/watch?v=7LrT3ckYa6g&ab_channel=Saebo%2CInc.',
   },
   {
     id: '3',
@@ -51,7 +51,7 @@ export const rehabilitationExercises: Exercise[] = [
       'Slowly lower yourself back to a seated position.',
       'Repeat 10-15 times.'
     ],
-    videoUrl: 'https://www.youtube.com/results?search_query=Sit+to+Stand+stroke+rehabilitation+exercise+guide',
+    videoUrl: 'https://www.youtube.com/watch?v=FgzjxOnWYvA&ab_channel=AmericanHeartAssociation',
   },
   {
     id: '4',
@@ -64,7 +64,7 @@ export const rehabilitationExercises: Exercise[] = [
       'Alternatively, tap each finger on the table surface.',
       'Repeat 10-15 cycles.'
     ],
-    videoUrl: 'https://www.youtube.com/results?search_query=Finger+Taps+stroke+rehabilitation+exercise+guide',
+    videoUrl: 'https://www.youtube.com/watch?v=ZKR1nOtCNKU&ab_channel=Saebo%2CInc.',
   },
   {
     id: '5',
@@ -78,7 +78,7 @@ export const rehabilitationExercises: Exercise[] = [
       'Return to the center and then twist to the other side.',
       'Repeat 10-15 times to each side.'
     ],
-    videoUrl: 'https://www.youtube.com/results?search_query=Seated+Trunk+Twists+stroke+rehabilitation+exercise+guide',
+    videoUrl: 'https://www.youtube.com/watch?v=4Wk9OM-tLjs&ab_channel=PostStroke',
   },
   {
     id: '6',
@@ -92,7 +92,7 @@ export const rehabilitationExercises: Exercise[] = [
       'Hold for 2-3 seconds.',
       'Repeat 15-20 times for each ankle.'
     ],
-    videoUrl: 'https://www.youtube.com/results?search_query=Ankle+Pumps+stroke+rehabilitation+exercise+guide',
+    videoUrl: 'https://www.youtube.com/watch?v=1NA0N8F0Nds&ab_channel=NHSGoldenJubilee',
   }
 ];
 
