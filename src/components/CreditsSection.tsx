@@ -1,4 +1,6 @@
+
 import React from 'react';
+import { UserCircle2, Github, Linkedin } from 'lucide-react';
 
 const CreditsSection = () => {
   return (
@@ -10,26 +12,34 @@ const CreditsSection = () => {
           {/* Team Member Cards */}
           <div className="rounded-lg shadow-md p-12 bg-[#161B22]">
             <div className="w-32 h-32 rounded-full bg-gray-700 mx-auto mb-4 flex items-center justify-center">
-              <i className="fas fa-user text-4xl text-white"></i>
+              <UserCircle2 className="h-16 w-16 text-white" />
             </div>
             <h3 className="text-xl font-semibold mb-2">Ahmed Qudsi Ghouse Ali Khan</h3>
             <p className="text-blue-400 mb-2">Full-Stack Dev. & Project Visionary</p>
-            <div className="flex justify-center mt-2">
+            <div className="flex justify-center mt-2 space-x-4">
               {/* Social Icons */}
-              <a href="https://github.com/ahmedqudsi" className="text-gray-400 hover:text-white mr-4"><i className="fab fa-github"></i></a>
-              <a href="https://www.linkedin.com/in/ahmed-qudsi-ghouse-ali-khan/" className="text-gray-400 hover:text-white"><i className="fab fa-linkedin-in"></i></a>
+              <a href="https://github.com/ahmedqudsi" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">
+                <Github className="h-6 w-6" />
+              </a>
+              <a href="https://www.linkedin.com/in/ahmed-qudsi-ghouse-ali-khan/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">
+                <Linkedin className="h-6 w-6" />
+              </a>
             </div>
           </div>
           <div className="rounded-lg shadow-md p-12 bg-[#161B22]">
             <div className="w-32 h-32 rounded-full bg-gray-700 mx-auto mb-4 flex items-center justify-center">
-              <i className="fas fa-user text-4xl text-white"></i>
+              <UserCircle2 className="h-16 w-16 text-white" />
             </div>
             <h3 className="text-xl font-semibold mb-2">Omar Syed Kaiser</h3>
             <p className="text-blue-400 mb-2">UI/UX Designer & Project Backbone</p>
-            <div className="flex justify-center mt-2">
+            <div className="flex justify-center mt-2 space-x-4">
               {/* Social Icons */}
-              <a href="https://github.com/OmarSyedK" className="text-gray-400 hover:text-white mr-4"><i className="fab fa-github"></i></a>
-              <a href="https://www.linkedin.com/in/omar-syed-kaiser-1337b0368/" className="text-gray-400 hover:text-white"><i className="fab fa-linkedin-in"></i></a>
+              <a href="https://github.com/OmarSyedK" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">
+                <Github className="h-6 w-6" />
+              </a>
+              <a href="https://www.linkedin.com/in/omar-syed-kaiser-1337b0368/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">
+                <Linkedin className="h-6 w-6" />
+              </a>
             </div>
           </div>
         </div>

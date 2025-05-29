@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Brain, Heart, Users } from 'lucide-react';
 
 const FeaturedInsights = () => {
   return (
@@ -14,7 +15,7 @@ const FeaturedInsights = () => {
           <div className="w-full md:w-1/3 p-4">
             <div className="rounded-lg shadow-md bg-darkCard neonBorder p-6 hover:scale-105 transition-transform duration-200 flex flex-col h-full">
               <div className="text-center mb-4">
-                <i className="fas fa-brain text-4xl text-primary"></i>
+                <Brain className="h-10 w-10 text-primary mx-auto" />
               </div>
               <div className="flex-grow">
                 <h3 className="text-xl font-semibold mb-2 text-center">Stroke Recovery After Brain Injury</h3>
@@ -31,7 +32,7 @@ const FeaturedInsights = () => {
           <div className="w-full md:w-1/3 p-4">
             <div className="rounded-lg shadow-md bg-darkCard neonBorder p-6 hover:scale-105 transition-transform duration-200 flex flex-col h-full">
               <div className="text-center mb-4">
-                <i className="fas fa-heart text-4xl text-primary"></i>
+                <Heart className="h-10 w-10 text-primary mx-auto" />
               </div>
               <div className="flex-grow">
                 <h3 className="text-xl font-semibold mb-2 text-center">How to Cope with Stroke Emotionally</h3>
@@ -48,10 +49,10 @@ const FeaturedInsights = () => {
           <div className="w-full md:w-1/3 p-4">
             <div className="rounded-lg shadow-md bg-darkCard neonBorder p-6 hover:scale-105 transition-transform duration-200 flex flex-col h-full">
               <div className="text-center mb-4">
-                <i className="fas fa-users text-4xl text-primary"></i>
+                <Users className="h-10 w-10 text-primary mx-auto" />
               </div>
               <div className="flex-grow">
-                <h3 className="text-xl font-semibold mb-2 text-center">Young Stroke Survivors: Voices & Stories</h3>
+                <h3 className="text-xl font-semibold mb-2 text-center">Young Stroke Survivors: Voices &amp; Stories</h3>
                 <p className="text-gray-400 text-center mb-4">Explore real-life stories from young stroke survivors and how community support shapes recovery.</p>
               </div>
               <div className="mt-auto">
