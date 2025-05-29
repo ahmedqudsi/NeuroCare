@@ -97,4 +97,8 @@
 git clone https://github.com/ahmedqudsi/NeuroCare.git
 cd NeuroCare
 npm install
+npm run build
 npm start
+(or)
+directly press the link for the Access of the project
+https://neuro-care.vercel.app
