@@ -136,7 +136,7 @@ export const sampleHospitals: Hospital[] = [
   {
     id: '1',
     name: 'Olive Hospital - Hyderabad',
-    address: 'Nanal Nagar ‘X’ Road, Rethibowli, Mehdipatnam, Hyderabad, Telangana 500028, India',
+    address: 'Nanal Nagar ‘X’ Road, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2351 5000',
     services: ['Multi-Speciality Care', 'Emergency Services', 'Diagnostics & Imaging', 'Stroke Unit'],
     imageUrl: '/olive.webp',
@@ -608,8 +608,8 @@ export const sampleLabTestPackages: LabTestPackage[] = [
     recommendedFor: ['post-stroke', 'cardiovascular health'],
     price: 2500,
     fastingRequired: true,
-    imageUrl: '/ltp001.jpg', // Updated to local path
-    imageHint: 'lab test',
+    imageUrl: '/post.png',
+    imageHint: 'lab test stroke',
     includes: ['Lipid Profile', 'HbA1c', 'Complete Blood Count (CBC)', 'Kidney Function Test (KFT)'],
   },
   {
@@ -620,8 +620,8 @@ export const sampleLabTestPackages: LabTestPackage[] = [
     recommendedFor: ['cardiovascular health', 'cholesterol monitoring'],
     price: 600,
     fastingRequired: true,
-    imageUrl: '/ltp002.jpg', // Updated to local path
-    imageHint: 'lab test',
+    imageUrl: '/lipid.jpg',
+    imageHint: 'lab test lipid',
   },
   {
     id: 'ltp003',
@@ -631,8 +631,8 @@ export const sampleLabTestPackages: LabTestPackage[] = [
     recommendedFor: ['general health', 'infection detection'],
     price: 300,
     fastingRequired: false,
-    imageUrl: '/ltp003.jpg', // Updated to local path
-    imageHint: 'lab test',
+    imageUrl: '/complete.jpg',
+    imageHint: 'lab test cbc',
   },
   {
     id: 'ltp004',
@@ -642,8 +642,8 @@ export const sampleLabTestPackages: LabTestPackage[] = [
     recommendedFor: ['diabetes'],
     price: 800,
     fastingRequired: true,
-    imageUrl: '/ltp004.jpg', // Updated to local path
-    imageHint: 'lab test',
+    imageUrl: '/diabetes.jpeg',
+    imageHint: 'lab test diabetes',
     includes: ['Fasting Blood Sugar', 'Post Prandial Blood Sugar', 'HbA1c'],
   },
   {
@@ -654,8 +654,8 @@ export const sampleLabTestPackages: LabTestPackage[] = [
     recommendedFor: ['thyroid disorders', 'general wellness'],
     price: 700,
     fastingRequired: false,
-    imageUrl: '/ltp005.jpg', // Updated to local path
-    imageHint: 'lab test',
+    imageUrl: '/thyroid.jpg',
+    imageHint: 'lab test thyroid',
   },
   {
     id: 'ltp006',
@@ -665,8 +665,8 @@ export const sampleLabTestPackages: LabTestPackage[] = [
     recommendedFor: ['general wellness', 'annual checkup', 'preventive care'],
     price: 4500,
     fastingRequired: true,
-    imageUrl: '/ltp006.jpg', // Updated to local path
-    imageHint: 'lab test',
+    imageUrl: '/comprehensive.jpg',
+    imageHint: 'lab test wellness',
     includes: ['Complete Blood Count (CBC)', 'Lipid Profile', 'Liver Function Test (LFT)', 'Kidney Function Test (KFT)', 'Thyroid Stimulating Hormone (TSH)', 'Urine Routine & Microscopy', 'Fasting Blood Sugar'],
   }
 ];
