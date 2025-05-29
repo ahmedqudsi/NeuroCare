@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.appName}`,
   },
   description: siteConfig.description,
-  icons: ['/images/favicon.ico'], // Updated favicon path
+  icons: ['/images/favicon.ico'], // Corrected favicon path
 };
 
 export default function RootLayout({
