@@ -2,7 +2,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import { ThemeProvider } from '@/providers/theme-provider';
+// import { ThemeProvider } from '@/providers/theme-provider'; // Temporarily commented out
 import { Toaster } from '@/components/ui/toaster';
 import { siteConfig } from '@/config/site';
 
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.appName}`,
   },
   description: siteConfig.description,
-  icons: ['/favicon.ico'], 
+  icons: ['/favicon.ico'],
 };
 
 export default function RootLayout({
@@ -33,15 +33,15 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}>
-        <ThemeProvider
+        {/* <ThemeProvider
           attribute="class"
           defaultTheme="light"
-          enableSystem={false}
+          enableSystem={false} // Was previously set to false
           disableTransitionOnChange
-        >
+        > */}
           {children}
           <Toaster />
-        </ThemeProvider>
+        {/* </ThemeProvider> */}
       </body>
     </html>
   );
