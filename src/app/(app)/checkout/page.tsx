@@ -128,7 +128,7 @@ export default function CheckoutPage() {
 
     setPaymentProcessing(false);
     setPaymentComplete(true);
-
+    
     toast({
       title: "Order Placed Successfully!",
       description: (
@@ -165,12 +165,13 @@ export default function CheckoutPage() {
           if (!Array.isArray(existingOrders)) existingOrders = [];
         } catch (e) {
           console.error("Error parsing existing orders from localStorage", e);
-          existingOrders = [];
+          existingOrders = []; // Reset if malformed
         }
       }
       
+      // If previous order was "Processing", set it to "Out for Delivery"
       if (existingOrders.length > 0 && existingOrders[0].status === "Processing") {
-        existingOrders[0].status = "Out for Delivery"; // Set previous processing order to Out for Delivery
+        existingOrders[0].status = "Out for Delivery"; 
       }
       
       const updatedOrders = [newOrderData, ...existingOrders];
@@ -189,23 +190,26 @@ export default function CheckoutPage() {
         const emailContent = await generateOrderConfirmationEmail(emailInput);
         console.log("Generated Order Confirmation Email Content:", emailContent);
       } catch (emailError: any) {
-        console.error("Error generating order confirmation email (full error object):", emailError);
         let errorDesc = "An unexpected error occurred while preparing the email.";
         if (emailError instanceof Error) {
-          errorDesc = emailError.message;
+          errorDesc = `${emailError.name}: ${emailError.message}`;
+          console.error("Error generating order confirmation email (Error Object):", emailError.name, emailError.message, emailError.stack);
         } else if (typeof emailError === 'string') {
           errorDesc = emailError;
+          console.error("Error generating order confirmation email (String):", emailError);
         } else {
           try {
             errorDesc = JSON.stringify(emailError).substring(0, 150) + "..."; 
+             console.error("Error generating order confirmation email (Other Object):", emailError);
           } catch {
             errorDesc = "Could not retrieve detailed error message for email generation.";
+            console.error("Error generating order confirmation email (Unstringifiable Object):", emailError);
           }
         }
         toast({
           variant: "destructive",
           title: "Email Generation Failed",
-          description: `Could not prepare order confirmation email: ${errorDesc}. Your order has still been placed.`,
+          description: `Failed to prepare order confirmation email: ${errorDesc}. However, your order was still placed successfully.`,
           duration: 8000,
         });
       }
@@ -321,5 +325,3 @@ export default function CheckoutPage() {
     </div>
   );
 }
-
-    
