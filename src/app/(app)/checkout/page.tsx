@@ -16,7 +16,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ShippingAddressForm } from '@/components/features/checkout/ShippingAddressForm';
 import { PaymentDetailsForm } from '@/components/features/checkout/PaymentDetailsForm';
 import confetti from 'canvas-confetti';
-import { generateOrderConfirmationEmail, type OrderConfirmationEmailInput } from '@/ai/flows/generate-order-confirmation-email-flow';
+// Removed import for generateOrderConfirmationEmail
 
 const checkoutFormSchema = z.object({
   // Shipping Details
@@ -134,7 +134,7 @@ export default function CheckoutPage() {
       description: (
         <div>
           <p>Thank you, {data.fullName}! Your order has been received.</p>
-          <p>A confirmation email with tracking details will be sent to {data.email}.</p>
+          <p>You can track your order status in the 'Track My Order' section.</p>
         </div>
       ),
       duration: 7000,
@@ -165,11 +165,10 @@ export default function CheckoutPage() {
           if (!Array.isArray(existingOrders)) existingOrders = [];
         } catch (e) {
           console.error("Error parsing existing orders from localStorage", e);
-          existingOrders = []; // Reset if malformed
+          existingOrders = []; 
         }
       }
       
-      // If previous order was "Processing", set it to "Out for Delivery"
       if (existingOrders.length > 0 && existingOrders[0].status === "Processing") {
         existingOrders[0].status = "Out for Delivery"; 
       }
@@ -177,42 +176,7 @@ export default function CheckoutPage() {
       const updatedOrders = [newOrderData, ...existingOrders];
       localStorage.setItem('neuroCareOrders', JSON.stringify(updatedOrders));
 
-      try {
-        const emailInput: OrderConfirmationEmailInput = {
-          orderId: newOrderData.orderId,
-          items: newOrderData.items,
-          total: newOrderData.total,
-          shippingAddress: newOrderData.shippingAddress,
-          userEmail: data.email,
-          customerName: data.fullName,
-          appBaseUrl: window.location.origin,
-        };
-        const emailContent = await generateOrderConfirmationEmail(emailInput);
-        console.log("Generated Order Confirmation Email Content:", emailContent);
-      } catch (emailError: any) {
-        let errorDesc = "An unexpected error occurred while preparing the email.";
-        if (emailError instanceof Error) {
-          errorDesc = `${emailError.name}: ${emailError.message}`;
-          console.error("Error generating order confirmation email (Error Object):", emailError.name, emailError.message, emailError.stack);
-        } else if (typeof emailError === 'string') {
-          errorDesc = emailError;
-          console.error("Error generating order confirmation email (String):", emailError);
-        } else {
-          try {
-            errorDesc = JSON.stringify(emailError).substring(0, 150) + "..."; 
-             console.error("Error generating order confirmation email (Other Object):", emailError);
-          } catch {
-            errorDesc = "Could not retrieve detailed error message for email generation.";
-            console.error("Error generating order confirmation email (Unstringifiable Object):", emailError);
-          }
-        }
-        toast({
-          variant: "destructive",
-          title: "Email Generation Failed",
-          description: `Failed to prepare order confirmation email: ${errorDesc}. However, your order was still placed successfully.`,
-          duration: 8000,
-        });
-      }
+      // Removed call to generateOrderConfirmationEmail
     }
 
     await new Promise(resolve => setTimeout(resolve, 2000)); 
@@ -325,3 +289,5 @@ export default function CheckoutPage() {
     </div>
   );
 }
+
+    
