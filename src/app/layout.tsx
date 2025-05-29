@@ -22,6 +22,7 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.appName}`,
   },
   description: siteConfig.description,
+  icons: ['/images/blue-brain-favicon.png'], // Updated favicon path
 };
 
 export default function RootLayout({

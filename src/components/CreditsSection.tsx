@@ -16,8 +16,8 @@ const CreditsSection = () => {
             <p className="text-blue-400 mb-2">Full-Stack Dev. & Project Visionary</p>
             <div className="flex justify-center mt-2">
               {/* Social Icons */}
-              <a href="#" className="text-gray-400 hover:text-white mr-4"><i className="fab fa-github"></i></a>
-              <a href="#" className="text-gray-400 hover:text-white"><i className="fab fa-linkedin-in"></i></a>
+              <a href="https://github.com/ahmedqudsi" className="text-gray-400 hover:text-white mr-4"><i className="fab fa-github"></i></a>
+              <a href="https://www.linkedin.com/in/ahmed-qudsi-ghouse-ali-khan/" className="text-gray-400 hover:text-white"><i className="fab fa-linkedin-in"></i></a>
             </div>
           </div>
           <div className="rounded-lg shadow-md p-12 bg-[#161B22]">
@@ -28,8 +28,8 @@ const CreditsSection = () => {
             <p className="text-blue-400 mb-2">UI/UX Designer & Project Backbone</p>
             <div className="flex justify-center mt-2">
               {/* Social Icons */}
-              <a href="#" className="text-gray-400 hover:text-white mr-4"><i className="fab fa-github"></i></a>
-              <a href="#" className="text-gray-400 hover:text-white"><i className="fab fa-linkedin-in"></i></a>
+              <a href="https://github.com/OmarSyedK" className="text-gray-400 hover:text-white mr-4"><i className="fab fa-github"></i></a>
+              <a href="https://www.linkedin.com/in/omar-syed-kaiser-1337b0368/" className="text-gray-400 hover:text-white"><i className="fab fa-linkedin-in"></i></a>
             </div>
           </div>
         </div>
