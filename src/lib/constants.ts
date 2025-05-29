@@ -136,10 +136,10 @@ export const sampleHospitals: Hospital[] = [
   {
     id: '1',
     name: 'Olive Hospital - Hyderabad',
-    address: 'Building No: 12-2-718/1, Nanal Nagar ‘X’ Road, Rethibowli, Mehdipatnam, Hyderabad, Telangana 500028, India',
+    address: 'Nanal Nagar ‘X’ Road, Rethibowli, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2351 5000',
     services: ['Multi-Speciality Care', 'Emergency Services', 'Diagnostics & Imaging', 'Stroke Unit'],
-    imageUrl: 'upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Olive_Hospital_Mehdipatnam.jpg/800px-Olive_Hospital_Mehdipatnam.jpg', // Example, replace with actual if needed or local path
+    imageUrl: '/olive.webp',
     imageHint: 'Olive Hospital building',
   },
   {
@@ -148,8 +148,8 @@ export const sampleHospitals: Hospital[] = [
     address: '6-3-347/22/A, Dwarakapuri, Near Saibaba Temple, Punjagutta, Hyderabad, Telangana 500082, India',
     phone: '+91 40 2353 8686',
     services: ['General Medicine', 'Orthopedics', 'Neurology Consultations', '24/7 Pharmacy'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Apollo_Hospitals_Hyderabad.jpg/800px-Apollo_Hospitals_Hyderabad.jpg', // Using Apollo as per previous request
-    imageHint: 'Apollo Hospital building',
+    imageUrl: '/premier.jpeg',
+    imageHint: 'Premier Hospital building',
   },
   {
     id: '3',
@@ -157,7 +157,7 @@ export const sampleHospitals: Hospital[] = [
     address: 'Santhosh Nagar, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 40 2334 0119',
     services: ['Specialized Eye Care', 'Emergency Eye Services', 'Outpatient Department'],
-    imageUrl: 'upload.wikimedia.org/wikipedia/commons/thumb/8/86/Sarojini_Devi_Eye_Hospital%2C_Hyderabad.jpg/800px-Sarojini_Devi_Eye_Hospital%2C_Hyderabad.jpg', // Example, replace with actual if needed or local path
+    imageUrl: '/sarojini.avif',
     imageHint: 'eye hospital hyderabad',
   },
    {
@@ -166,7 +166,7 @@ export const sampleHospitals: Hospital[] = [
     address: '12-2-417/A/2, Main Road, beside Subhash Chandra Bose Statue, near NMDC, Gudimalkapur, Mehdipatnam, Hyderabad, Telangana 500028, India',
     phone: '+91 72073 57861',
     services: ['Multi-Speciality Services', 'Intensive Care Unit', 'Surgical Facilities'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Ayaan_Hospital_Main_Building.jpg/800px-Ayaan_Hospital_Main_Building.jpg', // Example, replace if needed or local path
+    imageUrl: '/ayaan.png',
     imageHint: 'multi-speciality hospital hyderabad',
   },
   {
@@ -175,16 +175,16 @@ export const sampleHospitals: Hospital[] = [
     address: '12, Vitthaldas Thackersey Marg, New Marine Lines, Mumbai, Maharashtra 400020, India',
     phone: '+91 22 2206 7676',
     services: ['Emergency Care', 'Cardiology', 'Neurology', 'Advanced Stroke Care'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Bombay_Hospital_Mumbai.jpg/800px-Bombay_Hospital_Mumbai.jpg',
+    imageUrl: '/bombay.jpg',
     imageHint: 'Bombay Hospital building',
   },
   {
     id: '6',
     name: 'Max Healthcare Saket - Delhi',
-    address: 'Max Super Speciality Hospital, 1, 2, Press Enclave Marg, Saket Institutional Area, Saket, New Delhi, Delhi 110017, India',
+    address: 'Press Enclave Marg, Saket Institutional Area, Saket, New Delhi, Delhi 110017, India',
     phone: '+91 11 2651 5050',
     services: ['Comprehensive Stroke Center', 'Intensive Care', 'Neurosurgery', 'Rehabilitation Services'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Max_Healthcare_Saket.jpg/800px-Max_Healthcare_Saket.jpg',
+    imageUrl: '/max hospital.jpg',
     imageHint: 'Max Healthcare Saket building',
   },
   {
@@ -193,7 +193,7 @@ export const sampleHospitals: Hospital[] = [
     address: 'Rao Saheb Achutrao Patwardhan Marg, Four Bungalows, Andheri West, Mumbai, Maharashtra 400053, India',
     phone: '+91 22 3066 6666',
     services: ['Multi-Speciality', 'Robotic Surgery', 'Cancer Care', 'Stroke Program'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Kokilaben_Dhirubhai_Ambani_Hospital.jpg/800px-Kokilaben_Dhirubhai_Ambani_Hospital.jpg',
+    imageUrl: '/kokila.avif',
     imageHint: 'Kokilaben Hospital building',
   },
   {
@@ -202,7 +202,7 @@ export const sampleHospitals: Hospital[] = [
     address: 'A-791, Bandra Reclamation, Bandra (West), Mumbai, Maharashtra 400050, India',
     phone: '+91 22 2675 1000',
     services: ['Neurology', 'Cardiology', 'Oncology', 'Emergency Room'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Lilavati_Hospital_Mumbai.jpg/800px-Lilavati_Hospital_Mumbai.jpg',
+    imageUrl: '/lilavita.jpg',
     imageHint: 'Lilavati Hospital building',
   },
   {
@@ -211,16 +211,16 @@ export const sampleHospitals: Hospital[] = [
     address: '60 A, Bhulabhai Desai Road, Breach Candy, Cumballa Hill, Mumbai, Maharashtra 400026, India',
     phone: '+91 22 2367 1888',
     services: ['Critical Care', 'Diagnostic Services', 'Surgical Specialties', 'Neurology'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Breach_Candy_Hospital_Mumbai.jpg/800px-Breach_Candy_Hospital_Mumbai.jpg',
+    imageUrl: '/breach.avif',
     imageHint: 'Breach Candy Hospital building',
   },
   {
     id: '10',
     name: 'Indraprastha Apollo Hospitals - Delhi',
-    address: 'Sarita Vihar, Delhi Mathura Road, New Delhi - 110076, India',
+    address: 'Sarita Vihar, Delhi Mathura Road, New Delhi, Delhi 110076, India',
     phone: '+91 11 2692 5858',
     services: ['Advanced Stroke Unit', 'Organ Transplant', 'Cardiac Sciences', 'Neurosciences'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Indraprastha_Apollo_Hospital%2C_Delhi.jpg/800px-Indraprastha_Apollo_Hospital%2C_Delhi.jpg',
+    imageUrl: '/indraprastha.avif',
     imageHint: 'Indraprastha Apollo Hospital building',
   },
   {
@@ -229,7 +229,7 @@ export const sampleHospitals: Hospital[] = [
     address: 'Okhla Road, Sukhdev Vihar Metro Station, New Friends Colony, New Delhi, Delhi 110025, India',
     phone: '+91 11 4713 5000',
     services: ['Cardiac Care', 'Emergency Services', 'Neurology', 'Vascular Surgery'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Fortis_Escorts_Heart_Institute.jpg/800px-Fortis_Escorts_Heart_Institute.jpg',
+    imageUrl: '/fortis.jpg',
     imageHint: 'Fortis Escorts Heart Institute building',
   },
   {
@@ -238,7 +238,7 @@ export const sampleHospitals: Hospital[] = [
     address: 'Sir Ganga Ram Hospital Marg, Old Rajinder Nagar, Rajinder Nagar, New Delhi, Delhi 110060, India',
     phone: '+91 11 2575 0000',
     services: ['Multi-Speciality Care', 'Research Wing', 'Emergency Department', 'Stroke Clinic'],
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Sir_Ganga_Ram_Hospital%2C_Delhi.jpg/800px-Sir_Ganga_Ram_Hospital%2C_Delhi.jpg',
+    imageUrl: '/sir ganga.jpeg',
     imageHint: 'Sir Ganga Ram Hospital building',
   }
 ];
@@ -608,8 +608,8 @@ export const sampleLabTestPackages: LabTestPackage[] = [
     recommendedFor: ['post-stroke', 'cardiovascular health'],
     price: 2500,
     fastingRequired: true,
-    imageUrl: 'https://placehold.co/400x300.png',
-    imageHint: 'blood test package',
+    imageUrl: '/ltp001.jpg', // Updated to local path
+    imageHint: 'lab test',
     includes: ['Lipid Profile', 'HbA1c', 'Complete Blood Count (CBC)', 'Kidney Function Test (KFT)'],
   },
   {
@@ -620,8 +620,8 @@ export const sampleLabTestPackages: LabTestPackage[] = [
     recommendedFor: ['cardiovascular health', 'cholesterol monitoring'],
     price: 600,
     fastingRequired: true,
-    imageUrl: 'https://placehold.co/400x300.png',
-    imageHint: 'lipid profile test',
+    imageUrl: '/ltp002.jpg', // Updated to local path
+    imageHint: 'lab test',
   },
   {
     id: 'ltp003',
@@ -631,8 +631,8 @@ export const sampleLabTestPackages: LabTestPackage[] = [
     recommendedFor: ['general health', 'infection detection'],
     price: 300,
     fastingRequired: false,
-    imageUrl: 'https://placehold.co/400x300.png',
-    imageHint: 'cbc blood test',
+    imageUrl: '/ltp003.jpg', // Updated to local path
+    imageHint: 'lab test',
   },
   {
     id: 'ltp004',
@@ -642,8 +642,8 @@ export const sampleLabTestPackages: LabTestPackage[] = [
     recommendedFor: ['diabetes'],
     price: 800,
     fastingRequired: true,
-    imageUrl: 'https://placehold.co/400x300.png',
-    imageHint: 'diabetes test package',
+    imageUrl: '/ltp004.jpg', // Updated to local path
+    imageHint: 'lab test',
     includes: ['Fasting Blood Sugar', 'Post Prandial Blood Sugar', 'HbA1c'],
   },
   {
@@ -654,8 +654,8 @@ export const sampleLabTestPackages: LabTestPackage[] = [
     recommendedFor: ['thyroid disorders', 'general wellness'],
     price: 700,
     fastingRequired: false,
-    imageUrl: 'https://placehold.co/400x300.png',
-    imageHint: 'thyroid test',
+    imageUrl: '/ltp005.jpg', // Updated to local path
+    imageHint: 'lab test',
   },
   {
     id: 'ltp006',
@@ -665,10 +665,8 @@ export const sampleLabTestPackages: LabTestPackage[] = [
     recommendedFor: ['general wellness', 'annual checkup', 'preventive care'],
     price: 4500,
     fastingRequired: true,
-    imageUrl: 'https://placehold.co/400x300.png',
-    imageHint: 'wellness checkup',
+    imageUrl: '/ltp006.jpg', // Updated to local path
+    imageHint: 'lab test',
     includes: ['Complete Blood Count (CBC)', 'Lipid Profile', 'Liver Function Test (LFT)', 'Kidney Function Test (KFT)', 'Thyroid Stimulating Hormone (TSH)', 'Urine Routine & Microscopy', 'Fasting Blood Sugar'],
   }
 ];
-
-    
