@@ -78,7 +78,10 @@
 - Demo-ready with essential flows within 72-hour hackathon  
 
 ---
+## APP ARCHITECTURE
+![11](https://github.com/user-attachments/assets/324175a5-c364-403f-b2be-cf38425d0512)
 
+---
 ## 📸 Screenshots
 
 ![WhatsApp Image 2025-05-29 at 15 30 37_e75fc78c](https://github.com/user-attachments/assets/62262cfb-6d2b-4a94-9ed9-bda9e2b91813)
@@ -99,6 +102,8 @@ cd NeuroCare
 npm install
 npm run build
 npm start
+
 (or)
-directly press the link for the Access of the project
+
+USE the link TO the Access the project
 https://neuro-care.vercel.app
