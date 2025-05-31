@@ -223,6 +223,12 @@ export default function LoginPage() {
                     </>
                   )}
                 </Button>
+                <p className="text-center text-xs text-muted-foreground">
+                  Don&apos;t have an account?{' '}
+                  <Link href="/login" className="font-semibold text-primary hover:underline">
+                    Sign up now
+                  </Link>
+                </p>
               </form>
             </Form>
 
@@ -286,14 +292,7 @@ export default function LoginPage() {
           </div>
         )}
       </CardContent>
-      <CardFooter className="text-center text-xs text-muted-foreground flex flex-col pt-4">
-        <p>
-          Don&apos;t have an account?{' '}
-          <Link href="/login" className="font-semibold text-primary hover:underline">
-            Sign up now
-          </Link>
-        </p>
-      </CardFooter>
+      {/* CardFooter removed as the sign-up link is now in the form */}
     </Card>
   );
 }
