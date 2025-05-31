@@ -26,6 +26,12 @@ const signupFormSchema = z.object({
 
 type SignupFormValues = z.infer<typeof signupFormSchema>;
 
+interface StoredUser {
+  email: string;
+  password?: string; // Password stored for email/pass signup, optional for social
+  fullName?: string;
+}
+
 export default function SignupPage() {
   const router = useRouter();
   const { toast } = useToast();
@@ -45,13 +51,40 @@ export default function SignupPage() {
     setIsLoading(true);
     await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
 
-    // Simulate account creation
+    let signedUpUsers: StoredUser[] = [];
+    const storedUsersData = localStorage.getItem('neuroCareSignedUpUsers');
+    if (storedUsersData) {
+      try {
+        signedUpUsers = JSON.parse(storedUsersData);
+        if (!Array.isArray(signedUpUsers)) signedUpUsers = [];
+      } catch (e) {
+        signedUpUsers = [];
+      }
+    }
+
+    const existingUser = signedUpUsers.find(user => user.email.toLowerCase() === data.email.toLowerCase());
+
+    if (existingUser) {
+      toast({
+        title: "Registration Failed",
+        description: "This email address is already registered. Please log in.",
+        variant: "destructive",
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    // Add new user
+    signedUpUsers.push({ email: data.email, password: data.password, fullName: data.fullName });
+    localStorage.setItem('neuroCareSignedUpUsers', JSON.stringify(signedUpUsers));
+
+    // Proceed to log in the new user
     localStorage.setItem('neuroCareUserEmail', data.email);
     localStorage.setItem('neuroCareUserLoggedIn', 'true');
     
     toast({
       title: "Account Created Successfully!",
-      description: `Welcome to NeuroCare, ${data.fullName}!`,
+      description: `Welcome to NeuroCare, ${data.fullName}! You are now logged in.`,
     });
     
     router.push('/dashboard');
@@ -147,5 +180,3 @@ export default function SignupPage() {
     </Card>
   );
 }
-
-    

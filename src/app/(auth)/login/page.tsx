@@ -17,7 +17,7 @@ import Link from 'next/link';
 
 const loginFormSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),
-  password: z.string().min(6, { message: "Password must be at least 6 characters." }),
+  password: z.string().min(1, { message: "Password is required." }), // Min 1 to ensure it's not empty
 });
 
 type LoginFormValues = z.infer<typeof loginFormSchema>;
@@ -43,6 +43,12 @@ const MicrosoftIcon = () => (
 
 type SocialProvider = 'Google' | 'GitHub' | 'Microsoft';
 
+interface StoredUser {
+  email: string;
+  password?: string;
+  fullName?: string;
+}
+
 export default function LoginPage() {
   const router = useRouter();
   const { toast } = useToast();
@@ -60,15 +66,16 @@ export default function LoginPage() {
   });
 
   useEffect(() => {
-    const storedEmail = localStorage.getItem('neuroCareUserEmail');
+    if (localStorage.getItem('neuroCareUserLoggedIn') === 'true' && localStorage.getItem('neuroCareUserEmail')) {
+        router.replace('/dashboard'); // Redirect if already logged in
+        return;
+    }
+    const storedEmail = localStorage.getItem('neuroCareUserEmail'); // This is more like "last used email"
     if (storedEmail) {
       setSavedEmail(storedEmail);
       if (!activeSocialProvider) {
         form.setValue('email', storedEmail);
       }
-    }
-    if (localStorage.getItem('neuroCareUserLoggedIn') === 'true' && storedEmail) {
-        router.replace('/dashboard');
     }
   }, [form, router, activeSocialProvider]);
 
@@ -76,20 +83,40 @@ export default function LoginPage() {
     setIsLoading(true);
     await new Promise(resolve => setTimeout(resolve, 1000));
 
-    if (data.email && data.password) {
-      localStorage.setItem('neuroCareUserEmail', data.email);
+    let signedUpUsers: StoredUser[] = [];
+    const storedUsersData = localStorage.getItem('neuroCareSignedUpUsers');
+    if (storedUsersData) {
+      try {
+        signedUpUsers = JSON.parse(storedUsersData);
+        if (!Array.isArray(signedUpUsers)) signedUpUsers = [];
+      } catch (e) {
+        signedUpUsers = [];
+      }
+    }
+
+    const foundUser = signedUpUsers.find(user => user.email.toLowerCase() === data.email.toLowerCase());
+
+    if (!foundUser) {
+      toast({
+        title: "Login Failed",
+        description: "Account not found. Please sign up.",
+        variant: "destructive",
+      });
+    } else if (foundUser.password !== data.password) {
+      toast({
+        title: "Login Failed",
+        description: "Incorrect password. Please try again.",
+        variant: "destructive",
+      });
+    } else {
+      // Login successful
+      localStorage.setItem('neuroCareUserEmail', foundUser.email);
       localStorage.setItem('neuroCareUserLoggedIn', 'true');
       toast({
         title: "Login Successful",
-        description: `Welcome back, ${data.email}!`,
+        description: `Welcome back, ${foundUser.fullName || foundUser.email}!`,
       });
       router.push('/dashboard');
-    } else {
-      toast({
-        title: "Login Failed",
-        description: "Please check your email and password.",
-        variant: "destructive",
-      });
     }
     setIsLoading(false);
   }
@@ -97,7 +124,7 @@ export default function LoginPage() {
   const handleUseDifferentAccount = () => {
     setSavedEmail(null);
     form.reset({ email: '', password: '' });
-    localStorage.removeItem('neuroCareUserEmail');
+    localStorage.removeItem('neuroCareUserEmail'); // Clear last used email
   };
 
   const startSocialLogin = (provider: SocialProvider) => {
@@ -108,9 +135,9 @@ export default function LoginPage() {
   const cancelSocialLogin = () => {
     setActiveSocialProvider(null);
     setSocialEmail('');
-    const storedEmail = localStorage.getItem('neuroCareUserEmail');
-    if (storedEmail) {
-      form.setValue('email', storedEmail);
+    const lastUsedEmail = localStorage.getItem('neuroCareUserEmail');
+    if (lastUsedEmail) {
+      form.setValue('email', lastUsedEmail);
     } else {
       form.reset();
     }
@@ -122,25 +149,45 @@ export default function LoginPage() {
 
     const trimmedSocialEmail = socialEmail.trim();
 
-    if (!trimmedSocialEmail) {
+    if (!trimmedSocialEmail || !z.string().email().safeParse(trimmedSocialEmail).success) {
       toast({
         title: "Email Required",
-        description: `Please enter your ${activeSocialProvider} email address to continue.`,
+        description: `Please enter a valid ${activeSocialProvider} email address to continue.`,
         variant: "destructive",
       });
       setIsLoading(false);
       return;
     }
 
-    const emailToLogin = trimmedSocialEmail;
-
     await new Promise(resolve => setTimeout(resolve, 1500));
 
-    localStorage.setItem('neuroCareUserEmail', emailToLogin);
+    let signedUpUsers: StoredUser[] = [];
+    const storedUsersData = localStorage.getItem('neuroCareSignedUpUsers');
+    if (storedUsersData) {
+      try {
+        signedUpUsers = JSON.parse(storedUsersData);
+        if (!Array.isArray(signedUpUsers)) signedUpUsers = [];
+      } catch (e) {
+        signedUpUsers = [];
+      }
+    }
+
+    let userToLogin = signedUpUsers.find(user => user.email.toLowerCase() === trimmedSocialEmail.toLowerCase());
+    let userName = userToLogin?.fullName || trimmedSocialEmail;
+
+    if (!userToLogin) {
+      // Simulate account creation via social login
+      userToLogin = { email: trimmedSocialEmail, password: 'social_login_mock_password', fullName: `User via ${activeSocialProvider}` };
+      signedUpUsers.push(userToLogin);
+      localStorage.setItem('neuroCareSignedUpUsers', JSON.stringify(signedUpUsers));
+      userName = userToLogin.fullName;
+    }
+    
+    localStorage.setItem('neuroCareUserEmail', userToLogin.email);
     localStorage.setItem('neuroCareUserLoggedIn', 'true');
     toast({
       title: `Logged in with ${activeSocialProvider}`,
-      description: `Welcome, ${emailToLogin}!`,
+      description: `Welcome, ${userName}!`,
     });
     router.push('/dashboard');
     setIsLoading(false);
@@ -171,7 +218,7 @@ export default function LoginPage() {
           <>
             {savedEmail && !form.formState.isDirty && (
               <div className="mb-4 p-3 bg-secondary/50 rounded-md text-center">
-                <p className="text-sm text-muted-foreground">Welcome back!</p>
+                <p className="text-sm text-muted-foreground">Signing in as:</p>
                 <p className="font-semibold">{savedEmail}</p>
                 <Button variant="link" size="sm" onClick={handleUseDifferentAccount} className="text-xs h-auto p-0 mt-1">
                   Use a different account?
@@ -219,7 +266,7 @@ export default function LoginPage() {
                     </>
                   )}
                 </Button>
-                <p className="text-center text-xs text-muted-foreground">
+                 <p className="text-center text-xs text-muted-foreground">
                   Don&apos;t have an account?{' '}
                   <Link href="/signup" className="font-semibold text-primary hover:underline">
                     Sign up now
@@ -290,5 +337,3 @@ export default function LoginPage() {
     </Card>
   );
 }
-
-    
