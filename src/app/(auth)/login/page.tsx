@@ -8,10 +8,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Label } from '@/components/ui/label'; // Keep if still used, otherwise remove
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Brain, LogIn, Github } from 'lucide-react';
+import { Brain, LogIn, Github, ArrowLeft } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Separator } from '@/components/ui/separator';
 
@@ -43,12 +43,15 @@ const MicrosoftIcon = () => (
   </svg>
 );
 
+type SocialProvider = 'Google' | 'GitHub' | 'Microsoft';
 
 export default function LoginPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [savedEmail, setSavedEmail] = useState<string | null>(null);
+  const [activeSocialProvider, setActiveSocialProvider] = useState<SocialProvider | null>(null);
+  const [socialEmail, setSocialEmail] = useState('');
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginFormSchema),
@@ -62,12 +65,14 @@ export default function LoginPage() {
     const storedEmail = localStorage.getItem('neuroCareUserEmail');
     if (storedEmail) {
       setSavedEmail(storedEmail);
-      form.setValue('email', storedEmail);
+      if (!activeSocialProvider) { // Only prefill if not in social login flow
+        form.setValue('email', storedEmail);
+      }
     }
     if (localStorage.getItem('neuroCareUserLoggedIn') === 'true' && storedEmail) {
         router.replace('/dashboard');
     }
-  }, [form, router]);
+  }, [form, router, activeSocialProvider]);
 
   async function onSubmit(data: LoginFormValues) {
     setIsLoading(true);
@@ -97,25 +102,42 @@ export default function LoginPage() {
     localStorage.removeItem('neuroCareUserEmail');
   };
 
-  const handleSocialLogin = (provider: string) => {
-    toast({
-      title: `Social Login (${provider})`,
-      description: `This is a placeholder for ${provider} login. In a real app, this would initiate the OAuth flow.`,
-      duration: 5000,
-    });
-    // In a real app, you'd redirect to the provider's OAuth page.
-    // For demo, simulate a successful login after a delay and redirect.
+  const startSocialLogin = (provider: SocialProvider) => {
+    setActiveSocialProvider(provider);
+    setSocialEmail(''); // Clear previous social email
+  };
+
+  const cancelSocialLogin = () => {
+    setActiveSocialProvider(null);
+    setSocialEmail('');
+    // If there was a saved email, re-populate the main form
+    const storedEmail = localStorage.getItem('neuroCareUserEmail');
+    if (storedEmail) {
+      form.setValue('email', storedEmail);
+    } else {
+      form.reset();
+    }
+  };
+
+  const handleSocialLoginSubmit = async () => {
+    if (!activeSocialProvider) return;
     setIsLoading(true);
-    setTimeout(() => {
-      localStorage.setItem('neuroCareUserEmail', `${provider.toLowerCase()}@example.com`); // Mock email
-      localStorage.setItem('neuroCareUserLoggedIn', 'true');
-      toast({
-        title: `Logged in with ${provider}`,
-        description: "Welcome to NeuroCare!",
-      });
-      router.push('/dashboard');
-      setIsLoading(false);
-    }, 1500);
+
+    // Use the entered socialEmail, or a mock email if empty
+    const emailToLogin = socialEmail.trim() || `${activeSocialProvider.toLowerCase().replace(/\s/g, '')}@example.com`;
+
+    await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate API call
+
+    localStorage.setItem('neuroCareUserEmail', emailToLogin);
+    localStorage.setItem('neuroCareUserLoggedIn', 'true');
+    toast({
+      title: `Logged in with ${activeSocialProvider}`,
+      description: `Welcome, ${emailToLogin}!`,
+    });
+    router.push('/dashboard');
+    setIsLoading(false);
+    setActiveSocialProvider(null);
+    setSocialEmail('');
   };
 
   return (
@@ -124,48 +146,116 @@ export default function LoginPage() {
         <div className="mx-auto mb-4">
           <Brain className="h-12 w-12 text-primary" />
         </div>
-        <CardTitle className="text-3xl font-bold">Welcome to NeuroCare</CardTitle>
-        <CardDescription>Please sign in to continue to your dashboard.</CardDescription>
+        {!activeSocialProvider ? (
+          <>
+            <CardTitle className="text-3xl font-bold">Welcome to NeuroCare</CardTitle>
+            <CardDescription>Please sign in to continue to your dashboard.</CardDescription>
+          </>
+        ) : (
+          <>
+            <CardTitle className="text-2xl font-bold">Sign in with {activeSocialProvider}</CardTitle>
+            <CardDescription>Enter your {activeSocialProvider} email to continue.</CardDescription>
+          </>
+        )}
       </CardHeader>
       <CardContent className="space-y-6">
-        {savedEmail && !form.formState.isDirty && (
-          <div className="mb-4 p-3 bg-secondary/50 rounded-md text-center">
-            <p className="text-sm text-muted-foreground">Welcome back!</p>
-            <p className="font-semibold">{savedEmail}</p>
-            <Button variant="link" size="sm" onClick={handleUseDifferentAccount} className="text-xs h-auto p-0 mt-1">
-              Use a different account?
-            </Button>
-          </div>
-        )}
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email Address</FormLabel>
-                  <FormControl>
-                    <Input type="email" placeholder="your.email@example.com" {...field} disabled={isLoading} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input type="password" placeholder="••••••••" {...field} disabled={isLoading} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" className="w-full" disabled={isLoading}>
+        {!activeSocialProvider ? (
+          <>
+            {savedEmail && !form.formState.isDirty && (
+              <div className="mb-4 p-3 bg-secondary/50 rounded-md text-center">
+                <p className="text-sm text-muted-foreground">Welcome back!</p>
+                <p className="font-semibold">{savedEmail}</p>
+                <Button variant="link" size="sm" onClick={handleUseDifferentAccount} className="text-xs h-auto p-0 mt-1">
+                  Use a different account?
+                </Button>
+              </div>
+            )}
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email Address</FormLabel>
+                      <FormControl>
+                        <Input type="email" placeholder="your.email@example.com" {...field} disabled={isLoading} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input type="password" placeholder="••••••••" {...field} disabled={isLoading} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                  {isLoading ? (
+                    <>
+                      <LogIn className="mr-2 h-4 w-4 animate-spin" />
+                      Signing In...
+                    </>
+                  ) : (
+                    <>
+                      <LogIn className="mr-2 h-4 w-4" />
+                      Sign In
+                    </>
+                  )}
+                </Button>
+              </form>
+            </Form>
+
+            <div className="relative my-6">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">
+                  Or continue with
+                </span>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <Button variant="outline" className="w-full" onClick={() => startSocialLogin('Google')} disabled={isLoading}>
+                <GoogleIcon />
+                Continue with Google
+              </Button>
+              <Button variant="outline" className="w-full" onClick={() => startSocialLogin('GitHub')} disabled={isLoading}>
+                <Github className="mr-2 h-5 w-5" />
+                Continue with GitHub
+              </Button>
+              <Button variant="outline" className="w-full" onClick={() => startSocialLogin('Microsoft')} disabled={isLoading}>
+                <MicrosoftIcon />
+                Continue with Microsoft
+              </Button>
+            </div>
+          </>
+        ) : (
+          // Social Login Form
+          <div className="space-y-4">
+            <FormItem>
+              <FormLabel>{activeSocialProvider} Email</FormLabel>
+              <FormControl>
+                <Input 
+                  type="email" 
+                  placeholder={`your.${activeSocialProvider.toLowerCase()}@example.com`} 
+                  value={socialEmail}
+                  onChange={(e) => setSocialEmail(e.target.value)}
+                  disabled={isLoading} 
+                />
+              </FormControl>
+            </FormItem>
+            <Button onClick={handleSocialLoginSubmit} className="w-full" disabled={isLoading}>
               {isLoading ? (
                 <>
                   <LogIn className="mr-2 h-4 w-4 animate-spin" />
@@ -174,44 +264,21 @@ export default function LoginPage() {
               ) : (
                 <>
                   <LogIn className="mr-2 h-4 w-4" />
-                  Sign In
+                  Continue with {activeSocialProvider}
                 </>
               )}
             </Button>
-          </form>
-        </Form>
-
-        <div className="relative my-6">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t" />
+            <Button variant="outline" className="w-full" onClick={cancelSocialLogin} disabled={isLoading}>
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to other sign-in options
+            </Button>
           </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background px-2 text-muted-foreground">
-              Or continue with
-            </span>
-          </div>
-        </div>
-
-        <div className="space-y-3">
-          <Button variant="outline" className="w-full" onClick={() => handleSocialLogin('Google')} disabled={isLoading}>
-            <GoogleIcon />
-            Continue with Google
-          </Button>
-          <Button variant="outline" className="w-full" onClick={() => handleSocialLogin('GitHub')} disabled={isLoading}>
-            <Github className="mr-2 h-5 w-5" />
-            Continue with GitHub
-          </Button>
-          <Button variant="outline" className="w-full" onClick={() => handleSocialLogin('Microsoft')} disabled={isLoading}>
-            <MicrosoftIcon />
-            Continue with Microsoft
-          </Button>
-        </div>
+        )}
       </CardContent>
-      <CardFooter className="text-center text-xs text-muted-foreground">
+      <CardFooter className="text-center text-xs text-muted-foreground flex flex-col pt-4">
         {/* Footer content can be added here if needed */}
       </CardFooter>
     </Card>
   );
 }
-
     
