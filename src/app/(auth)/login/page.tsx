@@ -80,7 +80,7 @@ export default function LoginPage() {
 
     if (data.email && data.password) {
       localStorage.setItem('neuroCareUserEmail', data.email);
-      localStorage.setItem('neuroCareUserLoggedIn', 'true'); 
+      localStorage.setItem('neuroCareUserLoggedIn', 'true');
       toast({
         title: "Login Successful",
         description: `Welcome back, ${data.email}!`,
@@ -123,8 +123,19 @@ export default function LoginPage() {
     if (!activeSocialProvider) return;
     setIsLoading(true);
 
-    // Use the entered socialEmail, or a mock email if empty
-    const emailToLogin = socialEmail.trim() || `${activeSocialProvider.toLowerCase().replace(/\s/g, '')}@example.com`;
+    const trimmedSocialEmail = socialEmail.trim();
+
+    if (!trimmedSocialEmail) {
+      toast({
+        title: "Email Required",
+        description: `Please enter your ${activeSocialProvider} email address to continue.`,
+        variant: "destructive",
+      });
+      setIsLoading(false);
+      return; // Prevent further execution
+    }
+
+    const emailToLogin = trimmedSocialEmail;
 
     await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate API call
 
@@ -243,16 +254,16 @@ export default function LoginPage() {
         ) : (
           // Social Login Form
           <div className="space-y-4">
-            <div className="space-y-2"> {/* Replaced FormItem */}
-              <Label htmlFor="socialEmailInput">{activeSocialProvider} Email</Label> {/* Used Label instead of FormLabel */}
-              <Input 
+            <div className="space-y-2">
+              <Label htmlFor="socialEmailInput">{activeSocialProvider} Email</Label>
+              <Input
                 id="socialEmailInput"
-                type="email" 
-                placeholder={`your.${activeSocialProvider.toLowerCase()}@example.com`} 
+                type="email"
+                placeholder={`your.${activeSocialProvider.toLowerCase()}@example.com`}
                 value={socialEmail}
                 onChange={(e) => setSocialEmail(e.target.value)}
-                disabled={isLoading} 
-              /> {/* Removed FormControl wrapper */}
+                disabled={isLoading}
+              />
             </div>
             <Button onClick={handleSocialLoginSubmit} className="w-full" disabled={isLoading}>
               {isLoading ? (
@@ -280,6 +291,4 @@ export default function LoginPage() {
     </Card>
   );
 }
-    
-
     
