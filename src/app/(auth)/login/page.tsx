@@ -14,6 +14,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Brain, LogIn, Github, ArrowLeft } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Separator } from '@/components/ui/separator';
+import Link from 'next/link'; // Import Link for the sign-up link
 
 const loginFormSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),
@@ -259,7 +260,7 @@ export default function LoginPage() {
               <Input
                 id="socialEmailInput"
                 type="email"
-                placeholder={`your.${activeSocialProvider.toLowerCase()}@example.com`}
+                placeholder={`your.${activeSocialProvider?.toLowerCase()}@example.com`}
                 value={socialEmail}
                 onChange={(e) => setSocialEmail(e.target.value)}
                 disabled={isLoading}
@@ -286,7 +287,12 @@ export default function LoginPage() {
         )}
       </CardContent>
       <CardFooter className="text-center text-xs text-muted-foreground flex flex-col pt-4">
-        {/* Footer content can be added here if needed */}
+        <p>
+          Don&apos;t have an account?{' '}
+          <Link href="/login" className="font-semibold text-primary hover:underline">
+            Sign up now
+          </Link>
+        </p>
       </CardFooter>
     </Card>
   );
