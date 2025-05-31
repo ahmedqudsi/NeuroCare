@@ -87,10 +87,8 @@
 ![image](https://github.com/user-attachments/assets/1f067904-6aa8-46bd-920a-f7708f4ac2fc)
 ![WhatsApp Image 2025-05-29 at 15 30 37_e75fc78c](https://github.com/user-attachments/assets/62262cfb-6d2b-4a94-9ed9-bda9e2b91813)
 ![WhatsApp Image 2025-05-29 at 15 32 16_6712d593](https://github.com/user-attachments/assets/29fb5051-2a92-4d3d-a542-d3056d00b08e)
-![WhatsApp Image 2025-05-29 at 20 56 19_066d82b7](https://github.com/user-attachments/assets/53fbeacd-bfce-472f-9dd0-b4116097ffd6)
 ![image](https://github.com/user-attachments/assets/f0339464-a952-4f77-b89a-01c55675f1fb)
 ![WhatsApp Image 2025-05-29 at 20 56 35_f8441e3b](https://github.com/user-attachments/assets/3afcc769-cad8-4594-bb1c-6e67d82f664c)
-![WhatsApp Image 2025-05-29 at 21 00 08_4fd5092f](https://github.com/user-attachments/assets/a4b5431c-2bdb-4013-8689-2413c20e6f05)
 ![image](https://github.com/user-attachments/assets/0ece35d7-98e6-4648-8843-eb129e67fa60)
 
 
