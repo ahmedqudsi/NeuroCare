@@ -54,7 +54,6 @@ export default function LoginPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const [savedIdentifier, setSavedIdentifier] = useState<string | null>(null);
   const [activeSocialProvider, setActiveSocialProvider] = useState<SocialProvider | null>(null);
   const [socialEmail, setSocialEmail] = useState('');
 
@@ -68,15 +67,12 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (localStorage.getItem('neuroCareUserLoggedIn') === 'true' && localStorage.getItem('neuroCareUserIdentifier')) {
-        router.replace('/dashboard'); 
+        router.replace('/dashboard');
         return;
     }
-    const storedIdentifier = localStorage.getItem('neuroCareUserIdentifier'); // This is "last used username/email"
-    if (storedIdentifier) {
-      setSavedIdentifier(storedIdentifier);
-      if (!activeSocialProvider) {
-        form.setValue('identifier', storedIdentifier);
-      }
+    const storedIdentifier = localStorage.getItem('neuroCareUserIdentifier');
+    if (storedIdentifier && !activeSocialProvider) {
+      form.setValue('identifier', storedIdentifier);
     }
   }, [form, router, activeSocialProvider]);
 
@@ -95,8 +91,8 @@ export default function LoginPage() {
       }
     }
 
-    const foundUser = signedUpUsers.find(user => 
-        (user.email.toLowerCase() === data.identifier.toLowerCase() || 
+    const foundUser = signedUpUsers.find(user =>
+        (user.email.toLowerCase() === data.identifier.toLowerCase() ||
          user.username.toLowerCase() === data.identifier.toLowerCase())
     );
 
@@ -114,8 +110,8 @@ export default function LoginPage() {
       });
     } else {
       // Login successful
-      localStorage.setItem('neuroCareUserIdentifier', foundUser.username); // Store username as preferred identifier
-      localStorage.setItem('neuroCareUserEmail', foundUser.email); // Ensure email is set for AppLayout
+      localStorage.setItem('neuroCareUserIdentifier', foundUser.username);
+      localStorage.setItem('neuroCareUserEmail', foundUser.email);
       localStorage.setItem('neuroCareUserLoggedIn', 'true');
       toast({
         title: "Login Successful",
@@ -125,13 +121,6 @@ export default function LoginPage() {
     }
     setIsLoading(false);
   }
-
-  const handleUseDifferentAccount = () => {
-    setSavedIdentifier(null);
-    form.reset({ identifier: '', password: '' });
-    localStorage.removeItem('neuroCareUserIdentifier'); 
-    localStorage.removeItem('neuroCareUserEmail');
-  };
 
   const startSocialLogin = (provider: SocialProvider) => {
     setActiveSocialProvider(provider);
@@ -164,7 +153,7 @@ export default function LoginPage() {
       setIsLoading(false);
       return;
     }
-    
+
     await new Promise(resolve => setTimeout(resolve, 1500));
 
     let signedUpUsers: StoredUser[] = [];
@@ -184,11 +173,11 @@ export default function LoginPage() {
     if (!userToLogin) {
       // Simulate account creation via social login
       const tempUsername = trimmedSocialEmail.split('@')[0] + Math.floor(Math.random() * 1000);
-      userToLogin = { 
-        username: tempUsername, 
-        email: trimmedSocialEmail, 
-        password: 'social_login_mock_password', 
-        fullName: `User via ${activeSocialProvider}` 
+      userToLogin = {
+        username: tempUsername,
+        email: trimmedSocialEmail,
+        password: 'social_login_mock_password', // Mock password for socially created accounts
+        fullName: `User via ${activeSocialProvider}`
       };
       signedUpUsers.push(userToLogin);
       localStorage.setItem('neuroCareSignedUpUsers', JSON.stringify(signedUpUsers));
@@ -196,9 +185,9 @@ export default function LoginPage() {
     } else {
       userNameOrEmail = userToLogin.fullName || userToLogin.username;
     }
-    
+
     localStorage.setItem('neuroCareUserIdentifier', userToLogin.username);
-    localStorage.setItem('neuroCareUserEmail', userToLogin.email); // Ensure email is set for AppLayout
+    localStorage.setItem('neuroCareUserEmail', userToLogin.email);
     localStorage.setItem('neuroCareUserLoggedIn', 'true');
     toast({
       title: `Logged in with ${activeSocialProvider}`,
@@ -231,15 +220,6 @@ export default function LoginPage() {
       <CardContent className="space-y-6">
         {!activeSocialProvider ? (
           <>
-            {savedIdentifier && !form.formState.isDirty && (
-              <div className="mb-4 p-3 bg-secondary/50 rounded-md text-center">
-                <p className="text-sm text-muted-foreground">Signing in as:</p>
-                <p className="font-semibold">{savedIdentifier}</p>
-                <Button variant="link" size="sm" onClick={handleUseDifferentAccount} className="text-xs h-auto p-0 mt-1">
-                  Use a different account?
-                </Button>
-              </div>
-            )}
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                 <FormField
@@ -352,3 +332,5 @@ export default function LoginPage() {
     </Card>
   );
 }
+
+    
