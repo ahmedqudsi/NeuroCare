@@ -142,7 +142,7 @@ export default function LoginPage() {
         </Form>
       </CardContent>
       <CardFooter className="text-center text-xs text-muted-foreground">
-        <p>This is a demonstration app. Do not use real credentials.</p>
+        {/* Demo disclaimer removed */}
       </CardFooter>
     </Card>
   );
