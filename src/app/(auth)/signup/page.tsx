@@ -100,6 +100,7 @@ export default function SignupPage() {
 
     // Proceed to log in the new user
     localStorage.setItem('neuroCareUserIdentifier', data.username); // Store username as preferred identifier
+    localStorage.setItem('neuroCareUserEmail', data.email); // Ensure email is set for AppLayout
     localStorage.setItem('neuroCareUserLoggedIn', 'true');
     
     toast({

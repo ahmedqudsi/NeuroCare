@@ -115,6 +115,7 @@ export default function LoginPage() {
     } else {
       // Login successful
       localStorage.setItem('neuroCareUserIdentifier', foundUser.username); // Store username as preferred identifier
+      localStorage.setItem('neuroCareUserEmail', foundUser.email); // Ensure email is set for AppLayout
       localStorage.setItem('neuroCareUserLoggedIn', 'true');
       toast({
         title: "Login Successful",
@@ -129,6 +130,7 @@ export default function LoginPage() {
     setSavedIdentifier(null);
     form.reset({ identifier: '', password: '' });
     localStorage.removeItem('neuroCareUserIdentifier'); 
+    localStorage.removeItem('neuroCareUserEmail');
   };
 
   const startSocialLogin = (provider: SocialProvider) => {
@@ -196,6 +198,7 @@ export default function LoginPage() {
     }
     
     localStorage.setItem('neuroCareUserIdentifier', userToLogin.username);
+    localStorage.setItem('neuroCareUserEmail', userToLogin.email); // Ensure email is set for AppLayout
     localStorage.setItem('neuroCareUserLoggedIn', 'true');
     toast({
       title: `Logged in with ${activeSocialProvider}`,
