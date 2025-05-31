@@ -84,6 +84,7 @@
 ---
 ## 📸 Screenshots
 
+![image](https://github.com/user-attachments/assets/1f067904-6aa8-46bd-920a-f7708f4ac2fc)
 ![WhatsApp Image 2025-05-29 at 15 30 37_e75fc78c](https://github.com/user-attachments/assets/62262cfb-6d2b-4a94-9ed9-bda9e2b91813)
 ![WhatsApp Image 2025-05-29 at 15 32 16_6712d593](https://github.com/user-attachments/assets/29fb5051-2a92-4d3d-a542-d3056d00b08e)
 ![WhatsApp Image 2025-05-29 at 20 56 19_066d82b7](https://github.com/user-attachments/assets/53fbeacd-bfce-472f-9dd0-b4116097ffd6)
