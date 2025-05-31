@@ -106,4 +106,4 @@ npm start
 (or)
 
 USE the link TO the Access the project
-https://neuro-care.vercel.app
+https://neuro-care.vercel.app/login
