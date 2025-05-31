@@ -2,10 +2,10 @@
 "use client";
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { siteConfig } from '@/config/site';
 import { ThemeToggleButton } from './theme-toggle-button';
-import { Brain, Menu } from 'lucide-react';
+import { Brain, Menu, LogOut } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import {
@@ -15,12 +15,25 @@ import {
   SheetClose,
 } from '@/components/ui/sheet';
 import type { NavigationItem } from '@/types';
+import { useToast } from '@/hooks/use-toast';
 
 export function Header() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { toast } = useToast();
   const appName = siteConfig.appName;
   const navItems = siteConfig.sidebarNav;
   const toggleMenuText = "Toggle menu"; // Static text
+
+  const handleLogout = () => {
+    localStorage.removeItem('neuroCareUserEmail');
+    localStorage.removeItem('neuroCareUserLoggedIn');
+    toast({
+      title: "Logged Out",
+      description: "You have been successfully logged out.",
+    });
+    router.push('/login');
+  };
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -55,6 +68,9 @@ export function Header() {
 
         <div className="flex items-center space-x-2">
           <ThemeToggleButton />
+          <Button variant="outline" size="icon" onClick={handleLogout} aria-label="Logout">
+            <LogOut className="h-[1.2rem] w-[1.2rem]" />
+          </Button>
           <div className="md:hidden">
             <Sheet>
               <SheetTrigger asChild>
@@ -64,7 +80,7 @@ export function Header() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-full max-w-xs p-6">
-                 <div className="mb-6">
+                 <div className="mb-6 flex justify-between items-center">
                    <Link href="/dashboard" className="flex items-center space-x-2">
                      <Brain className="h-7 w-7 text-primary" />
                      <span className="text-lg font-semibold">
@@ -93,6 +109,12 @@ export function Header() {
                       </SheetClose>
                     );
                   })}
+                   <SheetClose asChild>
+                     <Button variant="ghost" onClick={handleLogout} className="flex items-center p-2 text-base font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground justify-start">
+                        <LogOut className="mr-3 h-5 w-5 flex-shrink-0" />
+                        <span className="truncate">Logout</span>
+                     </Button>
+                   </SheetClose>
                 </nav>
               </SheetContent>
             </Sheet>
