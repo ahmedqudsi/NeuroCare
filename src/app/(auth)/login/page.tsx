@@ -16,8 +16,8 @@ import { useToast } from '@/hooks/use-toast';
 import Link from 'next/link';
 
 const loginFormSchema = z.object({
-  email: z.string().email({ message: "Please enter a valid email address." }),
-  password: z.string().min(1, { message: "Password is required." }), // Min 1 to ensure it's not empty
+  identifier: z.string().min(1, { message: "Username or Email ID is required." }),
+  password: z.string().min(1, { message: "Password is required." }),
 });
 
 type LoginFormValues = z.infer<typeof loginFormSchema>;
@@ -44,6 +44,7 @@ const MicrosoftIcon = () => (
 type SocialProvider = 'Google' | 'GitHub' | 'Microsoft';
 
 interface StoredUser {
+  username: string;
   email: string;
   password?: string;
   fullName?: string;
@@ -53,28 +54,28 @@ export default function LoginPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const [savedEmail, setSavedEmail] = useState<string | null>(null);
+  const [savedIdentifier, setSavedIdentifier] = useState<string | null>(null);
   const [activeSocialProvider, setActiveSocialProvider] = useState<SocialProvider | null>(null);
   const [socialEmail, setSocialEmail] = useState('');
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
-      email: '',
+      identifier: '',
       password: '',
     },
   });
 
   useEffect(() => {
-    if (localStorage.getItem('neuroCareUserLoggedIn') === 'true' && localStorage.getItem('neuroCareUserEmail')) {
-        router.replace('/dashboard'); // Redirect if already logged in
+    if (localStorage.getItem('neuroCareUserLoggedIn') === 'true' && localStorage.getItem('neuroCareUserIdentifier')) {
+        router.replace('/dashboard'); 
         return;
     }
-    const storedEmail = localStorage.getItem('neuroCareUserEmail'); // This is more like "last used email"
-    if (storedEmail) {
-      setSavedEmail(storedEmail);
+    const storedIdentifier = localStorage.getItem('neuroCareUserIdentifier'); // This is "last used username/email"
+    if (storedIdentifier) {
+      setSavedIdentifier(storedIdentifier);
       if (!activeSocialProvider) {
-        form.setValue('email', storedEmail);
+        form.setValue('identifier', storedIdentifier);
       }
     }
   }, [form, router, activeSocialProvider]);
@@ -94,7 +95,10 @@ export default function LoginPage() {
       }
     }
 
-    const foundUser = signedUpUsers.find(user => user.email.toLowerCase() === data.email.toLowerCase());
+    const foundUser = signedUpUsers.find(user => 
+        (user.email.toLowerCase() === data.identifier.toLowerCase() || 
+         user.username.toLowerCase() === data.identifier.toLowerCase())
+    );
 
     if (!foundUser) {
       toast({
@@ -110,11 +114,11 @@ export default function LoginPage() {
       });
     } else {
       // Login successful
-      localStorage.setItem('neuroCareUserEmail', foundUser.email);
+      localStorage.setItem('neuroCareUserIdentifier', foundUser.username); // Store username as preferred identifier
       localStorage.setItem('neuroCareUserLoggedIn', 'true');
       toast({
         title: "Login Successful",
-        description: `Welcome back, ${foundUser.fullName || foundUser.email}!`,
+        description: `Welcome back, ${foundUser.fullName || foundUser.username}!`,
       });
       router.push('/dashboard');
     }
@@ -122,22 +126,22 @@ export default function LoginPage() {
   }
 
   const handleUseDifferentAccount = () => {
-    setSavedEmail(null);
-    form.reset({ email: '', password: '' });
-    localStorage.removeItem('neuroCareUserEmail'); // Clear last used email
+    setSavedIdentifier(null);
+    form.reset({ identifier: '', password: '' });
+    localStorage.removeItem('neuroCareUserIdentifier'); 
   };
 
   const startSocialLogin = (provider: SocialProvider) => {
     setActiveSocialProvider(provider);
-    setSocialEmail('');
+    setSocialEmail(''); // Clear previous social email input
   };
 
   const cancelSocialLogin = () => {
     setActiveSocialProvider(null);
     setSocialEmail('');
-    const lastUsedEmail = localStorage.getItem('neuroCareUserEmail');
-    if (lastUsedEmail) {
-      form.setValue('email', lastUsedEmail);
+    const lastUsedIdentifier = localStorage.getItem('neuroCareUserIdentifier');
+    if (lastUsedIdentifier) {
+      form.setValue('identifier', lastUsedIdentifier);
     } else {
       form.reset();
     }
@@ -158,7 +162,7 @@ export default function LoginPage() {
       setIsLoading(false);
       return;
     }
-
+    
     await new Promise(resolve => setTimeout(resolve, 1500));
 
     let signedUpUsers: StoredUser[] = [];
@@ -173,21 +177,29 @@ export default function LoginPage() {
     }
 
     let userToLogin = signedUpUsers.find(user => user.email.toLowerCase() === trimmedSocialEmail.toLowerCase());
-    let userName = userToLogin?.fullName || trimmedSocialEmail;
+    let userNameOrEmail: string;
 
     if (!userToLogin) {
       // Simulate account creation via social login
-      userToLogin = { email: trimmedSocialEmail, password: 'social_login_mock_password', fullName: `User via ${activeSocialProvider}` };
+      const tempUsername = trimmedSocialEmail.split('@')[0] + Math.floor(Math.random() * 1000);
+      userToLogin = { 
+        username: tempUsername, 
+        email: trimmedSocialEmail, 
+        password: 'social_login_mock_password', 
+        fullName: `User via ${activeSocialProvider}` 
+      };
       signedUpUsers.push(userToLogin);
       localStorage.setItem('neuroCareSignedUpUsers', JSON.stringify(signedUpUsers));
-      userName = userToLogin.fullName;
+      userNameOrEmail = userToLogin.fullName || userToLogin.username;
+    } else {
+      userNameOrEmail = userToLogin.fullName || userToLogin.username;
     }
     
-    localStorage.setItem('neuroCareUserEmail', userToLogin.email);
+    localStorage.setItem('neuroCareUserIdentifier', userToLogin.username);
     localStorage.setItem('neuroCareUserLoggedIn', 'true');
     toast({
       title: `Logged in with ${activeSocialProvider}`,
-      description: `Welcome, ${userName}!`,
+      description: `Welcome, ${userNameOrEmail}!`,
     });
     router.push('/dashboard');
     setIsLoading(false);
@@ -216,10 +228,10 @@ export default function LoginPage() {
       <CardContent className="space-y-6">
         {!activeSocialProvider ? (
           <>
-            {savedEmail && !form.formState.isDirty && (
+            {savedIdentifier && !form.formState.isDirty && (
               <div className="mb-4 p-3 bg-secondary/50 rounded-md text-center">
                 <p className="text-sm text-muted-foreground">Signing in as:</p>
-                <p className="font-semibold">{savedEmail}</p>
+                <p className="font-semibold">{savedIdentifier}</p>
                 <Button variant="link" size="sm" onClick={handleUseDifferentAccount} className="text-xs h-auto p-0 mt-1">
                   Use a different account?
                 </Button>
@@ -229,12 +241,12 @@ export default function LoginPage() {
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                 <FormField
                   control={form.control}
-                  name="email"
+                  name="identifier"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email Address</FormLabel>
+                      <FormLabel>Username / Email ID</FormLabel>
                       <FormControl>
-                        <Input type="email" placeholder="your.email@example.com" {...field} disabled={isLoading} />
+                        <Input placeholder="your_username or your.email@example.com" {...field} disabled={isLoading} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

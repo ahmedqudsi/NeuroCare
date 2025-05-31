@@ -16,6 +16,8 @@ import { useToast } from '@/hooks/use-toast';
 
 const signupFormSchema = z.object({
   fullName: z.string().min(3, { message: "Full name must be at least 3 characters." }),
+  username: z.string().min(3, { message: "Username must be at least 3 characters." })
+    .regex(/^[a-zA-Z0-9_]+$/, { message: "Username can only contain letters, numbers, and underscores." }),
   email: z.string().email({ message: "Please enter a valid email address." }),
   password: z.string().min(6, { message: "Password must be at least 6 characters." }),
   confirmPassword: z.string().min(6, { message: "Please confirm your password." }),
@@ -27,8 +29,9 @@ const signupFormSchema = z.object({
 type SignupFormValues = z.infer<typeof signupFormSchema>;
 
 interface StoredUser {
+  username: string;
   email: string;
-  password?: string; // Password stored for email/pass signup, optional for social
+  password?: string;
   fullName?: string;
 }
 
@@ -41,6 +44,7 @@ export default function SignupPage() {
     resolver: zodResolver(signupFormSchema),
     defaultValues: {
       fullName: '',
+      username: '',
       email: '',
       password: '',
       confirmPassword: '',
@@ -49,7 +53,7 @@ export default function SignupPage() {
 
   async function onSubmit(data: SignupFormValues) {
     setIsLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
     let signedUpUsers: StoredUser[] = [];
     const storedUsersData = localStorage.getItem('neuroCareSignedUpUsers');
@@ -62,12 +66,22 @@ export default function SignupPage() {
       }
     }
 
-    const existingUser = signedUpUsers.find(user => user.email.toLowerCase() === data.email.toLowerCase());
-
-    if (existingUser) {
+    const existingUserByEmail = signedUpUsers.find(user => user.email.toLowerCase() === data.email.toLowerCase());
+    if (existingUserByEmail) {
       toast({
         title: "Registration Failed",
-        description: "This email address is already registered. Please log in.",
+        description: "This email address is already registered. Please log in or use a different email.",
+        variant: "destructive",
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    const existingUserByUsername = signedUpUsers.find(user => user.username.toLowerCase() === data.username.toLowerCase());
+    if (existingUserByUsername) {
+      toast({
+        title: "Registration Failed",
+        description: "This username is already taken. Please choose a different username.",
         variant: "destructive",
       });
       setIsLoading(false);
@@ -75,11 +89,17 @@ export default function SignupPage() {
     }
 
     // Add new user
-    signedUpUsers.push({ email: data.email, password: data.password, fullName: data.fullName });
+    const newUser: StoredUser = {
+      username: data.username,
+      email: data.email,
+      password: data.password,
+      fullName: data.fullName
+    };
+    signedUpUsers.push(newUser);
     localStorage.setItem('neuroCareSignedUpUsers', JSON.stringify(signedUpUsers));
 
     // Proceed to log in the new user
-    localStorage.setItem('neuroCareUserEmail', data.email);
+    localStorage.setItem('neuroCareUserIdentifier', data.username); // Store username as preferred identifier
     localStorage.setItem('neuroCareUserLoggedIn', 'true');
     
     toast({
@@ -118,6 +138,19 @@ export default function SignupPage() {
             />
             <FormField
               control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Choose a username (e.g., neuro_user)" {...field} disabled={isLoading} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="email"
               render={({ field }) => (
                 <FormItem>
@@ -136,7 +169,7 @@ export default function SignupPage() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="Create a password" {...field} disabled={isLoading} />
+                    <Input type="password" placeholder="Create a password (min. 6 characters)" {...field} disabled={isLoading} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
