@@ -142,7 +142,7 @@ export default function LoginPage() {
         </Form>
       </CardContent>
       <CardFooter className="text-center text-xs text-muted-foreground">
-        {/* Demo disclaimer removed */}
+        {/* Footer content can be added here if needed */}
       </CardFooter>
     </Card>
   );
