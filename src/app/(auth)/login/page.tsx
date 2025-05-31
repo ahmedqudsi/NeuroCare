@@ -8,13 +8,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label'; // Standard Label
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'; // react-hook-form related
+import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Brain, LogIn, Github, ArrowLeft } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { Separator } from '@/components/ui/separator';
-import Link from 'next/link'; // Import Link for the sign-up link
+import Link from 'next/link';
 
 const loginFormSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),
@@ -23,7 +22,6 @@ const loginFormSchema = z.object({
 
 type LoginFormValues = z.infer<typeof loginFormSchema>;
 
-// Simple SVG for Google G icon
 const GoogleIcon = () => (
   <svg viewBox="0 0 48 48" width="20" height="20" className="mr-2">
     <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
@@ -34,7 +32,6 @@ const GoogleIcon = () => (
   </svg>
 );
 
-// Simple SVG for Microsoft icon
 const MicrosoftIcon = () => (
   <svg width="20" height="20" viewBox="0 0 21 21" className="mr-2">
     <path fill="#f25022" d="M1 1h9v9H1z"/>
@@ -66,7 +63,7 @@ export default function LoginPage() {
     const storedEmail = localStorage.getItem('neuroCareUserEmail');
     if (storedEmail) {
       setSavedEmail(storedEmail);
-      if (!activeSocialProvider) { // Only prefill if not in social login flow
+      if (!activeSocialProvider) {
         form.setValue('email', storedEmail);
       }
     }
@@ -105,13 +102,12 @@ export default function LoginPage() {
 
   const startSocialLogin = (provider: SocialProvider) => {
     setActiveSocialProvider(provider);
-    setSocialEmail(''); // Clear previous social email
+    setSocialEmail('');
   };
 
   const cancelSocialLogin = () => {
     setActiveSocialProvider(null);
     setSocialEmail('');
-    // If there was a saved email, re-populate the main form
     const storedEmail = localStorage.getItem('neuroCareUserEmail');
     if (storedEmail) {
       form.setValue('email', storedEmail);
@@ -133,12 +129,12 @@ export default function LoginPage() {
         variant: "destructive",
       });
       setIsLoading(false);
-      return; // Prevent further execution
+      return;
     }
 
     const emailToLogin = trimmedSocialEmail;
 
-    await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1500));
 
     localStorage.setItem('neuroCareUserEmail', emailToLogin);
     localStorage.setItem('neuroCareUserLoggedIn', 'true');
@@ -225,7 +221,7 @@ export default function LoginPage() {
                 </Button>
                 <p className="text-center text-xs text-muted-foreground">
                   Don&apos;t have an account?{' '}
-                  <Link href="/login" className="font-semibold text-primary hover:underline">
+                  <Link href="/signup" className="font-semibold text-primary hover:underline">
                     Sign up now
                   </Link>
                 </p>
@@ -259,7 +255,6 @@ export default function LoginPage() {
             </div>
           </>
         ) : (
-          // Social Login Form
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="socialEmailInput">{activeSocialProvider} Email</Label>
@@ -292,8 +287,8 @@ export default function LoginPage() {
           </div>
         )}
       </CardContent>
-      {/* CardFooter removed as the sign-up link is now in the form */}
     </Card>
   );
 }
+
     
