@@ -8,9 +8,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label'; // Keep if still used, otherwise remove
+import { Label } from '@/components/ui/label'; // Standard Label
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'; // react-hook-form related
 import { Brain, LogIn, Github, ArrowLeft } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Separator } from '@/components/ui/separator';
@@ -243,18 +243,17 @@ export default function LoginPage() {
         ) : (
           // Social Login Form
           <div className="space-y-4">
-            <FormItem>
-              <FormLabel>{activeSocialProvider} Email</FormLabel>
-              <FormControl>
-                <Input 
-                  type="email" 
-                  placeholder={`your.${activeSocialProvider.toLowerCase()}@example.com`} 
-                  value={socialEmail}
-                  onChange={(e) => setSocialEmail(e.target.value)}
-                  disabled={isLoading} 
-                />
-              </FormControl>
-            </FormItem>
+            <div className="space-y-2"> {/* Replaced FormItem */}
+              <Label htmlFor="socialEmailInput">{activeSocialProvider} Email</Label> {/* Used Label instead of FormLabel */}
+              <Input 
+                id="socialEmailInput"
+                type="email" 
+                placeholder={`your.${activeSocialProvider.toLowerCase()}@example.com`} 
+                value={socialEmail}
+                onChange={(e) => setSocialEmail(e.target.value)}
+                disabled={isLoading} 
+              /> {/* Removed FormControl wrapper */}
+            </div>
             <Button onClick={handleSocialLoginSubmit} className="w-full" disabled={isLoading}>
               {isLoading ? (
                 <>
@@ -281,4 +280,6 @@ export default function LoginPage() {
     </Card>
   );
 }
+    
+
     
