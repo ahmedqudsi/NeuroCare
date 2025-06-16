@@ -100,8 +100,3 @@ cd NeuroCare
 npm install
 npm run build
 npm start
-
-(or)
-
-USE the link TO the Access the project
-https://neuro-care.vercel.app
